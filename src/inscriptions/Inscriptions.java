@@ -1,8 +1,5 @@
 package inscriptions;
 
-import utilitaires.ligneDeCommande.Action;
-import utilitaires.ligneDeCommande.Menu;
-import utilitaires.ligneDeCommande.Option;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -216,7 +213,28 @@ public class Inscriptions implements Serializable
 	
 	public static void main(String[] args)
 	{
-		
+		Menu menu = new Menu("Menu bonjour");
+		Option AfficherLesPersonnes = new Option("Afficher les Personnes", "1");
+		Option AfficherLesEquipes = new Option("Afficher les equipes", "2");
+		menu.ajoute(AfficherLesPersonnes);
+		menu.ajouteQuitter("q");
+		menu.ajoute(AfficherLesPersonnes);
+		Action affichPers = new Action()
+		{
+			@Override
+			public void optionSelectionnee()
+			{
+				//TODO afficherlespers
+			}
+		};
+		Action affichEquip = new Action()
+		{
+			@Override
+			public void optionSelectionnee()
+			{
+				//TODO afficherlesequip
+			}
+		};
 		/*Inscriptions inscriptions = Inscriptions.getInscriptions();
 		Competition flechettes = inscriptions.createCompetition("Mondial de fléchettes", null, false);
 		Personne tony = inscriptions.createPersonne("Tony", "Dent de plomb", "azerty"), 
