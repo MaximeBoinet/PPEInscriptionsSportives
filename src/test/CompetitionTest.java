@@ -1,11 +1,16 @@
-package inscriptions;
+package test;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import java.time.LocalDate;
+import inscriptions.Candidat;
+import inscriptions.Competition;
+import inscriptions.Equipe;
+import inscriptions.Inscriptions;
+import inscriptions.Personne;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 

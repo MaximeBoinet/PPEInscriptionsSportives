@@ -1,8 +1,13 @@
-package inscriptions;
+package test;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import inscriptions.Equipe;
+import inscriptions.Inscriptions;
+import inscriptions.Personne;
+
 import java.util.Set;
 
 public class PersonneTest {

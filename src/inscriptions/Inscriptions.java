@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.time.LocalDate;
 import java.util.SortedSet;
 import java.util.TreeSet;
-
+import menu.NotreMenu;
 /**
  * Point d'entrée dans l'application, un seul objet de type Inscription
  * permet de gérer les compétitions, candidats (de type equipe ou personne)
@@ -213,28 +213,7 @@ public class Inscriptions implements Serializable
 	
 	public static void main(String[] args)
 	{
-		Menu menu = new Menu("Menu bonjour");
-		Option AfficherLesPersonnes = new Option("Afficher les Personnes", "1");
-		Option AfficherLesEquipes = new Option("Afficher les equipes", "2");
-		menu.ajoute(AfficherLesPersonnes);
-		menu.ajouteQuitter("q");
-		menu.ajoute(AfficherLesPersonnes);
-		Action affichPers = new Action()
-		{
-			@Override
-			public void optionSelectionnee()
-			{
-				//TODO afficherlespers
-			}
-		};
-		Action affichEquip = new Action()
-		{
-			@Override
-			public void optionSelectionnee()
-			{
-				//TODO afficherlesequip
-			}
-		};
+		NotreMenu.RecupMenuPrincipal().start();
 		/*Inscriptions inscriptions = Inscriptions.getInscriptions();
 		Competition flechettes = inscriptions.createCompetition("Mondial de fléchettes", null, false);
 		Personne tony = inscriptions.createPersonne("Tony", "Dent de plomb", "azerty"), 

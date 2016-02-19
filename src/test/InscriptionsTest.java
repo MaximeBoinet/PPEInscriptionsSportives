@@ -1,9 +1,16 @@
-package inscriptions;
+package test;
 
 import static org.junit.Assert.*;
+
 import org.junit.Test;
+
 import java.util.Set;
 
+import inscriptions.Candidat;
+import inscriptions.Competition;
+import inscriptions.Equipe;
+import inscriptions.Inscriptions;
+import inscriptions.Personne;
 public class InscriptionsTest {
 
 	Inscriptions inscriptionTest = Inscriptions.getInscriptions();
