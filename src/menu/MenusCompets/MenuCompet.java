@@ -16,6 +16,7 @@ public class MenuCompet {
 
 	public static Menu RecupMenuCompet() {
 		Menu menu = new Menu("Gestion Des Compétitions");
+		menu.ajoute(getOptionAfficherLesCompets());
 		menu.ajoute(getOptionCreerCompets());
 		menu.ajoute(getOptionGererLesCompets());
 		menu.ajoute(getOptionSupprimerUneCompet());
@@ -24,12 +25,16 @@ public class MenuCompet {
 		return menu;
 	}
 	
+	private static Option getOptionAfficherLesCompets() {
+		return new Option("Afficher les compétition", "1", getActionAfficherLesCompets());
+	}
+
 	static Option getOptionCreerCompets() {
-		return new Option("Creer une compétitions", "1", getActionCreerUneCompet());
+		return new Option("Creer une compétitions", "2", getActionCreerUneCompet());
 	}
 	
 	static Option getOptionGererLesCompets() {
-		return new Option("Editer les compétitions", "2", getActionGererLesCompets());
+		return new Option("Editer les compétitions", "3", getActionGererLesCompets());
 	}
 	
 	static Option getOptionEdition(Competition uneCompet, int numero) {
@@ -37,7 +42,23 @@ public class MenuCompet {
 	}
 	
 	static Option getOptionSupprimerUneCompet() {
-		return new Option("Supprimer une competition", "3", getActionSupprimerUneCompet());
+		return new Option("Supprimer une competition", "4", getActionSupprimerUneCompet());
+	}
+	
+
+	private static Action getActionAfficherLesCompets() {
+		return new Action() {
+			@Override
+			public void optionSelectionnee() {
+				SortedSet<Competition> mesCompets = Inscriptions.getInscriptions().getCompetitions();
+				
+				for (Competition maCompet : mesCompets) {
+					System.out.println("Nom: " + maCompet.getNom() + " DateCloture:" + maCompet.getDateCloture()
+							+" De type: " + (maCompet.estEnEquipe() ? "En equipe" : "Solo"));
+				}
+				
+			}
+		};
 	}
 	
 	static Action getActionCreerUneCompet() {

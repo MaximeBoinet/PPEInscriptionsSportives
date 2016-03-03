@@ -6,6 +6,7 @@ import inscriptions.Inscriptions;
 
 import java.util.SortedSet;
 import java.util.regex.Pattern;
+
 import utilitaires.EntreesSorties;
 import utilitaires.ligneDeCommande.Action;
 import utilitaires.ligneDeCommande.Menu;
@@ -19,19 +20,25 @@ public class MenuPersonnes {
 	
 	public static Menu RecupMenuPersonnes() {
 		Menu menu = new Menu("Gestion Des Personnes");
+		menu.ajoute(getOptionAfficherLesPersonnes());
 		menu.ajoute(getOptionCreerUnePersonne());
 		menu.ajoute(getOptionGererLesPersonnes());
 		menu.ajoute(getOptionSupprimerPersonne());
+		menu.ajouteRevenir("r");
 		menu.ajouteQuitter("q");
 		return menu;
 	}
 	
+	private static Option getOptionAfficherLesPersonnes() {
+		return new Option("Afficher les personnes", "1", getActionAfficherLesPersonnes());
+	}
+
 	static Option getOptionCreerUnePersonne() {
-		return new Option("Creer une personne", "1", getActionCreerUnePersonne());
+		return new Option("Creer une personne", "2", getActionCreerUnePersonne());
 	}
 	
 	static Option getOptionGererLesPersonnes() {
-		return new Option("Gerer les personnes", "2", getActionGererLesPersonnes());
+		return new Option("Gerer les personnes", "3", getActionGererLesPersonnes());
 	}
 	
 	static Option getOptionEdition(Candidat unCandidat, int numero) {
@@ -39,7 +46,24 @@ public class MenuPersonnes {
 	}
 	
 	static Option getOptionSupprimerPersonne() {
-		return new Option("Supprimer une personnes", "3", getActionSupprimerPersonne());
+		return new Option("Supprimer une personnes", "4", getActionSupprimerPersonne());
+	}
+	
+	private static Action getActionAfficherLesPersonnes() {
+		return new Action() {		
+			@Override
+			public void optionSelectionnee() {
+				SortedSet<Candidat> mesCandidat = Inscriptions.getInscriptions().getCandidats();
+				for (Candidat candidat : mesCandidat) {
+					if (candidat instanceof Personne) {
+						System.out.println("Nom: " + ((Personne)candidat).getNom() + " Prenom: " 
+								+((Personne)candidat).getPrenom() + " Mail: "+ ((Personne)candidat).getMail() 
+								+ " Inscrite à "+ ((Personne)candidat).getCompetitions().size() +" compétition"
+								+ " Faisant partie de " +  ((Personne)candidat).getEquipes().size() + " équipe(s)");
+					}
+				}
+			}
+		};
 	}
 	
 	static Action getActionCreerUnePersonne() {
@@ -51,12 +75,13 @@ public class MenuPersonnes {
 				prenom = (EntreesSorties.getString("Prenom de la Personnes?: "));
 				do {
 					mail = EntreesSorties.getString("Mail de la Personnes?: ");
-				} while (Pattern.compile(EMAIL_PATTERN).matcher(mail).matches());
+				} while (!Pattern.compile(EMAIL_PATTERN).matcher(mail).matches());
 				Inscriptions.getInscriptions().createPersonne(nom, prenom, mail);
 				System.out.println("La personnes à bien été crée");
 			}
 		};
 	}
+	
 	
 	static Action getActionGererLesPersonnes() {
 		return new Action() {
@@ -71,6 +96,9 @@ public class MenuPersonnes {
 						cpt++;
 					}
 				}
+				menu.ajouteRevenir("r");
+				menu.ajouteQuitter("q");
+				menu.start();
 			}
 		};
 	}

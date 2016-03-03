@@ -3,6 +3,7 @@ package menu.MenusEquipe;
 import inscriptions.Candidat;
 import inscriptions.Equipe;
 import inscriptions.Inscriptions;
+import inscriptions.Personne;
 
 import java.util.SortedSet;
 
@@ -15,19 +16,25 @@ public class MenuEquipe {
 	
 	public static Menu RecupMenuEquipe() {
 		Menu menu = new Menu("Gestion Des Equipes");
+		menu.ajoute(getOptionAfficherLesEquipe());
 		menu.ajoute(getOptionCreerUneEquipe());
 		menu.ajoute(getOptionGererLesEquipes());
 		menu.ajoute(getOptionSupprimerEquipe());
+		menu.ajouteRevenir("r");
 		menu.ajouteQuitter("q");
 		return menu;
 	}
 	
+	private static Option getOptionAfficherLesEquipe() {
+		return new Option("Afficher les équipes", "1", getActionAfficherLesEquipe());
+	}
+
 	static Option getOptionCreerUneEquipe() {
-		return new Option("Creer une equipe", "1", getActionCreerUneEquipe());
+		return new Option("Creer une equipe", "2", getActionCreerUneEquipe());
 	}
 	
 	static Option getOptionGererLesEquipes() {
-		return new Option("Gerer une equipe", "2", getActionGererLesEquipes());
+		return new Option("Gerer une equipe", "3", getActionGererLesEquipes());
 	}
 	
 	static Option getOptionEdition(Candidat unCandidat, int numero) {
@@ -35,7 +42,23 @@ public class MenuEquipe {
 	}
 	
 	static Option getOptionSupprimerEquipe() {
-		return new Option("Supprimer une equipe", "3", getActionSupprimerEquipe());
+		return new Option("Supprimer une equipe", "4", getActionSupprimerEquipe());
+	}
+	
+
+	private static Action getActionAfficherLesEquipe() {
+		return new Action() {		
+			@Override
+			public void optionSelectionnee() {
+				SortedSet<Candidat> mesCandidat = Inscriptions.getInscriptions().getCandidats();
+				for (Candidat candidat : mesCandidat) {
+					if (candidat instanceof Equipe) {
+						System.out.println("Nom: " + candidat.getNom() + " Nombre de personnes inscrite: " 
+								+((Equipe)candidat).getMembres().size() + " Inscrite à: "+ ((Equipe)candidat).getCompetitions().size() + " compétition");
+					}
+				}
+			}
+		};
 	}
 	
 	static Action getActionCreerUneEquipe() {
@@ -61,6 +84,9 @@ public class MenuEquipe {
 						cpt++;
 					}
 				}
+				menu.ajouteRevenir("r");
+				menu.ajouteQuitter("q");
+				menu.start();
 			}
 		};
 	}

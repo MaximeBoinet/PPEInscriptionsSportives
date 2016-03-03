@@ -1,5 +1,9 @@
 package utilitaires.ligneDeCommande;
 
+import java.io.IOException;
+
+import inscriptions.Inscriptions;
+
 /**
  * Permet d'affecter des actions au choix d'un élément dans un menu.
  */
@@ -16,6 +20,12 @@ public interface Action
 		@Override 
 		public void optionSelectionnee()
 		{
+			try {
+				Inscriptions.getInscriptions().sauvegarder();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			System.exit(0);
 		}
 	};
