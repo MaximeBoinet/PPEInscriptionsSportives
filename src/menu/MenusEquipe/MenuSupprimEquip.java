@@ -14,7 +14,7 @@ public class MenuSupprimEquip {
 
 	public static Menu RecupMenuSupprimEquip() {
 		
-		Menu menu = new Menu("Supprimer une competition:");
+		Menu menu = new Menu("Supprimer une equipe:");
 		SortedSet<Candidat> mesCandidats = Inscriptions.getInscriptions().getCandidats();
 		int cpt = 1;
 		
@@ -32,7 +32,7 @@ public class MenuSupprimEquip {
 	}
 	
 	static Option getOptionSupprimer(Candidat unCandidat, int cpt) {
-		return new Option("Supprimer une equipe", Integer.toString(cpt) , getActionSupprimer(unCandidat));
+		return new Option("Supprimer "+ unCandidat.getNom(), Integer.toString(cpt) , getActionSupprimer(unCandidat));
 	}
 	
 	static Action getActionSupprimer(Candidat unCandidat) {

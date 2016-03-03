@@ -23,11 +23,11 @@ public class MenuEquipe {
 	}
 	
 	static Option getOptionCreerUneEquipe() {
-		return new Option("Creer une compétitions", "1", getActionCreerUneEquipe());
+		return new Option("Creer une equipe", "1", getActionCreerUneEquipe());
 	}
 	
 	static Option getOptionGererLesEquipes() {
-		return new Option("Creer une compétitions", "2", getActionGererLesEquipes());
+		return new Option("Gerer une equipe", "2", getActionGererLesEquipes());
 	}
 	
 	static Option getOptionEdition(Candidat unCandidat, int numero) {
@@ -35,7 +35,7 @@ public class MenuEquipe {
 	}
 	
 	static Option getOptionSupprimerEquipe() {
-		return new Option("Creer une compétitions", "3", getActionSupprimerEquipe());
+		return new Option("Supprimer une equipe", "3", getActionSupprimerEquipe());
 	}
 	
 	static Action getActionCreerUneEquipe() {

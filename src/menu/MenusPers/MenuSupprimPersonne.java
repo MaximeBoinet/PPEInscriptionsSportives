@@ -32,7 +32,7 @@ public static Menu RecupMenuSupprimPersonne() {
 	}
 	
 	static Option getOptionSupprimer(Candidat unCandidat, int cpt) {
-		return new Option("Supprimer une personne", Integer.toString(cpt) , getActionSupprimer(unCandidat));
+		return new Option("Supprimer "+ ((Personne)unCandidat).getNom(), Integer.toString(cpt) , getActionSupprimer(unCandidat));
 	}
 	
 	static Action getActionSupprimer(Candidat unCandidat) {

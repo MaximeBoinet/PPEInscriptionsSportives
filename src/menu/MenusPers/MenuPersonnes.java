@@ -27,11 +27,11 @@ public class MenuPersonnes {
 	}
 	
 	static Option getOptionCreerUnePersonne() {
-		return new Option("Creer une compétitions", "1", getActionCreerUnePersonne());
+		return new Option("Creer une personne", "1", getActionCreerUnePersonne());
 	}
 	
 	static Option getOptionGererLesPersonnes() {
-		return new Option("Creer une compétitions", "2", getActionGererLesPersonnes());
+		return new Option("Gerer les personnes", "2", getActionGererLesPersonnes());
 	}
 	
 	static Option getOptionEdition(Candidat unCandidat, int numero) {
@@ -39,7 +39,7 @@ public class MenuPersonnes {
 	}
 	
 	static Option getOptionSupprimerPersonne() {
-		return new Option("Creer une compétitions", "3", getActionSupprimerPersonne());
+		return new Option("Supprimer une personnes", "3", getActionSupprimerPersonne());
 	}
 	
 	static Action getActionCreerUnePersonne() {
@@ -79,7 +79,7 @@ public class MenuPersonnes {
 		return new Action() {
 			@Override
 			public void optionSelectionnee() {
-				MenuEditionPersonnes.RecupMenuEditionPersonnes(unCandidat).start();
+				MenuEditionPersonne.RecupMenuEditionPersonne(unCandidat).start();
 			}
 		};
 	}

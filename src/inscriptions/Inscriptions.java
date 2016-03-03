@@ -213,6 +213,8 @@ public class Inscriptions implements Serializable
 	
 	public static void main(String[] args)
 	{
+		Inscriptions.inscriptions = readObject();
+		
 		MenuPrincipal.RecupMenuPrincipal().start();
 		/*Inscriptions inscriptions = Inscriptions.getInscriptions();
 		Competition flechettes = inscriptions.createCompetition("Mondial de fléchettes", null, false);

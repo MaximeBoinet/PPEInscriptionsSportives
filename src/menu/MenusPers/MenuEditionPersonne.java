@@ -17,7 +17,7 @@ public class MenuEditionPersonne {
 			"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 	
-	public static Menu RecupMenuEditionEquipe(Candidat unCandidat) {
+	public static Menu RecupMenuEditionPersonne(Candidat unCandidat) {
 		Menu menu = new Menu("Nom: " + ((Personne)unCandidat).getNom() + " Prenom: " + ((Personne)unCandidat).getPrenom()
 				+ " Mail:" +((Personne)unCandidat).getMail());
 		

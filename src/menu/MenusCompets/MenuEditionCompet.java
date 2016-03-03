@@ -15,7 +15,7 @@ public class MenuEditionCompet {
 	public static Menu RecupMenuEditionCompet(Competition uneCompet) {
 		Menu menu = new Menu("Competition: " + uneCompet.getNom() + ". Cloture:" 
 				+ uneCompet.getDateCloture() + " Nombre de Candidat: " + uneCompet.getCandidats().size()
-				+ " De type :" + uneCompet);
+				+ " De type: " + (uneCompet.estEnEquipe() ? "En equipe" : "Solo"));
 		
 		menu.ajoute(getOptionGererLesCandidatsInscrit(uneCompet));
 		menu.ajoute(getOptionChangerLaDate(uneCompet));
