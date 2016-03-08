@@ -131,6 +131,7 @@ public class Inscriptions implements Serializable
 		if (inscriptions == null)
 		{
 			inscriptions = readObject();
+			
 			if (inscriptions == null)
 				inscriptions = new Inscriptions();
 		}
@@ -198,6 +199,7 @@ public class Inscriptions implements Serializable
 			FileOutputStream fis = new FileOutputStream(FILE_NAME);
 			oos = new ObjectOutputStream(fis);
 			oos.writeObject(this);
+			
 			System.out.println("Sauvegardé");
 		}
 		catch (IOException e)
@@ -224,10 +226,6 @@ public class Inscriptions implements Serializable
 	
 	public static void main(String[] args)
 	{
-		Inscriptions.getInscriptions();
-		for (Candidat cand : Inscriptions.getInscriptions().getCandidats()) {
-			System.out.println(cand);
-		} 
 		MenuPrincipal.RecupMenuPrincipal().start();
 		/*Inscriptions inscriptions = Inscriptions.getInscriptions();
 		Competition flechettes = inscriptions.createCompetition("Mondial de fléchettes", null, false);

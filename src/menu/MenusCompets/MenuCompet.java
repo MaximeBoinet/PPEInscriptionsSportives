@@ -68,6 +68,7 @@ public class MenuCompet {
 				LocalDate laDate = null;
 				boolean bonformat = false;
 				String nom = EntreesSorties.getString("Nom de la compétition?: ");
+				System.out.println("le nom" + nom);
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 				
 				do {
@@ -76,6 +77,7 @@ public class MenuCompet {
 					
 					try {
 						laDate = LocalDate.parse(date, formatter);
+						System.out.println("date: " + date + " format: " + laDate);
 						bonformat = true;
 					} catch (Exception e) {
 						System.out.println("Date mauvais format");
@@ -84,7 +86,8 @@ public class MenuCompet {
 				} while (!bonformat);
 				
 				String enEquipe = EntreesSorties.getString("En equipe [O/N]? : ");
-				Inscriptions.getInscriptions().createCompetition(nom, laDate, enEquipe.toLowerCase() == "o");
+				System.out.println("reponsé " + enEquipe );
+				Inscriptions.getInscriptions().createCompetition(nom, laDate, enEquipe.toLowerCase().equals("o"));
 			}
 		};
 	}
