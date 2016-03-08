@@ -7,9 +7,18 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Collections;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
+
+
+
+
 import menu.MenuPrincipal;
 /**
  * Point d'entrée dans l'application, un seul objet de type Inscription
