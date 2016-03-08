@@ -2,11 +2,7 @@ package menu.MenusCompets.MenusEditionCompet;
 
 import inscriptions.Candidat;
 import inscriptions.Competition;
-import inscriptions.Inscriptions;
-
 import java.util.Set;
-import java.util.SortedSet;
-
 import utilitaires.ligneDeCommande.Action;
 import utilitaires.ligneDeCommande.Menu;
 import utilitaires.ligneDeCommande.Option;

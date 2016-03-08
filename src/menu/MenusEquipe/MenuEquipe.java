@@ -3,8 +3,6 @@ package menu.MenusEquipe;
 import inscriptions.Candidat;
 import inscriptions.Equipe;
 import inscriptions.Inscriptions;
-import inscriptions.Personne;
-
 import java.util.SortedSet;
 
 import utilitaires.EntreesSorties;
