@@ -49,7 +49,7 @@ public class MenuEditionEquipe {
 		return new Action() {
 			@Override
 			public void optionSelectionnee() {
-				MenuDesinscrireCompet.RecupMenuDesinscrireCompet(unCandidat);	
+				MenuDesinscrireCompet.RecupMenuDesinscrireCompet(unCandidat).start();	
 			}
 		};
 	}
@@ -58,7 +58,7 @@ public class MenuEditionEquipe {
 		return new Action() {
 			@Override
 			public void optionSelectionnee() {
-				MenuInscrireCompet.RecupMenuInscrireCompet(unCandidat);
+				MenuInscrireCompet.RecupMenuInscrireCompet(unCandidat).start();
 			}
 		};
 	}
@@ -67,7 +67,7 @@ public class MenuEditionEquipe {
 		return new Action() {
 			@Override
 			public void optionSelectionnee() {
-				MenuSupprimerPersonne.RecupMenuDesinscrirePersonnes(unCandidat);
+				MenuSupprimerPersonne.RecupMenuDesinscrirePersonnes(unCandidat).start();
 			}
 		};
 	}
@@ -76,7 +76,7 @@ public class MenuEditionEquipe {
 		return new Action() {
 			@Override
 			public void optionSelectionnee() {
-				MenuInscrirePersonnes.RecupMenuInscrirePersonnes(unCandidat);	
+				MenuInscrirePersonnes.RecupMenuInscrirePersonnes(unCandidat).start();
 			}
 		};
 	}
