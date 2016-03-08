@@ -17,8 +17,8 @@ import java.util.Set;
 public class CompetitionTest {
 	
 	Inscriptions inscriptionTest = Inscriptions.getInscriptions();
-	Competition competitionEquipeTest = inscriptionTest.createCompetition("CompetEquipeTest", null, true);
-	Competition competitionSoloTest = inscriptionTest.createCompetition("CompetSoloTest", null, false);
+	Competition competitionEquipeTest = inscriptionTest.createCompetition("CompetEquipeTest", LocalDate.of(2017, 02, 11), true);
+	Competition competitionSoloTest = inscriptionTest.createCompetition("CompetSoloTest", LocalDate.of(2017, 02, 11), false);
 	Personne personneTest = inscriptionTest.createPersonne ("TEST", "test", "tTEST@gmail.com");
 	Equipe equipeTest = inscriptionTest.createEquipe("L'EQUIPE TEST");
 
