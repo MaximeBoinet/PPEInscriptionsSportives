@@ -38,5 +38,56 @@ public class Mysql {
 	{
 		ConnectionToMysql("Léa");
 	}
+	/*
+	// Supprime personne d'une équipe
+ 
+public void EnleverPersonneEquipe(String mailp, String nome)
+{
+	
+	try 
+	{
+
+		query = "call SupprimePersonneEquipe(?,?)";
+		prepare = connec.prepareStatement(query);
+		prepare.setString(1,mailp);
+		prepare.setString(2,nome);
+	
+		prepare.executeQuery();
+	} 
+	catch (SQLException e) 
+	{
+		e.printStackTrace();
+	}
+}*/
+
+/*
+// Supprime candidat d'une competition
+
+public void EnleverCandiCompet(Candidat candidat, Competition competition) {
+	
+	try 
+	{ 
+		
+		if(candidat instanceof Personne)
+		{
+			query = "call retirerPersonneCompetition(?,?)";
+			prepare = connec.prepareStatement(query);
+			prepare.setString(1, ((Personne) candidat).getMail());
+			prepare.setString(2,competition.getNom());
+		}
+		else
+		{
+			query = "call retirerEquipeCompetition(?,?)";
+			prepare = connec.prepareStatement(query);
+			prepare.setString(1, candidat.getNom());
+			prepare.setString(2,competition.getNom());
+		}
+		prepare.executeQuery();
+	} 
+	catch (SQLException e) 
+	{
+		e.printStackTrace();
+	}
+}*/
 	
 }
