@@ -1,11 +1,12 @@
 package menu;
 
-import menu.MenusCompets.MenuCompet;
-import menu.MenusEquipe.MenuEquipe;
-import menu.MenusPers.MenuPersonnes;
+import utilitaires.*;
 import utilitaires.ligneDeCommande.Action;
 import utilitaires.ligneDeCommande.Menu;
 import utilitaires.ligneDeCommande.Option;
+import menu.MenusCompets.MenuCompet;
+import menu.MenusEquipe.MenuEquipe;
+import menu.MenusPers.MenuPersonnes;
 
 public class MenuPrincipal {
 	
