@@ -37,7 +37,7 @@ public class Connect {
 	 
      //Créé connexion à la BD
   
-	public void connect() {
+	public Connect() {
 		try {
 			connec = DriverManager.getConnection(host, username, password);
 			System.out.println("Works");
