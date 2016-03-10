@@ -51,19 +51,18 @@ public class Connect {
 
 	 //Initialise l'inscription avec BD
 
-	public Inscriptions getBaseD(Inscriptions inscription) throws SQLException {
-		inscription = getPersonnes(inscription);
-		inscription = getEquipes(inscription);
-		inscription = getCompet(inscription);
-		inscription = getPersonnesEquipes(inscription);
-		inscription = getParticipCompet(inscription);
-		return inscription;	
+	public void getBaseD(Inscriptions inscription) throws SQLException {
+		getPersonnes(inscription);
+		getEquipes(inscription);
+		getCompet(inscription);
+		getPersonnesEquipes(inscription);
+		getParticipCompet(inscription);	
 	}
 	
 	
 	 // Affiche les personnes dans leurs équipes 
 	
-	private Inscriptions getPersonnesEquipes(Inscriptions inscription) {
+	private void getPersonnesEquipes(Inscriptions inscription) {
 		try {
 			resultat = statement.executeQuery("call AfichePersonneEquipe() ");
 			
@@ -81,46 +80,42 @@ public class Connect {
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return inscription;
 	}
 
 	
 	 //Affiche candidats de type personnes 
 	
-	private Inscriptions getPersonnes(Inscriptions inscription) throws SQLException{
+	private void getPersonnes(Inscriptions inscription) throws SQLException{
 		resultat = statement.executeQuery("call AficheCandidatPersonnes()");
 		while (resultat.next()) {	
 			inscription.createPersonne(resultat.getString("nomcandidat"), resultat.getString("nompersonne"), resultat.getString("mailpersonne"));
 		}
-		return inscription;
 	}
 	
 	 //Affiche candidats de type équipes
 
-	private Inscriptions getEquipes(Inscriptions inscription) throws SQLException{
+	private void getEquipes(Inscriptions inscription) throws SQLException{
 		resultat = statement.executeQuery("call AfficheCandidatEquipe()");
 		while (resultat.next()) {
 			inscription.createEquipe(resultat.getString("nomcandidat"));	
 		}
-		return inscription;
 	}
 	
 	
 	// Affiche toutes les compétitions
 	
-	private Inscriptions getCompet(Inscriptions inscription) throws SQLException{
+	private void getCompet(Inscriptions inscription) throws SQLException{
 		resultat = statement.executeQuery("call AfficheCompet()");
 		while (resultat.next()) {
 			LocalDate date = LocalDate.parse(resultat.getString("date_cloture_compet"), formatter);
 			inscription.createCompetition(resultat.getString("nomcompetition"), date, resultat.getBoolean("compet_en_equipe"));
 		}
-		return inscription;
 	}
 	
 
 	// Affiche toutes les compétitions ainsi que les participants des disciplines respectifs, 
 
-	private Inscriptions getParticipCompet(Inscriptions inscription) {
+	private void getParticipCompet(Inscriptions inscription) {
 		try {
 			Statement statement = connec.createStatement();
 			ResultSet result = statement.executeQuery("call AficheParticipantCompet()");
@@ -156,7 +151,6 @@ public class Connect {
 		{
 			e.printStackTrace();
 		}
-		return inscription;
 	}
 
 	
