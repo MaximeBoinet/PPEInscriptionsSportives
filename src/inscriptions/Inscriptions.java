@@ -73,6 +73,7 @@ public class Inscriptions implements Serializable
 	{
 		Competition competition = new Competition(this, nom, dateCloture, enEquipe);
 		competitions.add(competition);
+		connection.ajouterCompetition(nom, dateCloture, enEquipe);
 		return competition;
 	}
 
@@ -90,6 +91,7 @@ public class Inscriptions implements Serializable
 	{
 		Personne personne = new Personne(this, nom, prenom, mail);
 		candidats.add(personne);
+		connection.ajouterPersonne(nom, mail);
 		return personne;
 	}
 	
@@ -106,17 +108,23 @@ public class Inscriptions implements Serializable
 	{
 		Equipe equipe = new Equipe(this, nom);
 		candidats.add(equipe);
+		connection.ajouterEquipe(nom);
 		return equipe;
 	}
 	
 	void remove(Competition competition)
 	{
 		competitions.remove(competition);
+		connection.EnleverCompet(competition.getNom());
 	}
 	
 	void remove(Candidat candidat)
 	{
 		candidats.remove(candidat);
+		if (candidat instanceof Personne)
+			connection.EnleverPersonne(((Personne) candidat).getMail());
+		else
+			connection.EnleverEquipe(candidat.getNom());
 	}
 	
 	/**
@@ -131,6 +139,7 @@ public class Inscriptions implements Serializable
 		if (inscriptions == null)
 		{
 			connection = new Connect();
+			inscriptions = new Inscriptions();
 			try {
 				connection.getBaseD(inscriptions);
 			} catch (SQLException e) {
@@ -139,8 +148,8 @@ public class Inscriptions implements Serializable
 			}
 			//inscriptions = readObject();
 			
-			if (inscriptions == null)
-				inscriptions = new Inscriptions();
+			//if (inscriptions == null)
+			//	inscriptions = new Inscriptions();
 		}
 		return inscriptions;
 	}
