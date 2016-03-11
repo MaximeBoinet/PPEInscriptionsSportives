@@ -37,6 +37,7 @@ public class Equipe extends Candidat
 
 	public boolean add(Personne membre)
 	{
+		Inscriptions.getConnection().AjoutCandiDansEquipe(membre.getNom(), membre.getMail());
 		membre.add(this);
 		return membres.add(membre);
 	}

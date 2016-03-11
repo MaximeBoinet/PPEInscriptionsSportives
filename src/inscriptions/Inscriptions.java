@@ -73,7 +73,7 @@ public class Inscriptions implements Serializable
 	{
 		Competition competition = new Competition(this, nom, dateCloture, enEquipe);
 		competitions.add(competition);
-		connection.ajouterCompetition(nom, dateCloture, enEquipe);
+		getConnection().ajouterCompetition(nom, dateCloture, enEquipe);
 		return competition;
 	}
 
@@ -91,7 +91,7 @@ public class Inscriptions implements Serializable
 	{
 		Personne personne = new Personne(this, nom, prenom, mail);
 		candidats.add(personne);
-		connection.ajouterPersonne(nom, prenom, mail);
+		getConnection().ajouterPersonne(nom, prenom, mail);
 		return personne;
 	}
 	
@@ -108,23 +108,23 @@ public class Inscriptions implements Serializable
 	{
 		Equipe equipe = new Equipe(this, nom);
 		candidats.add(equipe);
-		connection.ajouterEquipe(nom);
+		getConnection().ajouterEquipe(nom);
 		return equipe;
 	}
 	
 	void remove(Competition competition)
 	{
 		competitions.remove(competition);
-		connection.EnleverCompet(competition.getNom());
+		getConnection().EnleverCompet(competition.getNom());
 	}
 	
 	void remove(Candidat candidat)
 	{
 		candidats.remove(candidat);
 		if (candidat instanceof Personne)
-			connection.EnleverPersonne(((Personne) candidat).getMail());
+			getConnection().EnleverPersonne(((Personne) candidat).getMail());
 		else
-			connection.EnleverEquipe(candidat.getNom());
+			getConnection().EnleverEquipe(candidat.getNom());
 	}
 	
 	/**
@@ -138,10 +138,10 @@ public class Inscriptions implements Serializable
 		
 		if (inscriptions == null)
 		{
-			connection = new Connect();
+			setConnection(new Connect());
 			inscriptions = new Inscriptions();
 			try {
-				connection.getBaseD(inscriptions);
+				getConnection().getBaseD(inscriptions);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -262,5 +262,13 @@ public class Inscriptions implements Serializable
 		{
 			System.out.println("Sauvegarde impossible." + e);
 		}*/
+	}
+
+	public static Connect getConnection() {
+		return connection;
+	}
+
+	public static void setConnection(Connect connection) {
+		Inscriptions.connection = connection;
 	}
 }

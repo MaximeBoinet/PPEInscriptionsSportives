@@ -59,6 +59,7 @@ public class Personne extends Candidat
 	
 	public void setMail(String mail)
 	{
+		Inscriptions.getConnection().ModifMailCandidat(this, this.getMail());
 		this.mail = mail;
 	}
 
