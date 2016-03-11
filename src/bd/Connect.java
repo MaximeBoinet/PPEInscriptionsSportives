@@ -170,12 +170,13 @@ public class Connect {
 	
 	// Ajoute une personne
 
-	public void ajouterPersonne(String nompersonne, String mailpersonne) {
+	public void ajouterPersonne(String nomequipe, String nompersonne, String mailpersonne) {
 		try {
 			query = "call AjoutPersonne(?,?,?)";
 			prepare = connec.prepareStatement(query);
 			prepare.setString(1, nompersonne);
 			prepare.setString(2, mailpersonne);
+			prepare.setString(3,nomequipe);
 			prepare.executeQuery();
 		} 
 		catch (SQLException e) {

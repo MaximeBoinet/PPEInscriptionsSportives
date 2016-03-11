@@ -91,7 +91,7 @@ public class Inscriptions implements Serializable
 	{
 		Personne personne = new Personne(this, nom, prenom, mail);
 		candidats.add(personne);
-		connection.ajouterPersonne(nom, mail);
+		connection.ajouterPersonne(nom, prenom, mail);
 		return personne;
 	}
 	
