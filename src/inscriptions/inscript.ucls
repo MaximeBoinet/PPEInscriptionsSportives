@@ -47,105 +47,142 @@
     </display>  
   </class>  
   <association id="6">    
-    <bendpoint x="906" y="421"/>    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="7" name="competitions"/>      
-      <multiplicity id="8" minimum="0" maximum="2147483647"/>    
+    <bendpoint x="468" y="310"/>    
+    <bendpoint x="584" y="292"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="7" name="competitions">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="8" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="9">    
-    <bendpoint x="810" y="425"/>    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="10" name="inscriptions"/>      
-      <multiplicity id="11" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="12">    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="1"/>  
-  </generalization>  
-  <association id="13">    
-    <bendpoint x="540" y="413"/>    
-    <bendpoint x="672" y="476"/>    
-    <bendpoint x="742" y="506"/>    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="14" name="inscriptions"/>      
-      <multiplicity id="15" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="16">    
-    <bendpoint x="468" y="310"/>    
-    <bendpoint x="584" y="292"/>    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="17" name="competitions"/>      
-      <multiplicity id="18" minimum="0" maximum="2147483647"/>    
+    <bendpoint x="906" y="421"/>    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="10" name="competitions">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="11" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="19">    
+  <association id="12">    
+    <bendpoint x="246" y="729"/>    
+    <bendpoint x="302" y="728"/>    
+    <bendpoint x="356" y="730"/>    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="13" name="membres">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="14" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="15">    
+    <bendpoint x="357" y="649"/>    
+    <bendpoint x="300" y="648"/>    
+    <bendpoint x="249" y="649"/>    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="16" name="equipes">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="17" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="18">    
+    <bendpoint x="540" y="413"/>    
+    <bendpoint x="672" y="476"/>    
+    <bendpoint x="742" y="506"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="19" name="inscriptions">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="20" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="21">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="22" name="inscriptions">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="23" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="24">    
+    <bendpoint x="565" y="166"/>    
+    <bendpoint x="454" y="166"/>    
+    <bendpoint x="350" y="193"/>    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="25" name="candidats">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="26" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="27">    
     <bendpoint x="329" y="489"/>    
     <bendpoint x="273" y="441"/>    
     <bendpoint x="241" y="417"/>    
     <end type="SOURCE" refId="5"/>    
     <end type="TARGET" refId="1"/>  
   </generalization>  
-  <association id="20">    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="21" name="inscriptions"/>      
-      <multiplicity id="22" minimum="0" maximum="1"/>    
+  <generalization id="28">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="1"/>  
+  </generalization>  
+  <association id="29">    
+    <bendpoint x="810" y="425"/>    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="30" name="inscriptions">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="31" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="23">    
-    <bendpoint x="565" y="166"/>    
-    <bendpoint x="454" y="166"/>    
-    <bendpoint x="350" y="193"/>    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="24" name="candidats"/>      
-      <multiplicity id="25" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="1" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="26">    
-    <bendpoint x="357" y="649"/>    
-    <bendpoint x="300" y="648"/>    
-    <bendpoint x="249" y="649"/>    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="27" name="equipes"/>      
-      <multiplicity id="28" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="3" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="29">    
+  <association id="32">    
     <bendpoint x="646" y="532"/>    
+    <bendpoint x="447" y="437"/>    
     <bendpoint x="381" y="396"/>    
     <bendpoint x="321" y="377"/>    
     <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="30" name="candidats"/>      
-      <multiplicity id="31" minimum="0" maximum="2147483647"/>    
+      <attribute id="33" name="candidats">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="34" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="1" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="32">    
-    <bendpoint x="246" y="729"/>    
-    <bendpoint x="302" y="728"/>    
-    <bendpoint x="356" y="730"/>    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="33" name="membres"/>      
-      <multiplicity id="34" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

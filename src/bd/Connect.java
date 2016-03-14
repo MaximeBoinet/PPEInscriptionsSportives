@@ -68,7 +68,7 @@ public class Connect {
 			
 			while(resultat.next()){
 				for (Candidat candi : inscription.getCandidats()){
-					if(candi.getNom().equals(resultat.getString("nompersonne"))&& candi instanceof Personne){
+					if(candi.getNom().equals(resultat.getString("prenompersonne"))&& candi instanceof Personne){
 						for (Candidat equipe : inscription.getCandidats()){
 							if(equipe.getNom().equals(resultat.getString("nomequipe")) && equipe instanceof Equipe)
 								((Equipe) equipe).add((Personne) candi);		
@@ -88,7 +88,7 @@ public class Connect {
 	private void getPersonnes(Inscriptions inscription) throws SQLException{
 		resultat = statement.executeQuery("call AficheCandidatPersonnes()");
 		while (resultat.next()) {	
-			inscription.createPersonne(resultat.getString("nomcandidat"), resultat.getString("nompersonne"), resultat.getString("mailpersonne"));
+			inscription.createPersonne(resultat.getString("nomcandidat"), resultat.getString("prenompersonne"), resultat.getString("mailpersonne"));
 		}
 	}
 	

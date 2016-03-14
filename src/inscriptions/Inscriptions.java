@@ -1,5 +1,7 @@
 package inscriptions;
 
+import interfUtil.Fenpincipal;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -11,6 +13,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
 
 
 
@@ -242,7 +245,9 @@ public class Inscriptions implements Serializable
 	
 	public static void main(String[] args)
 	{
-		MenuPrincipal.RecupMenuPrincipal().start();
+		Fenpincipal fenetre = new Fenpincipal();
+		//MenuPrincipal.RecupMenuPrincipal().start();
+		
 		/*Inscriptions inscriptions = Inscriptions.getInscriptions();
 		Competition flechettes = inscriptions.createCompetition("Mondial de fléchettes", null, false);
 		Personne tony = inscriptions.createPersonne("Tony", "Dent de plomb", "azerty"), 
