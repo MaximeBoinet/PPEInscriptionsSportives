@@ -34,7 +34,8 @@ public class Inscriptions implements Serializable
 	private static final long serialVersionUID = -3095339436048473524L;
 	private static final String FILE_NAME = "Inscriptions.srz";
 	private static Inscriptions inscriptions;
-	private static Connect connection; 
+	private static Connect connection;
+	private static boolean construction = true;
 	private SortedSet<Competition> competitions = new TreeSet<>();
 	private SortedSet<Candidat> candidats = new TreeSet<>();
 
@@ -76,7 +77,9 @@ public class Inscriptions implements Serializable
 	{
 		Competition competition = new Competition(this, nom, dateCloture, enEquipe);
 		competitions.add(competition);
-		getConnection().ajouterCompetition(nom, dateCloture, enEquipe);
+		if (!construction)
+			getConnection().ajouterCompetition(nom, dateCloture, enEquipe);
+		
 		return competition;
 	}
 
@@ -94,7 +97,9 @@ public class Inscriptions implements Serializable
 	{
 		Personne personne = new Personne(this, nom, prenom, mail);
 		candidats.add(personne);
-		getConnection().ajouterPersonne(nom, prenom, mail);
+		if (!construction)
+			getConnection().ajouterPersonne(nom, prenom, mail);
+		
 		return personne;
 	}
 	
@@ -111,7 +116,9 @@ public class Inscriptions implements Serializable
 	{
 		Equipe equipe = new Equipe(this, nom);
 		candidats.add(equipe);
-		getConnection().ajouterEquipe(nom);
+		if (!construction)
+			getConnection().ajouterEquipe(nom);
+		
 		return equipe;
 	}
 	
@@ -145,6 +152,7 @@ public class Inscriptions implements Serializable
 			inscriptions = new Inscriptions();
 			try {
 				getConnection().getBaseD(inscriptions);
+				construction = false;
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -156,7 +164,11 @@ public class Inscriptions implements Serializable
 		}
 		return inscriptions;
 	}
-
+	
+	public static boolean getConstruction()
+	{
+		return construction;
+	}
 	/**
 	 * Retourne un object inscriptions vide. Ne modifie pas les compétitions
 	 * et candidats déjà existants.
@@ -245,8 +257,8 @@ public class Inscriptions implements Serializable
 	
 	public static void main(String[] args)
 	{
-		Fenpincipal fenetre = new Fenpincipal();
-		//MenuPrincipal.RecupMenuPrincipal().start();
+		//Fenpincipal fenetre = new Fenpincipal();
+		MenuPrincipal.RecupMenuPrincipal().start();
 		
 		/*Inscriptions inscriptions = Inscriptions.getInscriptions();
 		Competition flechettes = inscriptions.createCompetition("Mondial de fléchettes", null, false);

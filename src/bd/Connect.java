@@ -119,7 +119,6 @@ public class Connect {
 		try {
 			Statement statement = connec.createStatement();
 			ResultSet resultat = statement.executeQuery("call AficheParticipantCompet()");
-			
 			while(resultat.next()){
 				for (Competition compet : inscription.getCompetitions()) {
 					if (compet.getNom().equals(resultat.getString("nomcompet"))){
@@ -170,13 +169,13 @@ public class Connect {
 	
 	// Ajoute une personne
 
-	public void ajouterPersonne(String nomequipe, String nompersonne, String mailpersonne) {
+	public void ajouterPersonne(String nomequipe, String prenompersonne, String mailpersonne) {
 		try {
-			query = "call AjoutPersonne(?,?,?)";
+			query = "call AjoutPersonne(?,?)";
 			prepare = connec.prepareStatement(query);
-			prepare.setString(1, nompersonne);
+			//prepare.setString(1, nompersonne);
+			prepare.setString(1, prenompersonne);
 			prepare.setString(2, mailpersonne);
-			prepare.setString(3,nomequipe);
 			prepare.executeQuery();
 		} 
 		catch (SQLException e) {
