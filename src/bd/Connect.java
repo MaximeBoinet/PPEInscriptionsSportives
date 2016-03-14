@@ -134,7 +134,7 @@ public class Connect {
 						
 						else{
 							Statement statementa = connec.createStatement();
-							ResultSet resultata = statementa.executeQuery("call AficheCandidatPersonnes('"+resultat.getString("nomcandidat")+"')");
+							ResultSet resultata = statementa.executeQuery("call AficheCandidatPersonnes()");
 							
 							while(resultata.next()){
 								for (Candidat candi : inscription.getCandidats()) {

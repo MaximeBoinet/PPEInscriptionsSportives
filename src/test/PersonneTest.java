@@ -23,6 +23,7 @@ public class PersonneTest {
 		Set<Equipe> setEquipesTest = personneTest.getEquipes();
 		personneTest.delete();
 		assertFalse(setEquipesTest.contains(personneTest));
+		assertFalse(inscriptionTest.getCandidats().contains(personneTest));
 	}
 
 	@Test
