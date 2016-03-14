@@ -70,7 +70,7 @@ public class Connect {
 				for (Candidat candi : inscription.getCandidats()){
 					if(candi.getNom().equals(resultat.getString("prenompersonne"))&& candi instanceof Personne){
 						for (Candidat equipe : inscription.getCandidats()){
-							if(equipe.getNom().equals(resultat.getString("nomequipe")) && equipe instanceof Equipe)
+							if(equipe.getNom().equals(resultat.getString("equipe_candidat_idcandidat")) && equipe instanceof Equipe)
 								((Equipe) equipe).add((Personne) candi);		
 						}
 					}
@@ -107,8 +107,8 @@ public class Connect {
 	private void getCompet(Inscriptions inscription) throws SQLException{
 		resultat = statement.executeQuery("call AfficheCompet()");
 		while (resultat.next()) {
-			LocalDate date = LocalDate.parse(resultat.getString("date_cloture_compet"), formatter);
-			inscription.createCompetition(resultat.getString("nomcompetition"), date, resultat.getBoolean("compet_en_equipe"));
+			LocalDate date = LocalDate.parse(resultat.getString("datecloture"), formatter);
+			inscription.createCompetition(resultat.getString("nomcompet"), date, resultat.getBoolean("enequipe"));
 		}
 	}
 	
@@ -118,11 +118,11 @@ public class Connect {
 	private void getParticipCompet(Inscriptions inscription) {
 		try {
 			Statement statement = connec.createStatement();
-			ResultSet result = statement.executeQuery("call AficheParticipantCompet()");
+			ResultSet resultat = statement.executeQuery("call AficheParticipantCompet()");
 			
-			while(result.next()){
+			while(resultat.next()){
 				for (Competition compet : inscription.getCompetitions()) {
-					if (compet.getNom().equals(result.getString("nomcompet"))){
+					if (compet.getNom().equals(resultat.getString("nomcompet"))){
 						if (compet.estEnEquipe()){
 							for (Candidat candi : inscription.getCandidats()) {
 								if (candi.getNom().equals(resultat.getString("nomcandidat")) && candi instanceof Equipe)
@@ -134,7 +134,7 @@ public class Connect {
 						
 						else{
 							Statement statementa = connec.createStatement();
-							ResultSet resultata = statementa.executeQuery("call selectMail('"+resultat.getString("nomcandidat")+"')");
+							ResultSet resultata = statementa.executeQuery("call AficheCandidatPersonnes('"+resultat.getString("nomcandidat")+"')");
 							
 							while(resultata.next()){
 								for (Candidat candi : inscription.getCandidats()) {
