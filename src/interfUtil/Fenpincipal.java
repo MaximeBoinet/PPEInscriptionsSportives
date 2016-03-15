@@ -1,11 +1,9 @@
 package interfUtil;
 
-import java.awt.Color;
-
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+@SuppressWarnings("serial")
 public class Fenpincipal extends JFrame{
 
 	private JTabbedPane onglet;
@@ -15,19 +13,16 @@ public class Fenpincipal extends JFrame{
 	
 	public Fenpincipal(){
 		this.setLocationRelativeTo(null);
-		this.setTitle("Gérer vos conteneurs");
+		this.setTitle("Inscription Sportive M2L");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(400, 200);
-		System.out.println("1");
+		this.setSize(900, 300);
 		onglet = new JTabbedPane();
+		onglet.setBounds(0, 0, 300, 200);
 		onglet.add("Compétitions", panCompet);
 		onglet.add("Equipes", panEquipe);
 		onglet.add("Personnes", panPersonne);
-		System.out.println("2");
-		
-		//On passe ensuite les onglets au content pane
 		this.getContentPane().add(onglet);
 		this.setVisible(true);
-		System.out.println("3");
+		pack();
 	}
 }

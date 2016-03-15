@@ -68,15 +68,25 @@ public class Connect {
 			
 			while(resultat.next()){
 				for (Candidat candi : inscription.getCandidats()){
-					if(candi.getNom().equals(resultat.getString("prenompersonne"))&& candi instanceof Personne){
+					if(candi instanceof Personne && candi.getNom().equals(resultat.getString("prenompersonne"))){
 						for (Candidat equipe : inscription.getCandidats()){
-							if(equipe.getNom().equals(resultat.getString("equipe_candidat_idcandidat")) && equipe instanceof Equipe)
-								((Equipe) equipe).add((Personne) candi);		
+							if(equipe instanceof Equipe ) {
+								query = "call RecupNomCandidat(?)";
+								prepare = connec.prepareStatement(query);
+								prepare.setString(1, resultat.getString("equipe_candidat_idcandidat"));
+								ResultSet resultat2 = prepare.executeQuery();
+								resultat2.next();
+								if (equipe.getNom().equals(resultat2.getString("nomcandidat"))) {
+									((Equipe) equipe).add((Personne) candi);
+								}
+							}			
 						}
 					}
 				}
 			}
 		} 
+		
+		
 		catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -1,34 +1,48 @@
 package interfUtil;
 
+import inscriptions.Candidat;
 import inscriptions.Competition;
+import inscriptions.Equipe;
 import inscriptions.Inscriptions;
+import inscriptions.Personne;
 
 import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-public class PanneauPersonne extends Panneau{
+public class PanneauPersonne extends JPanel{
 
 	public PanneauPersonne()
 	{
-		super();
 		AddListePersonne();
 	}
 	
 	public void AddListePersonne()
 	{
-		Object[][] donnees = new Object[Inscriptions.getInscriptions().getCompetitions().size()][3];
-		int cpt = 0;
-		
-		for (Competition compet : Inscriptions.getInscriptions().getCompetitions()) {
-			donnees[cpt][0] = compet.getNom();
-			donnees[cpt][1] = compet.getDateCloture();
-			donnees[cpt][2] = compet.getCandidats().size();
+		int taille = 0 ;
+		for (Candidat candidat : Inscriptions.getInscriptions().getCandidats()) {
+			if (candidat instanceof Personne)
+				taille ++;
 		}
 		
-		String[] entetes = {"Nom", "Date de Cloture", "Nb Candidat Inscrit"};
+		Object[][] donnees = new Object[taille][3];
+		int cpt = 0;
+		
+		for (Candidat candidat : Inscriptions.getInscriptions().getCandidats()) {
+			if (candidat instanceof Personne)
+			{
+				donnees[cpt][0] = candidat.getNom();
+				donnees[cpt][1] = ((Personne) candidat).getPrenom();
+				donnees[cpt][2] = ((Personne) candidat).getMail();
+				cpt++;
+			}
+		}
+		
+		String[] entetes = {"Nom", "Prenom", "Mail"};
 		
 		JTable tableau = new JTable(donnees, entetes);
 		tableau.setDefaultRenderer(JComponent.class, new TableComponent());
-		this.add(tableau);
+		this.add(new JScrollPane(tableau));
 	}
 }
