@@ -1,9 +1,11 @@
 package interfUtil;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.table.AbstractTableModel;
 
-class ZModel extends AbstractTableModel{
+public class ZModel extends AbstractTableModel{
+
     private Object[][] data;
     private String[] title;
 
@@ -32,12 +34,15 @@ class ZModel extends AbstractTableModel{
     	  return this.title[col];
     }
     
-  //Retourne vrai si la cellule est éditable : celle-ci sera donc éditable
     public boolean isCellEditable(int row, int col){
-      //On appelle la méthode getValueAt qui retourne la valeur d'une cellule
-      //Et on effectue un traitement spécifique si c'est un JButton
-      if(getValueAt(0, col) instanceof JButton)
-        return false;
-      return true; 
+    	if(getValueAt(0, col) instanceof JButton)
+    		return false;
+    	else if(getValueAt(0,col) instanceof JComboBox)
+    		return false;
+    	return true; 
+    }
+    
+    public Class getColumnClass(int col){
+    	  return this.data[0][col].getClass();
     }
 }

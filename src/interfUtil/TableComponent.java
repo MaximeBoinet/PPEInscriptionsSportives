@@ -13,7 +13,7 @@ public class TableComponent extends DefaultTableCellRenderer{
 		    if (value instanceof JButton)
 		      return (JButton) value;
 		    else if (value instanceof JComboBox)
-		    	return (JComboBox<String>) value;
+		    	return (JComboBox) value;
 		    else
 		      return this;
 	  }
