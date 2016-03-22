@@ -11,13 +11,12 @@ public class mailmessage {
 	public mailmessage() {
 		// TODO Auto-generated constructor stub
 	}
-
-	public static void sendMessage(String subject, String text, String destinataire, String copyDest) { 
+	 public static void main (String[] args) throws Exception {
 	
 		String psw="leajulie";
-		String smtp = "smtp-mail.outlook.com";
-		String login = "lea_cohen@hotmail.fr";
-		String imap = "imap-mail.outlook.com";
+		String smtp = "smtp.gmail.com";
+		String login = "leacoh12@gmail.com";
+		String imap = "imap.gmail.com";
 		String text1 ="Mail Test";
     	String subject1 ="zeze";
     	String destinataire1 ="aurelienlazaro@gmail.com";
@@ -32,6 +31,7 @@ public class mailmessage {
 	    properties.setProperty("mail.smtp.host", smtp); 
 	    properties.setProperty("mail.smtp.user", login); 
 	    properties.setProperty("mail.from", imap ); 
+	    properties.setProperty("mail.smtp.starttls.enable", "true");
 	    Session session = Session.getInstance(properties);
 	    
 	    
@@ -51,11 +51,21 @@ public class mailmessage {
 	    } 
 	    
 	    // 3 -> Envoi du message 
-	    try { 
+	    Transport tr = session.getTransport("smtp");
+	    tr.connect(smtp, login, psw);
+	    message.saveChanges();
+	 
+	    // tr.send(message);
+	    /** Genere l'erreur. Avec l authentification, oblige d utiliser sendMessage meme pour une seule adresse... */
+	 
+	    tr.sendMessage(message,message.getAllRecipients());
+	    tr.close();
+	   /* try { 
 	    	Transport transport = session.getTransport("smtp");
 	        transport.connect(login, psw); 
-	        transport.sendMessage(message, new Address[] { new InternetAddress(destinataire1), 
-	                                                        new InternetAddress(copyDest1) });
+	        transport.sendMessage(message, new Address[] 
+	        { new InternetAddress(destinataire1), 
+	                                                       new InternetAddress(copyDest1) });
 	        
 	    } catch (MessagingException e) { 
 	        e.printStackTrace(); 
@@ -69,6 +79,7 @@ public class mailmessage {
 	            e.printStackTrace(); 
 
 }
-}
+}*/
 	}
 }
+
