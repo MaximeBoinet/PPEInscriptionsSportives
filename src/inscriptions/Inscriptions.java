@@ -1,6 +1,7 @@
 package inscriptions;
 
-import interfUtil.Fenpincipal;
+
+import interfUtil.MainApp;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -42,22 +43,22 @@ public class Inscriptions implements Serializable
 	private Inscriptions()
 	{
 	}
-	
+
 	/**
 	 * Retourne les compétitions.
 	 * @return
 	 */
-	
+
 	public SortedSet<Competition> getCompetitions()
 	{
 		return Collections.unmodifiableSortedSet(competitions);
 	}
-	
+
 	/**
 	 * Retourne tous les candidats (personnes et équipes confondues).
 	 * @return
 	 */
-	
+
 	public SortedSet<Candidat> getCandidats()
 	{
 		return Collections.unmodifiableSortedSet(candidats);
@@ -71,15 +72,15 @@ public class Inscriptions implements Serializable
 	 * @param enEquipe
 	 * @return
 	 */
-	
-	public Competition createCompetition(String nom, 
+
+	public Competition createCompetition(String nom,
 			LocalDate dateCloture, boolean enEquipe)
 	{
 		Competition competition = new Competition(this, nom, dateCloture, enEquipe);
 		competitions.add(competition);
 		if (!construction)
 			getConnection().ajouterCompetition(nom, dateCloture, enEquipe);
-		
+
 		return competition;
 	}
 
@@ -92,17 +93,17 @@ public class Inscriptions implements Serializable
 	 * @param mail
 	 * @return
 	 */
-	
+
 	public Personne createPersonne(String nom, String prenom, String mail)
 	{
 		Personne personne = new Personne(this, nom, prenom, mail);
 		candidats.add(personne);
 		if (!construction)
 			getConnection().ajouterPersonne(nom, prenom, mail);
-		
+
 		return personne;
 	}
-	
+
 	/**
 	 * Créée une Candidat de type équipe. Ceci est le seul moyen, il n'y a pas
 	 * de constructeur public dans {@link Equipe}.
@@ -111,23 +112,23 @@ public class Inscriptions implements Serializable
 	 * @param mail
 	 * @return
 	 */
-	
+
 	public Equipe createEquipe(String nom)
 	{
 		Equipe equipe = new Equipe(this, nom);
 		candidats.add(equipe);
 		if (!construction)
 			getConnection().ajouterEquipe(nom);
-		
+
 		return equipe;
 	}
-	
+
 	void remove(Competition competition)
 	{
 		competitions.remove(competition);
 		getConnection().EnleverCompet(competition.getNom());
 	}
-	
+
 	void remove(Candidat candidat)
 	{
 		candidats.remove(candidat);
@@ -136,16 +137,16 @@ public class Inscriptions implements Serializable
 		else
 			getConnection().EnleverEquipe(candidat.getNom());
 	}
-	
+
 	/**
 	 * Retourne l'unique instance de cette classe.
 	 * Crée cet objet s'il n'existe déjà.
 	 * @return l'unique objet de type {@link Inscriptions}.
 	 */
-	
+
 	public static Inscriptions getInscriptions()
 	{
-		
+
 		if (inscriptions == null)
 		{
 			setConnection(new Connect());
@@ -158,13 +159,13 @@ public class Inscriptions implements Serializable
 				e.printStackTrace();
 			}
 			//inscriptions = readObject();
-			
+
 			//if (inscriptions == null)
 			//	inscriptions = new Inscriptions();
 		}
 		return inscriptions;
 	}
-	
+
 	public static boolean getConstruction()
 	{
 		return construction;
@@ -173,7 +174,7 @@ public class Inscriptions implements Serializable
 	 * Retourne un object inscriptions vide. Ne modifie pas les compétitions
 	 * et candidats déjà existants.
 	 */
-	
+
 	public Inscriptions reinitialiser()
 	{
 		inscriptions = new Inscriptions();
@@ -184,13 +185,13 @@ public class Inscriptions implements Serializable
 	 * Efface toutes les modifications sur Inscriptions depuis la dernière sauvegarde.
 	 * Ne modifie pas les compétitions et candidats déjà existants.
 	 */
-	
+
 	public Inscriptions recharger()
 	{
 		inscriptions = null;
 		return getInscriptions();
 	}
-	
+
 	private static Inscriptions readObject()
 	{
 		ObjectInputStream ois = null;
@@ -203,7 +204,7 @@ public class Inscriptions implements Serializable
 		catch (IOException | ClassNotFoundException e)
 		{
 			return null;
-			
+
 		}
 		finally
 		{
@@ -211,17 +212,17 @@ public class Inscriptions implements Serializable
 				{
 					if (ois != null)
 						ois.close();
-				} 
+				}
 				catch (IOException e){}
-		}	
+		}
 	}
-	
+
 	/**
-	 * Sauvegarde le gestionnaire pour qu'il soit ouvert automatiquement 
+	 * Sauvegarde le gestionnaire pour qu'il soit ouvert automatiquement
 	 * lors d'une exécution ultérieure du programme.
-	 * @throws IOException 
+	 * @throws IOException
 	 */
-	
+
 	public void sauvegarder() throws IOException
 	{
 		ObjectOutputStream oos = null;
@@ -230,7 +231,7 @@ public class Inscriptions implements Serializable
 			FileOutputStream fis = new FileOutputStream(FILE_NAME);
 			oos = new ObjectOutputStream(fis);
 			oos.writeObject(this);
-			
+
 			System.out.println("Sauvegardé");
 		}
 		catch (IOException e)
@@ -243,26 +244,25 @@ public class Inscriptions implements Serializable
 			{
 				if (oos != null)
 					oos.close();
-			} 
+			}
 			catch (IOException e){}
 		}
 	}
-	
+
 	@Override
 	public String toString()
 	{
 		return "Candidats : " + getCandidats().toString()
 			+ "\nCompetitions  " + getCompetitions().toString();
 	}
-	
+
 	public static void main(String[] args)
 	{
-		Fenpincipal fenetre = new Fenpincipal();
 		//MenuPrincipal.RecupMenuPrincipal().start();
-		
+
 		/*Inscriptions inscriptions = Inscriptions.getInscriptions();
 		Competition flechettes = inscriptions.createCompetition("Mondial de fléchettes", null, false);
-		Personne tony = inscriptions.createPersonne("Tony", "Dent de plomb", "azerty"), 
+		Personne tony = inscriptions.createPersonne("Tony", "Dent de plomb", "azerty"),
 				boris = inscriptions.createPersonne("Boris", "le Hachoir", "ytreza");
 		flechettes.add(tony);
 		Equipe lesManouches = inscriptions.createEquipe("Les Manouches");
@@ -274,7 +274,7 @@ public class Inscriptions implements Serializable
 		try
 		{
 			inscriptions.sauvegarder();
-		} 
+		}
 		catch (IOException e)
 		{
 			System.out.println("Sauvegarde impossible." + e);

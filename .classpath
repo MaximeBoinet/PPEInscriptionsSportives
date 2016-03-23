@@ -8,5 +8,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/Utilitaires"/>
 	<classpathentry kind="lib" path="/Utilitaires/bin/utilitaires"/>
 	<classpathentry kind="lib" path="mail/javax.mail.jar"/>
+	<classpathentry kind="con" path="org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
