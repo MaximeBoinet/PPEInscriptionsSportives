@@ -259,7 +259,7 @@ public class Inscriptions implements Serializable
 	public static void main(String[] args)
 	{
 		//MenuPrincipal.RecupMenuPrincipal().start();
-
+		MainApp.main(args);
 		/*Inscriptions inscriptions = Inscriptions.getInscriptions();
 		Competition flechettes = inscriptions.createCompetition("Mondial de fléchettes", null, false);
 		Personne tony = inscriptions.createPersonne("Tony", "Dent de plomb", "azerty"),
