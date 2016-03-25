@@ -261,20 +261,26 @@ public class Connect {
 	public void InscritCompetCandi(Candidat candidat, Competition competition) {
 		int idcandidat = 0,idcompetition = 0;
 		try { 
-			if(candidat instanceof Personne){
+					query = "call AjoutCandiCompet(?,?)";
+					prepare = connec.prepareStatement(query);
+					prepare.setInt(1 ,idcandidat);
+					prepare.setInt(2, idcompetition);
+					prepare.executeQuery();
+	/*		if(candidat instanceof Personne){
 				resultat = statement.executeQuery("call AjoutPersonneCompet('"+((Personne) candidat).getMail()+"','"+competition.getNom()+"')");
 			}
 			else{
-				resultat = statement.executeQuery("call AjoutPersonneEquipe('"+candidat.getNom()+"','"+competition.getNom()+"')");
+				resultat = statement.executeQuery("call AjoutEquipeCompet('"+candidat.getNom()+"','"+competition.getNom()+"')");
 			}
 			while(resultat.next()){
 				idcandidat = resultat.getInt("Numcandidat");
 				idcompetition = resultat.getInt("Numcompetition");
-			}
+				
 			Statement statementa = connec.createStatement();
-			statementa.executeQuery("call insertParticiper("+idcandidat+","+idcompetition+")");
+			statementa.executeQuery("call AjoutCandiCompet("+idcandidat+","+idcompetition+")");*/
 		} 
 		
+					
 		catch (SQLException e) {
 			//e.printStackTrace();
 		}
