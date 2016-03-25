@@ -11,9 +11,10 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import interfUtil.model.Competition;
-import interfUtil.model.Equipe;
-import interfUtil.model.Personne;
+import inscriptions.Candidat;
+import inscriptions.Competition;
+import inscriptions.Equipe;
+import inscriptions.Personne;
 import interfUtil.view.PersonOverviewController;
 
 
@@ -26,20 +27,16 @@ public class MainApp extends Application {
     private ObservableList<Personne> personnes = FXCollections.observableArrayList();
 
     public MainApp() {
-        for (inscriptions.Competition competition : Inscriptions.getInscriptions().getCompetitions()) {
-            competitions.add(new Competition(Inscriptions.getInscriptions(), competition.getNom(), competition.getCandidats()
-                    ,competition.getDateCloture(), competition.estEnEquipe()));
-        }
+        for (Competition competition : Inscriptions.getInscriptions().getCompetitions())
+            this.competitions.add(competition);
 
-        for (inscriptions.Candidat candidat : Inscriptions.getInscriptions().getCandidats()) {
-			if (candidat instanceof inscriptions.Equipe) {
-				equipes.add(new Equipe(candidat.getNom(),candidat.getCompetitions(), ((inscriptions.Equipe)candidat).getMembres()));
-			}else {
-				personnes.add(new Personne(candidat.getCompetitions(), candidat.getNom(),
-						((inscriptions.Personne)candidat).getPrenom(), ((inscriptions.Personne)candidat).getMail()
-						, ((inscriptions.Personne)candidat).getEquipes()));
-			}
+        for (Candidat candidat : Inscriptions.getInscriptions().getCandidats()) {
+			if (candidat instanceof Equipe)
+				equipes.add(((Equipe)candidat));
+			else
+				personnes.add(((Personne)candidat));
 		}
+        Inscriptions.setMainApp(this);
     }
 
     public ObservableList<Competition> getCompetitions() {
