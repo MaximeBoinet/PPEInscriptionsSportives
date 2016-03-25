@@ -137,27 +137,16 @@ public class Connect {
 			while(resultat.next()){
 				for (Competition compet : inscription.getCompetitions()) {
 					if (compet.getNom().equals(resultat.getString("nomcompet"))){
-						if (compet.estEnEquipe()){
-							for (Candidat candi : inscription.getCandidats()) {
-								if (candi.getNom().equals(resultat.getString("nomcandidat")) && candi instanceof Equipe)
-									compet.add((Equipe) candi);	
-							}	
-						}
-						
-						// Si la compétition solo alors on va choisir candidats via leur E-mail
-						
-						else{
-							Statement statementa = connec.createStatement();
-							ResultSet resultata = statementa.executeQuery("call SelectCandiPerso()");
-							
-							while(resultata.next()){
-								for (Candidat candi : inscription.getCandidats()) {
-									if ( candi instanceof Personne && ((Personne) candi).getMail().equals(resultata.getString("mailpersonne")))
-										compet.add((Personne)candi);
-								}
+						for (Candidat candi : inscription.getCandidats()){
+							if (candi.getNom().equals(resultat.getString("nomcandidat"))){
+								if (compet.estEnEquipe())
+									compet.add((Equipe) candi);
+								else 
+									compet.add((Personne) candi);
 							}
+								
 						}
-					}	
+					}		
 				}
 			}
 		}
@@ -266,18 +255,7 @@ public class Connect {
 					prepare.setInt(1 ,idcandidat);
 					prepare.setInt(2, idcompetition);
 					prepare.executeQuery();
-	/*		if(candidat instanceof Personne){
-				resultat = statement.executeQuery("call AjoutPersonneCompet('"+((Personne) candidat).getMail()+"','"+competition.getNom()+"')");
-			}
-			else{
-				resultat = statement.executeQuery("call AjoutEquipeCompet('"+candidat.getNom()+"','"+competition.getNom()+"')");
-			}
-			while(resultat.next()){
-				idcandidat = resultat.getInt("Numcandidat");
-				idcompetition = resultat.getInt("Numcompetition");
-				
-			Statement statementa = connec.createStatement();
-			statementa.executeQuery("call AjoutCandiCompet("+idcandidat+","+idcompetition+")");*/
+	
 		} 
 		
 					
