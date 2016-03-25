@@ -22,14 +22,11 @@ public class MainApp extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
-    private ObservableList<Competition> competitions = FXCollections.observableArrayList();
+    private ObservableList<Competition> competitions = FXCollections.observableArrayList(Inscriptions.getInscriptions().getCompetitions());
     private ObservableList<Equipe> equipes = FXCollections.observableArrayList();
     private ObservableList<Personne> personnes = FXCollections.observableArrayList();
 
     public MainApp() {
-        for (Competition competition : Inscriptions.getInscriptions().getCompetitions())
-            this.competitions.add(competition);
-
         for (Candidat candidat : Inscriptions.getInscriptions().getCandidats()) {
 			if (candidat instanceof Equipe)
 				equipes.add(((Equipe)candidat));

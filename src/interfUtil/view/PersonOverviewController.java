@@ -5,8 +5,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import inscriptions.Equipe;
 import inscriptions.Inscriptions;
 import inscriptions.Personne;
@@ -55,16 +58,20 @@ public class PersonOverviewController {
     private TableView<Candidat> equipeAInscrire;
     @FXML
     private TableColumn<Candidat, String> nomEAI;
-
     @FXML
     private TableView<Candidat> equipeInscrite;
     @FXML
     private TableColumn<Candidat, String> nomEI;
-
     @FXML
-    Button desinscrire;
+    private Button desinscrire = new Button("Desinscrire");
     @FXML
-    Button inscrire;
+    private Button inscrire = new Button("Inscrire");
+    @FXML
+    private TextField nomcompet = new TextField();
+    @FXML
+    private CheckBox enEquipeCB = new CheckBox();
+    @FXML
+    private DatePicker dtePicker = new DatePicker();
 
     private MainApp mainApp;
 
@@ -126,39 +133,51 @@ public class PersonOverviewController {
 
     private void setCurrentCandidatCompetAInscrire(Candidat candidat) {
     	if (candidat != null) {
-			inscrire.setDisable(true);
-		} else {
 			inscrire.setDisable(false);
+		} else {
+			inscrire.setDisable(true);
 		}
     }
 
     private void setCurrentCandidatCompetADesinscrire(Candidat candidat) {
     	if (candidat != null)
-			desinscrire.setDisable(true);
-		else
 			desinscrire.setDisable(false);
+		else
+			desinscrire.setDisable(true);
     }
 
     @FXML
     private void handleInscrireCompetCandidat() {
-    	int selectedIndex = equipeAInscrire.getSelectionModel().getSelectedIndex();
-    	Candidat candidat = equipeAInscrire.getItems().get(selectedIndex);
-
+    	Candidat candidat = equipeAInscrire.getItems().get(equipeAInscrire.getSelectionModel().getSelectedIndex());
     	if (currentCompet.estEnEquipe()) {
     		this.currentCompet.add((Equipe)(candidat));
 		} else {
 			this.currentCompet.add((Personne)(candidat));
 		}
-        equipeAInscrire.getItems().add(candidat);
+        equipeAInscrire.getItems().remove(candidat);
+        equipeInscrite.getItems().add(candidat);
     }
 
     @FXML
     private void handleDesinscrireCompetCandidat() {
-    	int selectedIndex = equipeInscrite.getSelectionModel().getSelectedIndex();
-        this.currentCompet.remove(equipeInscrite.getItems().get(selectedIndex));
-        equipeAInscrire.getItems().remove(selectedIndex);
+    	Candidat candidat = equipeInscrite.getItems().get(equipeInscrite.getSelectionModel().getSelectedIndex());
+        currentCompet.remove(candidat);
+    	equipeInscrite.getItems().remove(candidat);
+        equipeAInscrire.getItems().add(candidat);
     }
 
+    @FXML
+    private void handleCreerCompetition() {
+    	Competition compet = Inscriptions.getInscriptions().createCompetition(nomcompet.getText(), dtePicker.getValue(), enEquipeCB.isSelected());
+    	mainApp.getCompetitions().add(compet);
+    }
+
+    @FXML
+    private void handleSuppression() {
+    	Competition uneCompet = competitions.getItems().get(competitions.getSelectionModel().getSelectedIndex());
+    	mainApp.getCompetitions().remove(uneCompet);
+    	uneCompet.delete();
+    }
     public void setMainApp(MainApp mainApp) {
     	this.mainApp = mainApp;
 
@@ -166,6 +185,8 @@ public class PersonOverviewController {
     	equipes.setItems(mainApp.getEquipes());
     	personnes.setItems(mainApp.getPersonnes());
     	showCompetDetails(null);
+    	setCurrentCandidatCompetADesinscrire(null);
+    	setCurrentCandidatCompetAInscrire(null);
     	competitions.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> showCompetDetails(newValue));
     	equipeAInscrire.getSelectionModel().selectedItemProperty().addListener(
