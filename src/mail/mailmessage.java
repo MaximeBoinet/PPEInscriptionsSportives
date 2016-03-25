@@ -13,10 +13,10 @@ public class mailmessage {
 	}
 	 public static void main (String[] args) throws Exception {
 	
-		String psw="leajulie";
-		String smtp = "smtp.gmail.com";
-		String login = "leacoh12@gmail.com";
-		String imap = "imap.gmail.com";
+		String psw="IticParis";
+		String smtp = "smtp-mail.outlook.com";
+		String login = "m2l.java@hotmail.com";
+		String imap = "imap-mail.outlook.com";
 		String text1 ="Mail Test";
     	String subject1 ="zeze";
     	String destinataire1 ="aurelienlazaro@gmail.com";
@@ -60,7 +60,7 @@ public class mailmessage {
 	 
 	    tr.sendMessage(message,message.getAllRecipients());
 	    tr.close();
-	   /* try { 
+	   try { 
 	    	Transport transport = session.getTransport("smtp");
 	        transport.connect(login, psw); 
 	        transport.sendMessage(message, new Address[] 
@@ -79,7 +79,7 @@ public class mailmessage {
 	            e.printStackTrace(); 
 
 }
-}*/
+}
 	}
 }
 

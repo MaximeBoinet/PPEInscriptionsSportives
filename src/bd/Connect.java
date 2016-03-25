@@ -64,11 +64,16 @@ public class Connect {
 	
 	private void getPersonnesEquipes(Inscriptions inscription) {
 		try {
-			resultat = statement.executeQuery("call AfichePersonneEquipe() ");
+			resultat = statement.executeQuery("call SelectPersoEquipe() ");
 			
 			while(resultat.next()){
 				for (Candidat candi : inscription.getCandidats()){
-					if(candi instanceof Personne && candi.getNom().equals(resultat.getString("prenompersonne"))){
+					if(candi.getNom().equals(resultat.getString("nompersonne"))&& candi instanceof Personne){
+						for (Candidat equipe : inscription.getCandidats()){
+							 
+							if(equipe.getNom().equals(resultat.getString("candidat_idcandidat")) && equipe instanceof Equipe)
+							 ((Equipe) equipe).add((Personne) candi);	
+					/*if(candi instanceof Personne && candi.getNom().equals(resultat.getString("prenompersonne"))){
 						for (Candidat equipe : inscription.getCandidats()){
 							if(equipe instanceof Equipe ) {
 								query = "call RecupNomCandidat(?)";
@@ -79,7 +84,7 @@ public class Connect {
 								if (equipe.getNom().equals(resultat2.getString("nomcandidat"))) {
 									((Equipe) equipe).add((Personne) candi);
 								}
-							}			
+							}*/			
 						}
 					}
 				}
@@ -96,16 +101,16 @@ public class Connect {
 	 //Affiche candidats de type personnes 
 	
 	private void getPersonnes(Inscriptions inscription) throws SQLException{
-		resultat = statement.executeQuery("call AficheCandidatPersonnes()");
+		resultat = statement.executeQuery("call SelectCandiPerso()");
 		while (resultat.next()) {	
-			inscription.createPersonne(resultat.getString("nomcandidat"), resultat.getString("prenompersonne"), resultat.getString("mailpersonne"));
+			inscription.createPersonne(resultat.getString("nomcandidat"), resultat.getString("nompersonne"), resultat.getString("mailpersonne"));
 		}
 	}
 	
 	 //Affiche candidats de type équipes
 
 	private void getEquipes(Inscriptions inscription) throws SQLException{
-		resultat = statement.executeQuery("call AfficheCandidatEquipe()");
+		resultat = statement.executeQuery("call SelectCandiEquipe()");
 		while (resultat.next()) {
 			inscription.createEquipe(resultat.getString("nomcandidat"));	
 		}
@@ -115,7 +120,7 @@ public class Connect {
 	// Affiche toutes les compétitions
 	
 	private void getCompet(Inscriptions inscription) throws SQLException{
-		resultat = statement.executeQuery("call AfficheCompet()");
+		resultat = statement.executeQuery("call SelectCompet()");
 		while (resultat.next()) {
 			LocalDate date = LocalDate.parse(resultat.getString("datecloture"), formatter);
 			inscription.createCompetition(resultat.getString("nomcompet"), date, resultat.getBoolean("enequipe"));
@@ -128,7 +133,7 @@ public class Connect {
 	private void getParticipCompet(Inscriptions inscription) {
 		try {
 			Statement statement = connec.createStatement();
-			ResultSet resultat = statement.executeQuery("call AficheParticipantCompet()");
+			ResultSet resultat = statement.executeQuery("call SelectPartiCompet()");
 			while(resultat.next()){
 				for (Competition compet : inscription.getCompetitions()) {
 					if (compet.getNom().equals(resultat.getString("nomcompet"))){
@@ -143,7 +148,7 @@ public class Connect {
 						
 						else{
 							Statement statementa = connec.createStatement();
-							ResultSet resultata = statementa.executeQuery("call AficheCandidatPersonnes()");
+							ResultSet resultata = statementa.executeQuery("call SelectCandiPerso()");
 							
 							while(resultata.next()){
 								for (Candidat candi : inscription.getCandidats()) {
@@ -179,12 +184,12 @@ public class Connect {
 	
 	// Ajoute une personne
 
-	public void ajouterPersonne(String nomequipe, String prenompersonne, String mailpersonne) {
+	public void ajouterPersonne(String nomequipe, String nompersonne, String mailpersonne) {
 		try {
 			query = "call AjoutPersonne(?,?)";
 			prepare = connec.prepareStatement(query);
-			//prepare.setString(1, nompersonne);
-			prepare.setString(1, prenompersonne);
+			prepare.setString(1, mailpersonne);
+			prepare.setString(1, nompersonne);
 			prepare.setString(2, mailpersonne);
 			prepare.executeQuery();
 		} 
@@ -254,7 +259,7 @@ public class Connect {
 	// Inscrit un candidat à une compétitions 
 
 	public void InscritCompetCandi(Candidat candidat, Competition competition) {
-		int Numcandidat = 0,Numcompetition = 0;
+		int idcandidat = 0,idcompetition = 0;
 		try { 
 			if(candidat instanceof Personne){
 				resultat = statement.executeQuery("call AjoutPersonneCompet('"+((Personne) candidat).getMail()+"','"+competition.getNom()+"')");
@@ -263,11 +268,11 @@ public class Connect {
 				resultat = statement.executeQuery("call AjoutPersonneEquipe('"+candidat.getNom()+"','"+competition.getNom()+"')");
 			}
 			while(resultat.next()){
-				Numcandidat = resultat.getInt("Numcandidat");
-				Numcompetition = resultat.getInt("Numcompetition");
+				idcandidat = resultat.getInt("Numcandidat");
+				idcompetition = resultat.getInt("Numcompetition");
 			}
 			Statement statementa = connec.createStatement();
-			statementa.executeQuery("call insertParticiper("+Numcandidat+","+Numcompetition+")");
+			statementa.executeQuery("call insertParticiper("+idcandidat+","+idcompetition+")");
 		} 
 		
 		catch (SQLException e) {
@@ -287,6 +292,43 @@ public class Connect {
 		} 
 		catch (SQLException e) {
 			//e.printStackTrace();
+		}
+	}
+	
+	/* Retire une personne d'une équipe */
+	public void EnlevePersonneEquipe(String mailp, String nomp)
+	{
+		int persone_candidat_idcandidat = 0,equipe_candidat_idcandidat= 0;
+		try 
+		{
+
+			query = "call SupprimePersonneEquipe(?,?)";
+			prepare = connec.prepareStatement(query);
+			prepare.setInt(1,equipe_candidat_idcandidat);
+			prepare.setInt(2,persone_candidat_idcandidat);
+		
+			prepare.executeQuery();
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	/* Retire un candidat (équipe ou personne) d'une compétitions*/
+	public void retirerCandidatCompetition(Candidat candidat, Competition competition) {
+		int idcandidat = 0,idcompetition = 0;
+		try 
+		{ 
+				query = "call SupprimeCandidatCompet(?,?)";
+				prepare = connec.prepareStatement(query);
+				prepare.setInt(1, idcandidat );
+				prepare.setInt(2,idcompetition);
+			prepare.executeQuery();
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
 		}
 	}
 	
