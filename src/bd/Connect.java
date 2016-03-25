@@ -64,11 +64,11 @@ public class Connect {
 	
 	private void getPersonnesEquipes(Inscriptions inscription) {
 		try {
-			resultat = statement.executeQuery("call AfichePersonneEquipe() ");
+			resultat = statement.executeQuery("call SelectPersoEquipe() ");
 			
 			while(resultat.next()){
 				for (Candidat candi : inscription.getCandidats()){
-					if(candi.getNom().equals(resultat.getString("prenompersonne"))&& candi instanceof Personne){
+					if(candi.getNom().equals(resultat.getString("nompersonne"))&& candi instanceof Personne){
 						for (Candidat equipe : inscription.getCandidats()){
 							 
 							if(equipe.getNom().equals(resultat.getString("candidat_idcandidat")) && equipe instanceof Equipe)
@@ -101,16 +101,16 @@ public class Connect {
 	 //Affiche candidats de type personnes 
 	
 	private void getPersonnes(Inscriptions inscription) throws SQLException{
-		resultat = statement.executeQuery("call AficheCandidatPersonnes()");
+		resultat = statement.executeQuery("call SelectCandiPerso()");
 		while (resultat.next()) {	
-			inscription.createPersonne(resultat.getString("nomcandidat"), resultat.getString("prenompersonne"), resultat.getString("mailpersonne"));
+			inscription.createPersonne(resultat.getString("nomcandidat"), resultat.getString("nompersonne"), resultat.getString("mailpersonne"));
 		}
 	}
 	
 	 //Affiche candidats de type équipes
 
 	private void getEquipes(Inscriptions inscription) throws SQLException{
-		resultat = statement.executeQuery("call AfficheCandidatEquipe()");
+		resultat = statement.executeQuery("call SelectCandiEquipe()");
 		while (resultat.next()) {
 			inscription.createEquipe(resultat.getString("nomcandidat"));	
 		}
@@ -120,7 +120,7 @@ public class Connect {
 	// Affiche toutes les compétitions
 	
 	private void getCompet(Inscriptions inscription) throws SQLException{
-		resultat = statement.executeQuery("call AfficheCompet()");
+		resultat = statement.executeQuery("call SelectCompet()");
 		while (resultat.next()) {
 			LocalDate date = LocalDate.parse(resultat.getString("datecloture"), formatter);
 			inscription.createCompetition(resultat.getString("nomcompet"), date, resultat.getBoolean("enequipe"));
@@ -133,7 +133,7 @@ public class Connect {
 	private void getParticipCompet(Inscriptions inscription) {
 		try {
 			Statement statement = connec.createStatement();
-			ResultSet resultat = statement.executeQuery("call AficheParticipantCompet()");
+			ResultSet resultat = statement.executeQuery("call SelectPartiCompet()");
 			while(resultat.next()){
 				for (Competition compet : inscription.getCompetitions()) {
 					if (compet.getNom().equals(resultat.getString("nomcompet"))){
@@ -148,7 +148,7 @@ public class Connect {
 						
 						else{
 							Statement statementa = connec.createStatement();
-							ResultSet resultata = statementa.executeQuery("call AficheCandidatPersonnes()");
+							ResultSet resultata = statementa.executeQuery("call SelectCandiPerso()");
 							
 							while(resultata.next()){
 								for (Candidat candi : inscription.getCandidats()) {
@@ -184,12 +184,12 @@ public class Connect {
 	
 	// Ajoute une personne
 
-	public void ajouterPersonne(String nomequipe, String prenompersonne, String mailpersonne) {
+	public void ajouterPersonne(String nomequipe, String nompersonne, String mailpersonne) {
 		try {
 			query = "call AjoutPersonne(?,?)";
 			prepare = connec.prepareStatement(query);
 			prepare.setString(1, mailpersonne);
-			prepare.setString(1, prenompersonne);
+			prepare.setString(1, nompersonne);
 			prepare.setString(2, mailpersonne);
 			prepare.executeQuery();
 		} 
