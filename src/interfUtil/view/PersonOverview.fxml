@@ -48,13 +48,12 @@
                                       <items>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                              <children>
-                                                <GridPane layoutX="78.0" layoutY="32.0" prefHeight="106.0" prefWidth="493.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <GridPane prefHeight="106.0" prefWidth="493.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                   <columnConstraints>
-                                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="93.0" minWidth="10.0" prefWidth="74.0" />
-                                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="122.0" minWidth="10.0" prefWidth="96.0" />
-                                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="131.0" minWidth="10.0" prefWidth="126.0" />
-                                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="113.0" minWidth="10.0" prefWidth="82.0" />
-                                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="122.0" minWidth="10.0" prefWidth="116.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="93.0" minWidth="10.0" prefWidth="59.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="154.0" minWidth="10.0" prefWidth="147.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="171.0" minWidth="10.0" prefWidth="160.0" />
+                                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="167.0" minWidth="10.0" prefWidth="91.0" />
                                                   </columnConstraints>
                                                   <rowConstraints>
                                                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -62,17 +61,17 @@
                                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                   </rowConstraints>
                                                    <children>
-                                                      <Label prefHeight="27.0" prefWidth="163.0" text="Creer Competitions:" GridPane.columnIndex="2">
+                                                      <Label alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="163.0" text="Creer Competitions:" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
                                                          <font>
                                                             <Font name="System Bold" size="13.0" />
                                                          </font>
                                                       </Label>
                                                       <Label text="Nom  " GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                                                      <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                      <DatePicker GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                      <Label text="Label  " GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-                                                      <CheckBox mnemonicParsing="false" text="En équipe" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                                                      <Button mnemonicParsing="false" text="Creer" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                                                      <TextField fx:id="nomcompet" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                      <DatePicker fx:id="dtePicker" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                      <Label text="Date" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                                                      <CheckBox fx:id="enEquipeCB" mnemonicParsing="false" text="En équipe" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                                      <Button mnemonicParsing="false" onAction="#handleCreerCompetition" text="Creer" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
                                                    </children>
                                                 </GridPane>
                                              </children></AnchorPane>
@@ -85,10 +84,10 @@
                                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="328.0" minWidth="10.0" prefWidth="246.0" />
                                                   </columnConstraints>
                                                   <rowConstraints>
-                                                      <RowConstraints maxHeight="87.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
-                                                    <RowConstraints maxHeight="87.0" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints maxHeight="122.0" minHeight="0.0" prefHeight="35.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints maxHeight="188.0" minHeight="0.0" prefHeight="185.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints maxHeight="87.0" minHeight="10.0" prefHeight="21.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints maxHeight="87.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints maxHeight="122.0" minHeight="0.0" prefHeight="29.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints maxHeight="188.0" minHeight="0.0" prefHeight="187.0" vgrow="SOMETIMES" />
                                                     <RowConstraints maxHeight="95.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
                                                   </rowConstraints>
                                                    <children>
@@ -100,7 +99,7 @@
                                                             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                                          </columnResizePolicy>
                                                       </TableView>
-                                                      <Button mnemonicParsing="false" text="Inscrire" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+                                                      <Button fx:id="inscrire" mnemonicParsing="false" onAction="#handleInscrireCompetCandidat" text="Inscrire" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
                                                       <Label text="Inscrire Equipe" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                                                       <Label text="Desinscrire Equipe" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                                                       <TableView fx:id="equipeInscrite" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
@@ -111,8 +110,8 @@
                                                             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                                          </columnResizePolicy>
                                                       </TableView>
-                                                      <Button mnemonicParsing="false" text="Desinscrire" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                                                      <Button mnemonicParsing="false" text="SUPPRIMER COMPETITION" textFill="RED" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                                                      <Button fx:id="desinscrire" mnemonicParsing="false" onAction="#handleDesinscrireCompetCandidat" text="Desinscrire" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                                                      <Button mnemonicParsing="false" onAction="#handleSuppression" text="SUPPRIMER COMPETITION" textFill="RED" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                                                          <font>
                                                             <Font name="System Bold" size="11.0" />
                                                          </font>
