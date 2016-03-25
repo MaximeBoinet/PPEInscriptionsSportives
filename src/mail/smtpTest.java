@@ -9,14 +9,16 @@ package mail;
 	 
 	  public static void main (String[] args) throws Exception {
 	 
-	    String smtpHost = "smtp.xyz.com";
-	    String from = "originataire@origine.com";
-	    String to = "destinataire@destination.com";
-	    String username = "moi";
-	    String password = "mon_mot_secret";
+	    String smtpHost = "smtp-mail.outlook.com";
+	    String from = "m2l.java@hotmail.com";
+/*	    String to = "aurelienlazaro@gmail.com";
+*/	    String to = "lea_cohen@hotmail.fr";
+	    String username = "m2l.java@hotmail.com";
+	    String password = "IticParis";
 	 
 	    Properties props = new Properties();
 	    props.put("mail.smtp.host", smtpHost);
+	    props.setProperty("mail.smtp.starttls.enable", "true");
 	    props.put("mail.smtp.auth", "true");
 	 
 	    Session session = Session.getDefaultInstance(props);
