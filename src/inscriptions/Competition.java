@@ -154,6 +154,7 @@ public class Competition implements Comparable<Competition>, Serializable
 	
 	public boolean remove(Candidat candidat)
 	{
+		Inscriptions.getMainApp().getCompetitions().remove(candidat);
 		candidat.remove(this);
 		return candidats.remove(candidat);
 	}

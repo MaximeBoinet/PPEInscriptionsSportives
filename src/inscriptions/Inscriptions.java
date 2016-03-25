@@ -39,6 +39,7 @@ public class Inscriptions implements Serializable
 	private static boolean construction = true;
 	private SortedSet<Competition> competitions = new TreeSet<>();
 	private SortedSet<Candidat> candidats = new TreeSet<>();
+	private static MainApp mainApp;
 
 	private Inscriptions()
 	{
@@ -84,6 +85,14 @@ public class Inscriptions implements Serializable
 		return competition;
 	}
 
+	public static void setMainApp(MainApp mainApp)
+	{
+		mainApp = mainApp;
+	}
+
+	public static MainApp getMainApp() {
+		return mainApp;
+	}
 	/**
 	 * Créée une Candidat de type Personne. Ceci est le seul moyen, il n'y a pas
 	 * de constructeur public dans {@link Personne}.
