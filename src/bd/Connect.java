@@ -24,7 +24,7 @@ import inscriptions.Personne;
 
 public class Connect {
 	
-	private String host = "jdbc:mysql://localhost:3306/ppe inscription sportif";
+	private String host = "jdbc:mysql://localhost:3306/ppe inscription sportif2";
 	private String username = "root";
 	private String password = "";
 	private Connection connec = null;
@@ -57,6 +57,8 @@ public class Connect {
 		getCompet(inscription);
 		getPersonnesEquipes(inscription);
 		getParticipCompet(inscription);	
+		System.out.println(Inscriptions.getInscriptions().toString());
+
 	}
 	
 	
