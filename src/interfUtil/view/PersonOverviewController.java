@@ -54,6 +54,7 @@ public class PersonOverviewController {
     @FXML
     private TableColumn<Personne, String> nbrCompetitionp;
 
+    //Champs pour les competitons
     @FXML
     private TableView<Candidat> equipeAInscrire;
     @FXML
@@ -72,7 +73,12 @@ public class PersonOverviewController {
     private CheckBox enEquipeCB = new CheckBox();
     @FXML
     private DatePicker dtePicker = new DatePicker();
+    @FXML
+    private Button changerDate = new Button("Changer");
+    @FXML
+    private DatePicker dtePickerSet = new DatePicker();
 
+    //Champs pour les equipes
     private MainApp mainApp;
 
     Competition currentCompet = null;
@@ -85,20 +91,32 @@ public class PersonOverviewController {
 
     @FXML
     private void initialize() {
-        nomc.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getNom()));
+    	initializeCompetition();
+    	initializeEquipe();
+    	initializePersonne();
+    }
+    
+    public void initializeCompetition() {
+    	nomc.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getNom()));
         datecloture.setCellValueFactory(cellData -> new ReadOnlyStringWrapper((cellData.getValue().getDateCloture()).format(DateTimeFormatter.ISO_LOCAL_DATE)));
         nbrCandidat.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(Integer.toString(cellData.getValue().getCandidats().size())));
         enEquipe.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().estEnEquipe() ? "Oui" : "Non"));
-        nome.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getNom()));
+    }
+
+    public void initializeEquipe () {
+    	nome.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getNom()));
         nbrMembres.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(Integer.toString(cellData.getValue().getMembres().size())));
         nbrCompetition.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(Integer.toString(cellData.getValue().getCompetitions().size())));
-        prenom.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getPrenom()));
+    }
+    
+    public void initializePersonne() {
+    	prenom.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getPrenom()));
         nomp.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getNom()));
         mail.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getMail()));
         nbrEquipe.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(Integer.toString(cellData.getValue().getEquipes().size())));
         nbrCompetitionp.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(Integer.toString(cellData.getValue().getCompetitions().size())));
     }
-
+    
     private void showCompetDetails(Competition compet) {
         if (compet != null) {
         	currentCompet = compet;
@@ -146,6 +164,10 @@ public class PersonOverviewController {
 			desinscrire.setDisable(true);
     }
 
+    private void dateSelected() {
+
+    }
+
     @FXML
     private void handleInscrireCompetCandidat() {
     	Candidat candidat = equipeAInscrire.getItems().get(equipeAInscrire.getSelectionModel().getSelectedIndex());
@@ -178,9 +200,21 @@ public class PersonOverviewController {
     	mainApp.getCompetitions().remove(uneCompet);
     	uneCompet.delete();
     }
+
+    @FXML
+    private void handleChangementDate() {
+    	currentCompet.setDateCloture(dtePickerSet.getValue());
+    }
+
+    @FXML
+    private void handleDatePicked() {
+    	if (dtePickerSet.getValue() != null) {
+    		changerDate.setDisable(false);
+    	}
+    }
     public void setMainApp(MainApp mainApp) {
     	this.mainApp = mainApp;
-
+    	changerDate.setDisable(true);
     	competitions.setItems(mainApp.getCompetitions());
     	equipes.setItems(mainApp.getEquipes());
     	personnes.setItems(mainApp.getPersonnes());
