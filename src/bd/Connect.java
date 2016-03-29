@@ -256,12 +256,11 @@ public class Connect {
 	// Inscrit un candidat à une compétitions
 
 	public void InscritCompetCandi(Candidat candidat, Competition competition) {
-		int idcandidat = 0,idcompetition = 0;
 		try {
 					query = "call AjoutCandiCompet(?,?)";
 					prepare = connec.prepareStatement(query);
-					prepare.setInt(1 ,idcandidat);
-					prepare.setInt(2, idcompetition);
+					prepare.setString(1 ,candidat.getNom());
+					prepare.setString(2, competition.getNom());
 					prepare.executeQuery();
 
 		}
@@ -288,16 +287,14 @@ public class Connect {
 	}
 
 	/* Retire une personne d'une équipe */
-	public void EnlevePersonneEquipe(String mailp, String nomp)
+	public void EnlevePersonneEquipe(Personne personne, Equipe equipe)
 	{
-		int persone_candidat_idcandidat = 0,equipe_candidat_idcandidat= 0;
 		try
 		{
-
 			query = "call SupprimePersonneEquipe(?,?)";
 			prepare = connec.prepareStatement(query);
-			prepare.setInt(1,equipe_candidat_idcandidat);
-			prepare.setInt(2,persone_candidat_idcandidat);
+			prepare.setString(1, personne.getNom());
+			prepare.setString(2,equipe.getNom());
 
 			prepare.executeQuery();
 		}
@@ -309,13 +306,12 @@ public class Connect {
 
 	/* Retire un candidat (équipe ou personne) d'une compétitions*/
 	public void retirerCandidatCompetition(Candidat candidat, Competition competition) {
-		int idcandidat = 0,idcompetition = 0;
 		try
 		{
 				query = "call SupprimeCandidatCompet(?,?)";
 				prepare = connec.prepareStatement(query);
-				prepare.setInt(1, idcandidat );
-				prepare.setInt(2,idcompetition);
+				prepare.setString(1, candidat.getNom() );
+				prepare.setString(2,competition.getNom());
 			prepare.executeQuery();
 		}
 		catch (SQLException e)
@@ -338,6 +334,20 @@ public class Connect {
 			//e.printStackTrace();
 		}
 	}
+	
+	public void ModifieDateCompet(LocalDate dateclot, Date dateclo) {
+		try {
+			query = "call ModifDateCompetition(?,?)";
+			prepare = connec.prepareStatement(query);
+			prepare.setDate(1,Date.valueOf(dateclot));
+			prepare.setDate(2, dateclo);
+			prepare.executeQuery();
+		}
+		catch (SQLException e) {
+			//e.printStackTrace();
+		}
+	}
+	
 	// Modification du mail d'une personne
 
 	public void ModifMailCandidat(Candidat candidat, String mailp) {
@@ -354,7 +364,40 @@ public class Connect {
 			//e.printStackTrace();
 		}
 	}
+	
+	// Modification le nom d'une personne
 
+		public void ModifNomPersonne(Candidat candidat, String nomp) {
+			try {
+				if (candidat instanceof Personne){
+					query = "call ModifNomPersonne(?,?)";
+					prepare = connec.prepareStatement(query);
+					prepare.setString(1,((Personne)candidat).getPrenom());
+					prepare.setString(2, nomp);
+				}
+				prepare.executeQuery();
+			}
+			catch (SQLException e) {
+				//e.printStackTrace();
+			}
+		}
+
+		// Modification le prenom d'une personne
+
+				public void ModifPrenomPersonne(Candidat candidat, String prenomp) {
+					try {
+						if (candidat instanceof Personne){
+							query = "call ModifNomPersonne(?,?)";
+							prepare = connec.prepareStatement(query);
+							prepare.setString(1,((Personne)candidat).getNom());
+							prepare.setString(2, prenomp);
+						}
+						prepare.executeQuery();
+					}
+					catch (SQLException e) {
+						//e.printStackTrace();
+					}
+				}
 }
 
 
