@@ -23,7 +23,7 @@ import inscriptions.Personne;
 
 
 public class Connect {
-	
+
 	private String host = "jdbc:mysql://localhost:3306/ppe inscription sportif2";
 	private String username = "root";
 	private String password = "";
@@ -33,21 +33,21 @@ public class Connect {
 	ResultSet resultat = null;
 	String query;
 	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-	
-	 
+
+
      //Créé connexion à la BD
-  
+
 	public Connect() {
 		try {
 			connec = DriverManager.getConnection(host, username, password);
 			System.out.println("Works");
 			statement =  connec.createStatement();
-		} 
+		}
 		catch (Exception e) {
 			System.out.println("problème de connexion");
 		}
 	}
-	
+
 
 	 //Initialise l'inscription avec BD
 
@@ -56,25 +56,25 @@ public class Connect {
 		getEquipes(inscription);
 		getCompet(inscription);
 		getPersonnesEquipes(inscription);
-		getParticipCompet(inscription);	
+		getParticipCompet(inscription);
 		System.out.println(Inscriptions.getInscriptions().toString());
 
 	}
-	
-	
-	 // Affiche les personnes dans leurs équipes 
-	
+
+
+	 // Affiche les personnes dans leurs équipes
+
 	private void getPersonnesEquipes(Inscriptions inscription) {
 		try {
 			resultat = statement.executeQuery("call SelectPersoEquipe() ");
-			
+
 			while(resultat.next()){
 				for (Candidat candi : inscription.getCandidats()){
 					if(candi.getNom().equals(resultat.getString("nompersonne"))&& candi instanceof Personne){
 						for (Candidat equipe : inscription.getCandidats()){
-							 
-							if(equipe.getNom().equals(resultat.getString("candidat_idcandidat")) && equipe instanceof Equipe)
-							 ((Equipe) equipe).add((Personne) candi);	
+
+							if(equipe.getNom().equals(resultat.getString("nomcandidat")) && equipe instanceof Equipe)
+							 ((Equipe) equipe).add((Personne) candi);
 					/*if(candi instanceof Personne && candi.getNom().equals(resultat.getString("prenompersonne"))){
 						for (Candidat equipe : inscription.getCandidats()){
 							if(equipe instanceof Equipe ) {
@@ -86,51 +86,52 @@ public class Connect {
 								if (equipe.getNom().equals(resultat2.getString("nomcandidat"))) {
 									((Equipe) equipe).add((Personne) candi);
 								}
-							}*/			
+							}*/
 						}
 					}
 				}
 			}
-		} 
-		
-		
+		}
+
+
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	
-	 //Affiche candidats de type personnes 
-	
+
+	 //Affiche candidats de type personnes
+
 	private void getPersonnes(Inscriptions inscription) throws SQLException{
 		resultat = statement.executeQuery("call SelectCandiPerso()");
-		while (resultat.next()) {	
+		while (resultat.next()) {
 			inscription.createPersonne(resultat.getString("nomcandidat"), resultat.getString("nompersonne"), resultat.getString("mailpersonne"));
 		}
 	}
-	
+
 	 //Affiche candidats de type équipes
 
 	private void getEquipes(Inscriptions inscription) throws SQLException{
 		resultat = statement.executeQuery("call SelectCandiEquipe()");
 		while (resultat.next()) {
-			inscription.createEquipe(resultat.getString("nomcandidat"));	
+			inscription.createEquipe(resultat.getString("nomcandidat"));
 		}
 	}
-	
-	
+
+
 	// Affiche toutes les compétitions
-	
+
 	private void getCompet(Inscriptions inscription) throws SQLException{
 		resultat = statement.executeQuery("call SelectCompet()");
 		while (resultat.next()) {
 			LocalDate date = LocalDate.parse(resultat.getString("datecloture"), formatter);
 			inscription.createCompetition(resultat.getString("nomcompet"), date, resultat.getBoolean("enequipe"));
+			//System.out.println(resultat.getString("nomcompet") + " " + resultat.getBoolean("enequipe"));
 		}
 	}
-	
 
-	// Affiche toutes les compétitions ainsi que les participants des disciplines respectifs, 
+
+	// Affiche toutes les compétitions ainsi que les participants des disciplines respectifs,
 
 	private void getParticipCompet(Inscriptions inscription) {
 		try {
@@ -138,41 +139,46 @@ public class Connect {
 			ResultSet resultat = statement.executeQuery("call SelectPartiCompet()");
 			while(resultat.next()){
 				for (Competition compet : inscription.getCompetitions()) {
+					//System.out.println(resultat.getString("nomcompet") + " " + compet.getNom() + " " + compet.getNom().equals(resultat.getString("nomcompet" )));
 					if (compet.getNom().equals(resultat.getString("nomcompet"))){
 						for (Candidat candi : inscription.getCandidats()){
+							//System.out.println(resultat.getString("nomcandidat") + " " + candi.getNom() + " " + candi.getNom().equals(resultat.getString("nomcandidat")));
+							//System.out.println(compet.getNom() + " " + compet.estEnEquipe());
 							if (candi.getNom().equals(resultat.getString("nomcandidat"))){
-								if (compet.estEnEquipe())
+								System.out.println(candi.getNom() + " " + compet.getNom());
+								if (compet.estEnEquipe()) {
 									compet.add((Equipe) candi);
-								else 
+								}
+								else {
 									compet.add((Personne) candi);
+								}
 							}
-								
 						}
-					}		
+					}
 				}
 			}
 		}
-		catch (SQLException e) 
+		catch (SQLException e)
 		{
 			e.printStackTrace();
 		}
 	}
 
-	
+
 	 // Ajoute une équipe
-	
+
 	public void ajouterEquipe(String nomcandidat){
 		try {
 			query = "call AjoutEquipe(?)";
 			prepare = connec.prepareStatement(query);
 			prepare.setString(1, nomcandidat);
 			prepare.executeQuery();
-		} 
+		}
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	// Ajoute une personne
 
 	public void ajouterPersonne(String nomequipe, String nompersonne, String mailpersonne) {
@@ -183,151 +189,151 @@ public class Connect {
 			prepare.setString(1, nompersonne);
 			prepare.setString(2, mailpersonne);
 			prepare.executeQuery();
-		} 
+		}
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	// Ajoute une compétiton 
+	// Ajoute une compétiton
 
 	public void ajouterCompetition(String nomcompet, LocalDate dateCloturec, boolean enEquipe) {
-		try { 
+		try {
 			query = "call AjoutCompet(?,?,?)";
 			prepare = connec.prepareStatement(query);
 			prepare.setString(1, nomcompet);
 			prepare.setDate(2,Date.valueOf(dateCloturec));
 			prepare.setBoolean(3,enEquipe);
 			prepare.executeQuery();
-		} 
+		}
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
-		//Supprime une compétition 
-	 
+
+
+		//Supprime une compétition
+
 	public void EnleverCompet(String nomc) {
 		try {
 			query = "call SupprimeCompet('"+nomc+"')";
 			statement.executeQuery(query);
-			
-		} 
+
+		}
 		catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+
 		//Supprime une personne
 
 	public void EnleverPersonne(String mailp) {
-		
+
 		query = "call SupprimePersonne('"+mailp+"')";
 		try {
 			statement.executeQuery(query);
-		} 
+		}
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-		// Supprime une équipe 
+		// Supprime une équipe
 
 	public void EnleverEquipe(String nome) {
-		
+
 		query = "call SupprimeEquipe('"+nome+"')";
 		try {
 			statement.executeQuery(query);
-		} 
+		}
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
 
-	// Inscrit un candidat à une compétitions 
+
+	// Inscrit un candidat à une compétitions
 
 	public void InscritCompetCandi(Candidat candidat, Competition competition) {
 		int idcandidat = 0,idcompetition = 0;
-		try { 
+		try {
 					query = "call AjoutCandiCompet(?,?)";
 					prepare = connec.prepareStatement(query);
 					prepare.setInt(1 ,idcandidat);
 					prepare.setInt(2, idcompetition);
 					prepare.executeQuery();
-	
-		} 
-		
-					
+
+		}
+
+
 		catch (SQLException e) {
 			//e.printStackTrace();
 		}
 	}
-	
+
 	// Ajoute un candidat dans une equipe
 
 	public void AjoutCandiDansEquipe(String nomp, String mailp) {
-		try { 
+		try {
 			query = "call AjoutPersonneEquipe(?,?)";
 			prepare = connec.prepareStatement(query);
 			prepare.setString(1,nomp);
 			prepare.setString(2, mailp);
 			prepare.executeQuery();
-		} 
+		}
 		catch (SQLException e) {
 			//e.printStackTrace();
 		}
 	}
-	
+
 	/* Retire une personne d'une équipe */
 	public void EnlevePersonneEquipe(String mailp, String nomp)
 	{
 		int persone_candidat_idcandidat = 0,equipe_candidat_idcandidat= 0;
-		try 
+		try
 		{
 
 			query = "call SupprimePersonneEquipe(?,?)";
 			prepare = connec.prepareStatement(query);
 			prepare.setInt(1,equipe_candidat_idcandidat);
 			prepare.setInt(2,persone_candidat_idcandidat);
-		
+
 			prepare.executeQuery();
-		} 
-		catch (SQLException e) 
+		}
+		catch (SQLException e)
 		{
 			e.printStackTrace();
 		}
 	}
-	
+
 	/* Retire un candidat (équipe ou personne) d'une compétitions*/
 	public void retirerCandidatCompetition(Candidat candidat, Competition competition) {
 		int idcandidat = 0,idcompetition = 0;
-		try 
-		{ 
+		try
+		{
 				query = "call SupprimeCandidatCompet(?,?)";
 				prepare = connec.prepareStatement(query);
 				prepare.setInt(1, idcandidat );
 				prepare.setInt(2,idcompetition);
 			prepare.executeQuery();
-		} 
-		catch (SQLException e) 
+		}
+		catch (SQLException e)
 		{
 			e.printStackTrace();
 		}
 	}
-	
+
 	// Modification nom d'une competition
 
 	public void ModifieNomCompet(Competition compet, String nomc) {
-		try { 
+		try {
 			query = "call ModifCompetition(?,?)";
 			prepare = connec.prepareStatement(query);
 			prepare.setString(1,compet.getNom());
 			prepare.setString(2, nomc);
 			prepare.executeQuery();
-		} 
+		}
 		catch (SQLException e) {
 			//e.printStackTrace();
 		}
@@ -335,24 +341,24 @@ public class Connect {
 	// Modification du mail d'une personne
 
 	public void ModifMailCandidat(Candidat candidat, String mailp) {
-		try { 
+		try {
 			if (candidat instanceof Personne){
 				query = "call ModifPersonne(?,?)";
 				prepare = connec.prepareStatement(query);
 				prepare.setString(1,((Personne)candidat).getMail());
 				prepare.setString(2, mailp);
 			}
-			prepare.executeQuery();	
-		} 
+			prepare.executeQuery();
+		}
 		catch (SQLException e) {
 			//e.printStackTrace();
 		}
 	}
-	
+
 }
 
 
 
 
-	
-	
+
+
