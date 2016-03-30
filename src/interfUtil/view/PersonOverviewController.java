@@ -4,6 +4,8 @@ import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
@@ -79,11 +81,41 @@ public class PersonOverviewController {
     private DatePicker dtePickerSet = new DatePicker();
 
     //Champs pour les equipes
+    @FXML
+    private TableView<Competition> competitionDisponible;
+    @FXML
+    private TableColumn<Competition, String> nomCD;
+    @FXML
+    private TableView<Competition> competitionParticipe;
+    @FXML
+    private TableColumn<Competition, String> nomCP;
+    @FXML
+    private TableView<Candidat> personneDisponible;
+    @FXML
+    private TableColumn<Candidat, String> nomPD;
+    @FXML
+    private TableView<Candidat> personneMembre;
+    @FXML
+    private TableColumn<Candidat, String> nomPM;
+    @FXML
+    private Button inscrireCompet = new Button();
+    @FXML
+    private Button desinscrireCompet = new Button();
+    @FXML
+    private Button inscrirePersonne = new Button();
+    @FXML
+    private Button desinscrirePersonne = new Button();
+
     private MainApp mainApp;
 
     Competition currentCompet = null;
 	ObservableList<Candidat> lesEquipeAInscrire = FXCollections.observableArrayList();
 	ObservableList<Candidat> lesEquipeInscrite = FXCollections.observableArrayList();
+    Equipe currentEquipe = null;
+    ObservableList<Competition> competDispos = FXCollections.observableArrayList();
+	ObservableList<Competition> competParticipes = FXCollections.observableArrayList();
+	ObservableList<Candidat> personneDispos = FXCollections.observableArrayList();
+	ObservableList<Candidat> personneMembres = FXCollections.observableArrayList();
 
 	public PersonOverviewController() {
 
@@ -95,7 +127,7 @@ public class PersonOverviewController {
     	initializeEquipe();
     	initializePersonne();
     }
-    
+
     public void initializeCompetition() {
     	nomc.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getNom()));
         datecloture.setCellValueFactory(cellData -> new ReadOnlyStringWrapper((cellData.getValue().getDateCloture()).format(DateTimeFormatter.ISO_LOCAL_DATE)));
@@ -108,7 +140,7 @@ public class PersonOverviewController {
         nbrMembres.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(Integer.toString(cellData.getValue().getMembres().size())));
         nbrCompetition.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(Integer.toString(cellData.getValue().getCompetitions().size())));
     }
-    
+
     public void initializePersonne() {
     	prenom.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getPrenom()));
         nomp.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getNom()));
@@ -116,7 +148,7 @@ public class PersonOverviewController {
         nbrEquipe.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(Integer.toString(cellData.getValue().getEquipes().size())));
         nbrCompetitionp.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(Integer.toString(cellData.getValue().getCompetitions().size())));
     }
-    
+
     private void showCompetDetails(Competition compet) {
         if (compet != null) {
         	currentCompet = compet;
@@ -203,7 +235,12 @@ public class PersonOverviewController {
 
     @FXML
     private void handleChangementDate() {
-    	currentCompet.setDateCloture(dtePickerSet.getValue());
+    	if (currentCompet.getDateCloture().isBefore(dtePickerSet.getValue())) {
+    		currentCompet.setDateCloture(dtePickerSet.getValue());
+		}
+    	else {
+    		createAlerte("Date Incorrect", "Selectionnez une autre date", "La date doit être ultérieur à celle actuellement défini pour la compétition");
+    	}
     }
 
     @FXML
@@ -212,6 +249,78 @@ public class PersonOverviewController {
     		changerDate.setDisable(false);
     	}
     }
+
+    private void showEquipeDetails(Equipe equipe) {
+    	if (equipe != null) {
+        	currentEquipe = equipe;
+        	competDispos.clear();
+        	competParticipes.clear();
+        	personneDispos.clear();
+        	personneMembres.clear();
+
+        	for (Competition compet : Inscriptions.getInscriptions().getCompetitions()) {
+        		if (equipe.getCompetitions().contains(compet)) {
+					competParticipes.add(compet);
+				} else {
+					competDispos.add(compet);
+				}
+			}
+
+        	for (Candidat candidat : Inscriptions.getInscriptions().getCandidats()) {
+				if (equipe.getMembres().contains(candidat)) {
+					personneMembres.add(candidat);
+				} else {
+					personneDispos.add(candidat);
+				}
+			}
+
+        	competitionDisponible.setItems(competDispos);
+        	competitionParticipe.setItems(competParticipes);
+        	personneDisponible.setItems(personneDispos);
+        	personneMembre.setItems(personneMembres);
+
+        	nomCD.setCellValueFactory(cellData ->new ReadOnlyStringWrapper(cellData.getValue().getNom()));
+        	nomCP.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getNom()));
+        	nomPD.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getNom()));
+        	nomPM.setCellValueFactory(cellData ->new ReadOnlyStringWrapper(cellData.getValue().getNom()));
+
+        } else {
+        	currentEquipe = null;
+        }
+    }
+
+    private void setCurrentCompetDispo(Competition competition) {
+    	if (competition != null) {
+			inscrireCompet.setDisable(false);
+		} else {
+			inscrireCompet.setDisable(true);
+		}
+    }
+
+    private void setCurrentCompetPerticipe(Competition competition) {
+    	if (competition != null) {
+			desinscrireCompet.setDisable(false);
+		} else {
+			desinscrireCompet.setDisable(true);
+		}
+    }
+
+    private void setCurrentPersonneDispo(Candidat candidat) {
+    	if (candidat != null) {
+			inscrirePersonne.setDisable(false);
+		} else {
+			inscrirePersonne.setDisable(true);
+		}
+    }
+
+    private void setCurrentPersonneMembre(Candidat candidat) {
+    	if (candidat != null) {
+			desinscrirePersonne.setDisable(false);
+		} else {
+			desinscrirePersonne.setDisable(true);
+		}
+    }
+
     public void setMainApp(MainApp mainApp) {
     	this.mainApp = mainApp;
     	changerDate.setDisable(true);
@@ -221,11 +330,36 @@ public class PersonOverviewController {
     	showCompetDetails(null);
     	setCurrentCandidatCompetADesinscrire(null);
     	setCurrentCandidatCompetAInscrire(null);
+    	showEquipeDetails(null);
+    	setCurrentCompetDispo(null);
+    	setCurrentCompetPerticipe(null);
+    	setCurrentPersonneDispo(null);
+    	setCurrentPersonneMembre(null);
     	competitions.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> showCompetDetails(newValue));
     	equipeAInscrire.getSelectionModel().selectedItemProperty().addListener(
     			(observable, oldValue, newValue) -> setCurrentCandidatCompetAInscrire(newValue));
     	equipeInscrite.getSelectionModel().selectedItemProperty().addListener(
     			(observable, oldValue, newValue) -> setCurrentCandidatCompetADesinscrire(newValue));
+    	equipes.getSelectionModel().selectedItemProperty().addListener(
+    			(observable, oldValue, newValue) -> showEquipeDetails(newValue));
+    	competitionDisponible.getSelectionModel().selectedItemProperty().addListener(
+    			(observable, oldValue, newValue) -> setCurrentCompetDispo(newValue));
+    	competitionParticipe.getSelectionModel().selectedItemProperty().addListener(
+    			(observable, oldValue, newValue) -> setCurrentCompetPerticipe(newValue));
+    	personneDisponible.getSelectionModel().selectedItemProperty().addListener(
+    			(observable, oldValue, newValue) -> setCurrentPersonneDispo(newValue));
+    	personneMembre.getSelectionModel().selectedItemProperty().addListener(
+    			(observable, oldValue, newValue) -> setCurrentPersonneMembre(newValue));
+    }
+
+    private void createAlerte(String title, String header, String content) {
+    	Alert alert = new Alert(AlertType.WARNING);
+        alert.initOwner(mainApp.getPrimaryStage());
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+
+        alert.showAndWait();
     }
 }

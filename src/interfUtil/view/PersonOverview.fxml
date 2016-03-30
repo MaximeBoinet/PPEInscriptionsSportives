@@ -220,21 +220,21 @@
                                                                       <RowConstraints maxHeight="56.0" minHeight="10.0" prefHeight="16.0" vgrow="SOMETIMES" />
                                                                     </rowConstraints>
                                                                      <children>
-                                                                        <TableView prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                                                                        <TableView fx:id="competitionDisponible" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                                                                           <columns>
-                                                                            <TableColumn prefWidth="75.0" text="Competitons dispo" />
+                                                                            <TableColumn fx:id="nomCD" prefWidth="75.0" text="Competitons dispo" />
                                                                           </columns>
                                                                            <columnResizePolicy>
                                                                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                                                            </columnResizePolicy>
                                                                         </TableView>
                                                                         <Label text="Inscrire a une Compétition" GridPane.halignment="CENTER" />
-                                                                        <Button mnemonicParsing="false" text="Inscrire" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                                                        <Button fx:id="inscrireCompet" mnemonicParsing="false" text="Inscrire" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                                                                         <Label text="Desinscrire" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                                                                        <Button mnemonicParsing="false" text="Desinscrire" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                                                                        <TableView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                                        <Button fx:id="desinscrireCompet" mnemonicParsing="false" text="Desinscrire" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                                                        <TableView fx:id="competitionParticipe" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                                           <columns>
-                                                                            <TableColumn prefWidth="75.0" text="Competition participé" />
+                                                                            <TableColumn fx:id="nomCP" prefWidth="75.0" text="Competition participé" />
                                                                           </columns>
                                                                            <columnResizePolicy>
                                                                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -259,24 +259,24 @@
                                                                      <children>
                                                                         <Label text="Inscrire Membre" GridPane.halignment="CENTER" />
                                                                         <Label text="Desinscrire Membre" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                                                                        <TableView prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                                                                        <TableView fx:id="personneDisponible" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                                                                           <columns>
-                                                                            <TableColumn prefWidth="75.0" text="Membre Dispo" />
+                                                                            <TableColumn fx:id="nomPD" prefWidth="75.0" text="Membre Dispo" />
                                                                           </columns>
                                                                            <columnResizePolicy>
                                                                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                                                            </columnResizePolicy>
                                                                         </TableView>
-                                                                        <TableView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                                        <TableView fx:id="personneMembre" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                                           <columns>
-                                                                            <TableColumn prefWidth="75.0" text="Membre inscrit" />
+                                                                            <TableColumn fx:id="nomPM" prefWidth="75.0" text="Membre inscrit" />
                                                                           </columns>
                                                                            <columnResizePolicy>
                                                                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                                                            </columnResizePolicy>
                                                                         </TableView>
-                                                                        <Button mnemonicParsing="false" text="Inscrire" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                                                                        <Button mnemonicParsing="false" text="Desinscrire" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                                                        <Button fx:id="inscrirePersonne" mnemonicParsing="false" text="Inscrire" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                                                        <Button fx:id="desinscrirePersonne" mnemonicParsing="false" text="Desinscrire" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                                                                      </children>
                                                                   </GridPane>
                                                                </content>
