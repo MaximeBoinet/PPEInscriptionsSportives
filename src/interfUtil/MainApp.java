@@ -84,6 +84,10 @@ public class MainApp extends Application {
 		}
     }
 
+    public Stage getPrimaryStage() {
+    	return this.primaryStage;
+    }
+
     public static void main(String[] args) {
         launch(args);
     }
