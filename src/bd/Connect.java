@@ -335,12 +335,12 @@ public class Connect {
 		}
 	}
 	
-	public void ModifieDateCompet(LocalDate dateclot, Date dateclo) {
+	public void ModifieDateCompet(LocalDate dateclot, LocalDate dateclo) {
 		try {
 			query = "call ModifDateCompetition(?,?)";
 			prepare = connec.prepareStatement(query);
 			prepare.setDate(1,Date.valueOf(dateclot));
-			prepare.setDate(2, dateclo);
+			prepare.setDate(2, Date.valueOf(dateclo));
 			prepare.executeQuery();
 		}
 		catch (SQLException e) {
