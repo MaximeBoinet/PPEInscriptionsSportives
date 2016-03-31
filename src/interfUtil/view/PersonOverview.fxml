@@ -220,7 +220,7 @@
                                                                       <RowConstraints maxHeight="56.0" minHeight="10.0" prefHeight="16.0" vgrow="SOMETIMES" />
                                                                     </rowConstraints>
                                                                      <children>
-                                                                        <TableView fx:id="competitionDisponible" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                                                                        <TableView fx:id="competitionDisponible" onSort="#handleInscrireCompetEquipe" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                                                                           <columns>
                                                                             <TableColumn fx:id="nomCD" prefWidth="75.0" text="Competitons dispo" />
                                                                           </columns>
@@ -229,10 +229,10 @@
                                                                            </columnResizePolicy>
                                                                         </TableView>
                                                                         <Label text="Inscrire a une Compétition" GridPane.halignment="CENTER" />
-                                                                        <Button fx:id="inscrireCompet" mnemonicParsing="false" text="Inscrire" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                                                        <Button fx:id="inscrireCompet" mnemonicParsing="false" onAction="#handleInscrireCompetEquipe" text="Inscrire" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                                                                         <Label text="Desinscrire" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                                                                        <Button fx:id="desinscrireCompet" mnemonicParsing="false" text="Desinscrire" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                                                                        <TableView fx:id="competitionParticipe" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                                        <Button fx:id="desinscrireCompet" mnemonicParsing="false" onAction="#handleDesinscrireCompetEquipe" text="Desinscrire" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                                                        <TableView fx:id="competitionParticipe" onSort="#handleDesinscrireCompetEquipe" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                                           <columns>
                                                                             <TableColumn fx:id="nomCP" prefWidth="75.0" text="Competition participé" />
                                                                           </columns>
@@ -267,7 +267,7 @@
                                                                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                                                            </columnResizePolicy>
                                                                         </TableView>
-                                                                        <TableView fx:id="personneMembre" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                                        <TableView fx:id="personneMembre" onSort="#handleDesinscrireMembreEquipe" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                                           <columns>
                                                                             <TableColumn fx:id="nomPM" prefWidth="75.0" text="Membre inscrit" />
                                                                           </columns>
@@ -275,8 +275,8 @@
                                                                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                                                            </columnResizePolicy>
                                                                         </TableView>
-                                                                        <Button fx:id="inscrirePersonne" mnemonicParsing="false" text="Inscrire" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                                                                        <Button fx:id="desinscrirePersonne" mnemonicParsing="false" text="Desinscrire" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                                                        <Button fx:id="inscrirePersonne" mnemonicParsing="false" onAction="#handleInscrireMembreEquipe" text="Inscrire" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                                                        <Button fx:id="desinscrirePersonne" mnemonicParsing="false" onAction="#handleDesinscrireMembreEquipe" text="Desinscrire" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                                                                      </children>
                                                                   </GridPane>
                                                                </content>
@@ -452,8 +452,8 @@
                                                                                   <RowConstraints maxHeight="38.0" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
                                                                                 </rowConstraints>
                                                                                  <children>
-                                                                                    <Button fx:id="inscrireCompetP" mnemonicParsing="false" text="Inscrire" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                                                                                    <Button fx:id="desinscrireCompetP" mnemonicParsing="false" text="Desinscrire" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                                                                    <Button fx:id="inscrireCompetP" mnemonicParsing="false" onAction="#handleInscrireCompetP" text="Inscrire" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                                                                    <Button fx:id="desinscrireCompetP" mnemonicParsing="false" onAction="#handleDesinscrireCompetP" text="Desinscrire" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                                                                                     <TableView fx:id="competDispoPersonne" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                                                                                       <columns>
                                                                                         <TableColumn fx:id="nomCDP" prefWidth="75.0" text="Competitions dispo" />
@@ -511,8 +511,8 @@
                                                                                     </TableView>
                                                                                     <Label text="Inscrire" GridPane.halignment="CENTER" />
                                                                                     <Label text="Desinscrire" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                                                                                    <Button fx:id="inscrireEquipeP" mnemonicParsing="false" text="Inscrire" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                                                                                    <Button fx:id="desinscrireEquipeP" mnemonicParsing="false" text="Desinscrire" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                                                                    <Button fx:id="inscrireEquipeP" mnemonicParsing="false" onAction="#handleInscrireEquipeP" text="Inscrire" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                                                                    <Button fx:id="desinscrireEquipeP" mnemonicParsing="false" onAction="#handleDesinscrireEquipeP" text="Desinscrire" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                                                                                  </children>
                                                                               </GridPane>
                                                                            </children>
