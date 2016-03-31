@@ -181,11 +181,11 @@ public class Connect {
 
 	// Ajoute une personne
 
-	public void ajouterPersonne(String nomequipe, String nompersonne, String mailpersonne) {
+	public void ajouterPersonne(String nomcandidat, String nompersonne, String mailpersonne) {
 		try {
 			query = "call AjoutPersonne(?,?,?)";
 			prepare = connec.prepareStatement(query);
-			prepare.setString(1, mailpersonne);
+			prepare.setString(1, nomcandidat);
 			prepare.setString(2, nompersonne);
 			prepare.setString(3, mailpersonne);
 			prepare.executeQuery();
