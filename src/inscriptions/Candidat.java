@@ -74,6 +74,11 @@ public abstract class Candidat implements Comparable<Candidat>, Serializable
 		for (Competition c : competitions)
 			c.remove(this);
 		inscriptions.remove(this);
+		if (this instanceof Equipe) {
+			Inscriptions.getConnection().EnleverEquipe(this.getNom());
+		} else if (this instanceof Personne) {
+			Inscriptions.getConnection().EnleverPersonne(((Personne)this).getMail());
+		}
 	}
 
 	@Override

@@ -374,7 +374,7 @@
                                                          </GridPane.margin>
                                                       </TextField>
                                                       <TextField fx:id="mailNew" onKeyReleased="#toggleCreerPersonne" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                      <Button fx:id="creerPersonne" mnemonicParsing="false" text="Creer" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                                                      <Button fx:id="creerPersonne" mnemonicParsing="false" onAction="#handleCreerPersonne" text="Creer" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
                                                    </children>
                                                 </GridPane>
                                              </children></AnchorPane>
@@ -406,22 +406,22 @@
                                                                   <Label text="Nom  " GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
                                                                   <Label text="Prenom  " GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
                                                                   <Label text="Mail  " GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
-                                                                  <Button fx:id="appliquerNom" mnemonicParsing="false" text="Appliquer Nom" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                                                  <Button fx:id="appliquerNom" mnemonicParsing="false" onAction="#handleChangerNomP" text="Appliquer Nom" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                                                      <GridPane.margin>
                                                                         <Insets left="5.0" />
                                                                      </GridPane.margin>
                                                                   </Button>
-                                                                  <Button fx:id="appliquerPrenom" mnemonicParsing="false" text="Appliquer Prenom" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                                                  <Button fx:id="appliquerPrenom" mnemonicParsing="false" onAction="#handleChangerPrenomP" text="Appliquer Prenom" GridPane.columnIndex="2" GridPane.rowIndex="2">
                                                                      <GridPane.margin>
                                                                         <Insets left="5.0" />
                                                                      </GridPane.margin>
                                                                   </Button>
-                                                                  <Button fx:id="appliquerMail" mnemonicParsing="false" text="Appliquer Mail" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                                                  <Button fx:id="appliquerMail" mnemonicParsing="false" onAction="#handleChangerMailP" text="Appliquer Mail" GridPane.columnIndex="2" GridPane.rowIndex="3">
                                                                      <GridPane.margin>
                                                                         <Insets left="5.0" />
                                                                      </GridPane.margin>
                                                                   </Button>
-                                                                  <Button fx:id="supprimerPersonne" mnemonicParsing="false" text="Supprimer Personne" textFill="RED" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                                                                  <Button fx:id="supprimerPersonne" mnemonicParsing="false" onAction="#handleSupprimerPersonne" text="Supprimer Personne" textFill="RED" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                                                                      <font>
                                                                         <Font name="System Bold" size="12.0" />
                                                                      </font>

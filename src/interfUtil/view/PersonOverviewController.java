@@ -270,6 +270,7 @@ public class PersonOverviewController {
     @FXML
     private void handleInscrireCompetCandidat() {
     	Candidat candidat = equipeAInscrire.getItems().get(equipeAInscrire.getSelectionModel().getSelectedIndex());
+    	System.out.println(candidat.getNom());
     	if (currentCompet.estEnEquipe()) {
     		this.currentCompet.add((Equipe)(candidat));
 		} else {
@@ -285,6 +286,7 @@ public class PersonOverviewController {
         currentCompet.remove(candidat);
     	equipeInscrite.getItems().remove(candidat);
         equipeAInscrire.getItems().add(candidat);
+        initializeCompetition();
     }
 
     @FXML
@@ -308,15 +310,16 @@ public class PersonOverviewController {
 
     @FXML
     private void handleSuppression() {
-    	Competition uneCompet = competitions.getItems().get(competitions.getSelectionModel().getSelectedIndex());
-    	mainApp.getCompetitions().remove(uneCompet);
-    	uneCompet.delete();
+    	Competition tempsCompet = currentCompet;
+    	mainApp.getEquipes().remove(currentCompet);
+    	tempsCompet.delete();
     }
 
     @FXML
     private void handleChangementDate() {
     	if (currentCompet.getDateCloture().isBefore(dtePickerSet.getValue())) {
     		currentCompet.setDateCloture(dtePickerSet.getValue());
+    		initializeCompetition();
 		}
     	else {
     		createAlerte("Date Incorrect", "Selectionnez une autre date", "La date doit être ultérieur à celle actuellement défini pour la compétition");
@@ -350,11 +353,13 @@ public class PersonOverviewController {
 			}
 
         	for (Candidat candidat : Inscriptions.getInscriptions().getCandidats()) {
-				if (equipe.getMembres().contains(candidat)) {
-					personneMembres.add(candidat);
-				} else {
-					personneDispos.add(candidat);
-				}
+        		if (candidat instanceof Personne) {
+					if (equipe.getMembres().contains(candidat)) {
+						personneMembres.add(candidat);
+					} else {
+						personneDispos.add(candidat);
+					}
+        		}
 			}
 
         	competitionDisponible.setItems(competDispos);
@@ -431,7 +436,9 @@ public class PersonOverviewController {
 
     @FXML
     private void handleSupprimerEquipe() {
-    	currentEquipe.delete();
+    	Equipe tempsEquipe = currentEquipe;
+    	mainApp.getEquipes().remove(currentEquipe);
+    	tempsEquipe.delete();
     }
 
     private void showPersonneDetails(Personne personne) {
@@ -520,6 +527,12 @@ public class PersonOverviewController {
     }
 
     @FXML
+    private void handleCreerPersonne() {
+    	Personne pers = Inscriptions.getInscriptions().createPersonne(nomNew.getText(), prenomNew.getText(), mailNew.getText());
+    	mainApp.getPersonnes().add(pers);
+    }
+
+    @FXML
     private void toggleNewNom() {
     	if (nomUpdate.getText().length() != 0) {
 			appliquerNom.setDisable(false);
@@ -561,6 +574,32 @@ public class PersonOverviewController {
     	currentPersonne.setMail(mailUpdate.getText());
     }
 
+    @FXML
+    private void handleInscrireEquipeP() {
+
+    }
+
+    @FXML
+    private void handleDesinscrireEquipeP() {
+
+    }
+
+    @FXML
+    private void handleInscrireCompetP() {
+
+    }
+
+    @FXML
+    private void handleDesinscrireCompetP() {
+
+    }
+
+    @FXML
+    private void handleSupprimerPersonne() {
+    	Personne tempsPersonne = currentPersonne;
+    	mainApp.getPersonnes().remove(currentPersonne);
+    	tempsPersonne.delete();
+    }
     public void setMainApp(MainApp mainApp) {
     	this.mainApp = mainApp;
     	supprimCompet.setDisable(true);

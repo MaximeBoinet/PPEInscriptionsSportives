@@ -84,6 +84,7 @@ public class Competition implements Comparable<Competition>, Serializable
 	{
 		// TODO vérifier que l'on avance pas la date.
 		if (this.dateCloture == null || dateCloture.isAfter(getDateCloture())) {
+			Inscriptions.getConnection().ModifieDateCompet(dateCloture, this.dateCloture, this.getNom());
 			this.dateCloture = dateCloture;
 		}
 
@@ -115,8 +116,7 @@ public class Competition implements Comparable<Competition>, Serializable
 				throw new RuntimeException();
 			personne.add(this);
 
-			if (!Inscriptions.getConstruction())
-				Inscriptions.getConnection().InscritCompetCandi(personne, this);
+			Inscriptions.getConnection().InscritCompetCandi(personne, this);
 
 			return candidats.add(personne);
 		}
@@ -167,6 +167,7 @@ public class Competition implements Comparable<Competition>, Serializable
 	{
 		for (Candidat candidat : candidats)
 			remove(candidat);
+		Inscriptions.getConnection().EnleverCompet(this.getNom());
 		inscriptions.remove(this);
 	}
 

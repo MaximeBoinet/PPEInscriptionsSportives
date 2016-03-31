@@ -183,11 +183,11 @@ public class Connect {
 
 	public void ajouterPersonne(String nomequipe, String nompersonne, String mailpersonne) {
 		try {
-			query = "call AjoutPersonne(?,?)";
+			query = "call AjoutPersonne(?,?,?)";
 			prepare = connec.prepareStatement(query);
 			prepare.setString(1, mailpersonne);
-			prepare.setString(1, nompersonne);
-			prepare.setString(2, mailpersonne);
+			prepare.setString(2, nompersonne);
+			prepare.setString(3, mailpersonne);
 			prepare.executeQuery();
 		}
 		catch (SQLException e) {
@@ -264,8 +264,6 @@ public class Connect {
 					prepare.executeQuery();
 
 		}
-
-
 		catch (SQLException e) {
 			//e.printStackTrace();
 		}
@@ -277,8 +275,8 @@ public class Connect {
 		try {
 			query = "call AjoutPersonneEquipe(?,?)";
 			prepare = connec.prepareStatement(query);
-			prepare.setString(1,nomp);
-			prepare.setString(2, mailp);
+			prepare.setString(2,nomp);
+			prepare.setString(1, mailp);
 			prepare.executeQuery();
 		}
 		catch (SQLException e) {
@@ -326,28 +324,29 @@ public class Connect {
 		try {
 			query = "call ModifCompetition(?,?)";
 			prepare = connec.prepareStatement(query);
-			prepare.setString(1,compet.getNom());
-			prepare.setString(2, nomc);
+			prepare.setString(2,compet.getNom());
+			prepare.setString(1, nomc);
 			prepare.executeQuery();
 		}
 		catch (SQLException e) {
 			//e.printStackTrace();
 		}
 	}
-	
-	public void ModifieDateCompet(LocalDate dateclot, LocalDate dateclo) {
+
+	public void ModifieDateCompet(LocalDate dateclot, LocalDate dateclo, String nomco) {
 		try {
-			query = "call ModifDateCompetition(?,?)";
+			query = "call ModifDateCompetition(?,?,?)";
 			prepare = connec.prepareStatement(query);
 			prepare.setDate(1,Date.valueOf(dateclot));
 			prepare.setDate(2, Date.valueOf(dateclo));
+			prepare.setString(3, nomco);
 			prepare.executeQuery();
 		}
 		catch (SQLException e) {
 			//e.printStackTrace();
 		}
 	}
-	
+
 	// Modification du mail d'une personne
 
 	public void ModifMailCandidat(Candidat candidat, String mailp) {
@@ -355,8 +354,8 @@ public class Connect {
 			if (candidat instanceof Personne){
 				query = "call ModifPersonne(?,?)";
 				prepare = connec.prepareStatement(query);
-				prepare.setString(1,((Personne)candidat).getMail());
-				prepare.setString(2, mailp);
+				prepare.setString(2,((Personne)candidat).getMail());
+				prepare.setString(1, mailp);
 			}
 			prepare.executeQuery();
 		}
@@ -364,7 +363,7 @@ public class Connect {
 			//e.printStackTrace();
 		}
 	}
-	
+
 	// Modification le nom d'une personne
 
 		public void ModifNomPersonne(Candidat candidat, String nomp) {
@@ -372,8 +371,8 @@ public class Connect {
 				if (candidat instanceof Personne){
 					query = "call ModifNomPersonne(?,?)";
 					prepare = connec.prepareStatement(query);
-					prepare.setString(1,((Personne)candidat).getPrenom());
-					prepare.setString(2, nomp);
+					prepare.setString(2,((Personne)candidat).getPrenom());
+					prepare.setString(1, nomp);
 				}
 				prepare.executeQuery();
 			}
@@ -389,8 +388,8 @@ public class Connect {
 						if (candidat instanceof Personne){
 							query = "call ModifNomPersonne(?,?)";
 							prepare = connec.prepareStatement(query);
-							prepare.setString(1,((Personne)candidat).getNom());
-							prepare.setString(2, prenomp);
+							prepare.setString(2,((Personne)candidat).getNom());
+							prepare.setString(1, prenomp);
 						}
 						prepare.executeQuery();
 					}
