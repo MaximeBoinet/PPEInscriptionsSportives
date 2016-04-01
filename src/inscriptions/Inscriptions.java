@@ -107,15 +107,18 @@ public class Inscriptions implements Serializable
 	public Personne createPersonne(String nom, String prenom, String mail)
 	{
 		Personne personne = new Personne(this, nom, prenom, mail);
-		try {
-			new mailmessage("Vous venez d'être inscrit à l'application m2l", "Inscription", personne.getMail(), null).envoyer();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+
 		candidats.add(personne);
-		if (!construction)
+		if (!construction) {
+			try {
+				new mailmessage("Vous venez d'être inscrit à l'application m2l", "Inscription", personne.getMail(), null).envoyer();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			getConnection().ajouterPersonne(nom, prenom, mail);
+		}
 
 		return personne;
 	}
