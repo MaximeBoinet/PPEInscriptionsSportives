@@ -2,6 +2,7 @@ package inscriptions;
 
 
 import interfUtil.MainApp;
+import mail.mailmessage;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -106,6 +107,12 @@ public class Inscriptions implements Serializable
 	public Personne createPersonne(String nom, String prenom, String mail)
 	{
 		Personne personne = new Personne(this, nom, prenom, mail);
+		try {
+			new mailmessage("Vous venez d'être inscrit à l'application m2l", "Inscription", personne.getMail(), null).envoyer();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		candidats.add(personne);
 		if (!construction)
 			getConnection().ajouterPersonne(nom, prenom, mail);
