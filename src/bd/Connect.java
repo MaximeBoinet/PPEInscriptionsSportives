@@ -67,13 +67,11 @@ public class Connect {
 	private void getPersonnesEquipes(Inscriptions inscription) {
 		try {
 			resultat = statement.executeQuery("call SelectPersoEquipe() ");
-
 			while(resultat.next()){
 				for (Candidat candi : inscription.getCandidats()){
-					if(candi.getNom().equals(resultat.getString("nompersonne"))&& candi instanceof Personne){
+					if(candi instanceof Personne && ((Personne)candi).getPrenom().equals(resultat.getString("nompersonne"))){
 						for (Candidat equipe : inscription.getCandidats()){
-
-							if(equipe.getNom().equals(resultat.getString("nomcandidat")) && equipe instanceof Equipe)
+							if(equipe instanceof Equipe && equipe.getNom().equals(resultat.getString("nomcandidat")))
 							 ((Equipe) equipe).add((Personne) candi);
 					/*if(candi instanceof Personne && candi.getNom().equals(resultat.getString("prenompersonne"))){
 						for (Candidat equipe : inscription.getCandidats()){
@@ -275,12 +273,14 @@ public class Connect {
 		try {
 			query = "call AjoutPersonneEquipe(?,?)";
 			prepare = connec.prepareStatement(query);
-			prepare.setString(2,nomp);
 			prepare.setString(1, mailp);
+			prepare.setString(2, nomp);
 			prepare.executeQuery();
+			System.out.println(nomp + " " + mailp);
+			System.out.println("ok");
 		}
 		catch (SQLException e) {
-			//e.printStackTrace();
+			System.out.println("Echec ajout");
 		}
 	}
 

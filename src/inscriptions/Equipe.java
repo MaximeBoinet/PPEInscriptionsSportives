@@ -5,16 +5,16 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 /**
- * Représente une Equipe. C'est-à-dire un ensemble de personnes pouvant 
+ * Représente une Equipe. C'est-à-dire un ensemble de personnes pouvant
  * s'inscrire à une compétition.
- * 
+ *
  */
 
 public class Equipe extends Candidat
 {
 	private static final long serialVersionUID = 4147819927233466035L;
 	private SortedSet<Personne> membres = new TreeSet<>();
-	
+
 	Equipe(Inscriptions inscriptions, String nom)
 	{
 		super(inscriptions, nom);
@@ -23,12 +23,12 @@ public class Equipe extends Candidat
 	/**
 	 * Retourne l'ensemble des personnes formant l'équipe.
 	 */
-	
+
 	public SortedSet<Personne> getMembres()
 	{
 		return Collections.unmodifiableSortedSet(membres);
 	}
-	
+
 	/**
 	 * Ajoute une personne dans l'équipe.
 	 * @param membre
@@ -37,19 +37,20 @@ public class Equipe extends Candidat
 
 	public boolean add(Personne membre)
 	{
+		System.out.println(!Inscriptions.getConstruction());
 		if (!Inscriptions.getConstruction())
-			Inscriptions.getConnection().AjoutCandiDansEquipe(membre.getNom(), membre.getMail());
-		
+			Inscriptions.getConnection().AjoutCandiDansEquipe(this.getNom(), membre.getMail());
+
 		membre.add(this);
 		return membres.add(membre);
 	}
 
 	/**
-	 * Supprime une personne de l'équipe. 
+	 * Supprime une personne de l'équipe.
 	 * @param membre
 	 * @return
 	 */
-	
+
 	public boolean remove(Personne membre)
 	{
 		membre.remove(this);
@@ -61,7 +62,7 @@ public class Equipe extends Candidat
 	{
 		super.delete();
 	}
-	
+
 	@Override
 	public String toString()
 	{
