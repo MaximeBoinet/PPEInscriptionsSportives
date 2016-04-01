@@ -112,7 +112,7 @@ public class Inscriptions implements Serializable
 		candidats.add(personne);
 		if (!construction) {
 			try {
-				new mailmessage("Vous venez d'être inscrit à l'application m2l", "Inscription", personne.getMail(), null).envoyer();
+				new mailmessage( personne.getMail(), "Inscription", "Vous venez d'être inscrit à l'application m2l" ).envoyer();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
