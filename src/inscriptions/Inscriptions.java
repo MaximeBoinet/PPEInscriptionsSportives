@@ -119,7 +119,6 @@ public class Inscriptions implements Serializable
 			}
 			getConnection().ajouterPersonne(nom, prenom, mail);
 		}
-
 		return personne;
 	}
 

@@ -284,6 +284,7 @@ public class PersonOverviewController {
 		}
         equipeAInscrire.getItems().remove(candi);
         equipeInscrite.getItems().add(candi);
+        competitions.refresh();
     }
 
     @FXML
@@ -292,6 +293,7 @@ public class PersonOverviewController {
         currentCompet.remove(candi);
     	equipeInscrite.getItems().remove(candi);
         equipeAInscrire.getItems().add(candi);
+        competitions.refresh();
     }
 
     @FXML
@@ -324,6 +326,7 @@ public class PersonOverviewController {
     private void handleChangementDate() {
     	if (currentCompet.getDateCloture().isBefore(dtePickerSet.getValue())) {
     		currentCompet.setDateCloture(dtePickerSet.getValue());
+    		competitions.refresh();
 		}
     	else {
     		createAlerte("Date Incorrect", "Selectionnez une autre date", "La date doit être ultérieur à celle actuellement défini pour la compétition");
@@ -423,6 +426,7 @@ public class PersonOverviewController {
     	compet.add(currentEquipe);
     	competitionDisponible.getItems().remove(compet);
     	competitionParticipe.getItems().add(compet);
+    	equipes.refresh();
     }
 
     @FXML
@@ -431,6 +435,7 @@ public class PersonOverviewController {
     	compet.remove(currentEquipe);
     	competitionDisponible.getItems().add(compet);
     	competitionParticipe.getItems().remove(compet);
+    	equipes.refresh();
     }
 
     @FXML
@@ -439,6 +444,7 @@ public class PersonOverviewController {
     	currentEquipe.add((Personne)candi);
     	personneDisponible.getItems().remove(candi);
     	personneMembre.getItems().add(candi);
+    	equipes.refresh();
     }
 
     @FXML
@@ -447,6 +453,7 @@ public class PersonOverviewController {
     	currentEquipe.remove((Personne)candi);
     	personneDisponible.getItems().add(candi);
     	personneMembre.getItems().remove(candi);
+    	equipes.refresh();
     }
 
     @FXML
@@ -476,6 +483,7 @@ public class PersonOverviewController {
     @FXML
     private void handleChangerNomEquipe() {
     	currentEquipe.setNom(nomEquipeNew.getText());
+    	equipes.refresh();
     }
 
     @FXML
@@ -618,16 +626,19 @@ public class PersonOverviewController {
     @FXML
     private void handleChangerNomP() {
     	currentPersonne.setNom(nomUpdate.getText());
+    	personnes.refresh();
     }
 
     @FXML
     private void handleChangerPrenomP() {
     	currentPersonne.setPrenom(prenomUpdate.getText());
+    	personnes.refresh();
     }
 
     @FXML
     private void handleChangerMailP() {
     	currentPersonne.setMail(mailUpdate.getText());
+    	personnes.refresh();
     }
 
     @FXML
@@ -636,6 +647,7 @@ public class PersonOverviewController {
     	((Equipe)candi).add(currentPersonne);
     	equipeDispoPersonne.getItems().remove(candi);
         equipeInscritePersonne.getItems().add(candi);
+        personnes.refresh();
     }
 
     @FXML
@@ -644,6 +656,7 @@ public class PersonOverviewController {
     	((Equipe)candi).remove(currentPersonne);
     	equipeDispoPersonne.getItems().add(candi);
         equipeInscritePersonne.getItems().remove(candi);
+        personnes.refresh();
     }
 
     @FXML
@@ -652,6 +665,7 @@ public class PersonOverviewController {
     	compet.add(currentPersonne);
     	competDispoPersonne.getItems().remove(compet);
         competParticipePersonne.getItems().add(compet);
+        personnes.refresh();
     }
 
     @FXML
@@ -660,6 +674,7 @@ public class PersonOverviewController {
     	compet.remove(currentPersonne);
     	competDispoPersonne.getItems().add(compet);
     	competParticipePersonne.getItems().remove(compet);
+    	personnes.refresh();
     }
 
     @FXML
