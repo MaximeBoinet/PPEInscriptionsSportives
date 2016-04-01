@@ -175,16 +175,26 @@ public class PersonOverviewController {
     Competition currentCompet = null;
 	ObservableList<Candidat> lesEquipeAInscrire = FXCollections.observableArrayList();
 	ObservableList<Candidat> lesEquipeInscrite = FXCollections.observableArrayList();
+    Candidat currentCandidatCompetAInscrire = null;
+    Candidat currentCandidatCompetADesinscrire = null;
     Equipe currentEquipe = null;
     ObservableList<Competition> competDispos = FXCollections.observableArrayList();
 	ObservableList<Competition> competParticipes = FXCollections.observableArrayList();
 	ObservableList<Candidat> personneDispos = FXCollections.observableArrayList();
 	ObservableList<Candidat> personneMembres = FXCollections.observableArrayList();
+    Competition currentCompetDispo = null;
+    Competition currentCompetPerticipe = null;
+    Candidat currentPersonneDispo = null;
+    Candidat currentPersonneMembre = null;
 	Personne currentPersonne = null;
 	ObservableList<Competition> competDisposPersonne = FXCollections.observableArrayList();
 	ObservableList<Competition> competParticipesPersonne = FXCollections.observableArrayList();
 	ObservableList<Candidat> equipeDisposPersonne = FXCollections.observableArrayList();
 	ObservableList<Candidat> equipeInscritesPersonne = FXCollections.observableArrayList();
+    Competition currentCompetDispoPersonne = null;
+    Competition currentCompetParticipePersonne = null;
+    Candidat currentEquipeDispoPersonne = null;
+    Candidat currentEquipeParticipePersonne = null;
 
 	public PersonOverviewController() {
 
@@ -256,41 +266,43 @@ public class PersonOverviewController {
         }
     }
 
+
     private void setCurrentCandidatCompetAInscrire(Candidat candidat) {
     	if (candidat != null) {
 			inscrire.setDisable(false);
+			currentCandidatCompetAInscrire = candidat;
 		} else {
 			inscrire.setDisable(true);
+			currentCandidatCompetAInscrire = null;
 		}
     }
 
     private void setCurrentCandidatCompetADesinscrire(Candidat candidat) {
-    	if (candidat != null)
+    	if (candidat != null) {
 			desinscrire.setDisable(false);
-		else
+    		currentCandidatCompetADesinscrire = candidat;
+    	} else {
 			desinscrire.setDisable(true);
+    		currentCandidatCompetADesinscrire = null;
+    	}
     }
 
     @FXML
     private void handleInscrireCompetCandidat() {
-    	Candidat candidat = equipeAInscrire.getItems().get(equipeAInscrire.getSelectionModel().getSelectedIndex());
-    	System.out.println(candidat.getNom());
     	if (currentCompet.estEnEquipe()) {
-    		this.currentCompet.add((Equipe)(candidat));
+    		this.currentCompet.add((Equipe)(currentCandidatCompetAInscrire));
 		} else {
-			this.currentCompet.add((Personne)(candidat));
+			this.currentCompet.add((Personne)(currentCandidatCompetAInscrire));
 		}
-        equipeAInscrire.getItems().remove(candidat);
-        equipeInscrite.getItems().add(candidat);
+        equipeAInscrire.getItems().remove(currentCandidatCompetAInscrire);
+        equipeInscrite.getItems().add(currentCandidatCompetAInscrire);
     }
 
     @FXML
     private void handleDesinscrireCompetCandidat() {
-    	Candidat candidat = equipeInscrite.getItems().get(equipeInscrite.getSelectionModel().getSelectedIndex());
-        currentCompet.remove(candidat);
-    	equipeInscrite.getItems().remove(candidat);
-        equipeAInscrire.getItems().add(candidat);
-        initializeCompetition();
+        currentCompet.remove(currentCandidatCompetADesinscrire);
+    	equipeInscrite.getItems().remove(currentCandidatCompetADesinscrire);
+        equipeAInscrire.getItems().add(currentCandidatCompetADesinscrire);
     }
 
     @FXML
@@ -323,7 +335,6 @@ public class PersonOverviewController {
     private void handleChangementDate() {
     	if (currentCompet.getDateCloture().isBefore(dtePickerSet.getValue())) {
     		currentCompet.setDateCloture(dtePickerSet.getValue());
-    		initializeCompetition();
 		}
     	else {
     		createAlerte("Date Incorrect", "Selectionnez une autre date", "La date doit être ultérieur à celle actuellement défini pour la compétition");
@@ -387,74 +398,70 @@ public class PersonOverviewController {
 
     private void setCurrentCompetDispo(Competition competition) {
     	if (competition != null) {
+    		currentCompetDispo = competition;
 			inscrireCompet.setDisable(false);
 		} else {
+			currentCompetDispo = null;
 			inscrireCompet.setDisable(true);
 		}
     }
 
     private void setCurrentCompetPerticipe(Competition competition) {
     	if (competition != null) {
+    		currentCompetPerticipe = competition;
 			desinscrireCompet.setDisable(false);
 		} else {
+			currentCompetPerticipe = null;
 			desinscrireCompet.setDisable(true);
 		}
     }
 
     private void setCurrentPersonneDispo(Candidat candidat) {
     	if (candidat != null) {
+    		currentPersonneDispo = candidat;
 			inscrirePersonne.setDisable(false);
 		} else {
+			currentPersonneDispo = null;
 			inscrirePersonne.setDisable(true);
 		}
     }
 
     private void setCurrentPersonneMembre(Candidat candidat) {
     	if (candidat != null) {
+    		currentPersonneMembre = candidat;
 			desinscrirePersonne.setDisable(false);
 		} else {
+			currentPersonneDispo = null;
 			desinscrirePersonne.setDisable(true);
 		}
     }
 
     @FXML
     private void handleInscrireCompetEquipe() {
-    	Competition compet = competitionDisponible.getItems().get(competitionDisponible.getSelectionModel().getSelectedIndex());
-    	compet.add(currentEquipe);
-    	competitionDisponible.getItems().remove(compet);
-    	competitionParticipe.getItems().add(compet);
-    	mainApp.resetList();
-    	showEquipeDetails(currentEquipe);
+    	currentCompetDispo.add(currentEquipe);
+    	competitionDisponible.getItems().remove(currentCompetDispo);
+    	competitionParticipe.getItems().add(currentCompetDispo);
     }
 
     @FXML
     private void handleDesinscrireCompetEquipe() {
-    	Competition compet = competitionParticipe.getItems().get(competitionParticipe.getSelectionModel().getSelectedIndex());
-    	compet.remove(currentEquipe);
-    	competitionDisponible.getItems().add(compet);
-    	competitionParticipe.getItems().remove(compet);
-    	mainApp.resetList();
-    	showEquipeDetails(currentEquipe);
+    	currentCompetPerticipe.remove(currentEquipe);
+    	competitionDisponible.getItems().add(currentCompetPerticipe);
+    	competitionParticipe.getItems().remove(currentCompetPerticipe);
     }
 
     @FXML
     private void handleInscrireMembreEquipe() {
-    	Candidat pers = personneDisponible.getItems().get(personneDisponible.getSelectionModel().getSelectedIndex());
-    	currentEquipe.add((Personne)pers);
-    	personneDisponible.getItems().remove(pers);
-    	personneMembre.getItems().add(pers);
-    	mainApp.resetList();
-    	showEquipeDetails(currentEquipe);
+    	currentEquipe.add((Personne)currentPersonneDispo);
+    	personneDisponible.getItems().remove(currentPersonneDispo);
+    	personneMembre.getItems().add(currentPersonneDispo);
     }
 
     @FXML
     private void handleDesinscrireMembreEquipe() {
-    	Candidat pers = personneMembre.getItems().get(personneMembre.getSelectionModel().getSelectedIndex());
-    	currentEquipe.remove((Personne)pers);
-    	personneDisponible.getItems().add(pers);
-    	personneMembre.getItems().remove(pers);
-    	mainApp.resetList();
-    	showEquipeDetails(currentEquipe);
+    	currentEquipe.remove((Personne)currentPersonneMembre);
+    	personneDisponible.getItems().add(currentPersonneMembre);
+    	personneMembre.getItems().remove(currentPersonneMembre);
     }
 
     @FXML
@@ -465,13 +472,11 @@ public class PersonOverviewController {
 
     @FXML
     private void toggleChangerEquipe() {
-    	if (nomEquipeNew.getText().length() == 0 && currentEquipe != null) {
-			appliquerNomB.setDisable(true);
-		} else {
+    	if (nomEquipeNew.getText().length() != 0 && currentEquipe != null) {
 			appliquerNomB.setDisable(false);
+		} else {
+			appliquerNomB.setDisable(true);
 		}
-    	mainApp.resetList();
-    	showEquipeDetails(currentEquipe);
     }
 
     @FXML
@@ -481,6 +486,11 @@ public class PersonOverviewController {
 		} else {
 			creerEquipe.setDisable(false);
 		}
+    }
+
+    @FXML
+    private void handleChangerNomEquipe() {
+    	currentEquipe.setNom(nomEquipeNew.getText());
     }
 
     @FXML
@@ -548,32 +558,40 @@ public class PersonOverviewController {
 
     private void setCurrentCompetDispoPersonne(Competition compet) {
     	if (compet != null) {
+    		currentCompetDispoPersonne = compet;
 			inscrireCompetP.setDisable(false);
 		} else {
+			currentCompetDispoPersonne = null;
 			inscrireCompetP.setDisable(true);
 		}
     }
 
     private void setCurrentCompetParticipePersonne(Competition compet) {
     	if (compet != null) {
+    		currentCompetParticipePersonne = compet;
 			desinscrireCompetP.setDisable(false);
 		} else {
+			currentCompetParticipePersonne = null;
 			desinscrireCompetP.setDisable(true);
 		}
     }
 
     private void setCurrentEquipeDispoPersonne(Candidat candidat) {
     	if (candidat != null) {
+    		currentEquipeDispoPersonne = candidat;
 			inscrireEquipeP.setDisable(false);
 		} else {
+			currentEquipeDispoPersonne = null;
 			inscrireEquipeP.setDisable(true);
 		}
     }
 
     private void setCurrentEquipeParticipePersonne(Candidat candidat) {
     	if (candidat != null) {
+    		currentEquipeParticipePersonne = candidat;
 			desinscrireEquipeP.setDisable(false);
 		} else {
+			currentEquipeParticipePersonne = null;
 			desinscrireEquipeP.setDisable(true);
 		}
     }
@@ -623,62 +641,43 @@ public class PersonOverviewController {
     @FXML
     private void handleChangerNomP() {
     	currentPersonne.setNom(nomUpdate.getText());
-    	mainApp.resetList();
-    	showPersonneDetails(currentPersonne);
     }
 
     @FXML
     private void handleChangerPrenomP() {
     	currentPersonne.setPrenom(prenomUpdate.getText());
-    	mainApp.resetList();
-    	showPersonneDetails(currentPersonne);
     }
 
     @FXML
     private void handleChangerMailP() {
     	currentPersonne.setMail(mailUpdate.getText());
-    	mainApp.resetList();
-    	showPersonneDetails(currentPersonne);
     }
 
     @FXML
     private void handleInscrireEquipeP() {
-    	Candidat candidat = equipeDispoPersonne.getItems().get(equipeDispoPersonne.getSelectionModel().getSelectedIndex());
-    	((Equipe)candidat).add(currentPersonne);
-    	equipeDispoPersonne.getItems().remove(candidat);
-        equipeInscritePersonne.getItems().add(candidat);
-        mainApp.resetList();
-    	showPersonneDetails(currentPersonne);
+    	((Equipe)currentEquipeDispoPersonne).add(currentPersonne);
+    	equipeDispoPersonne.getItems().remove(currentEquipeDispoPersonne);
+        equipeInscritePersonne.getItems().add(currentEquipeDispoPersonne);
     }
 
     @FXML
     private void handleDesinscrireEquipeP() {
-    	Candidat candidat = equipeInscritePersonne.getItems().get(equipeInscritePersonne.getSelectionModel().getSelectedIndex());
-    	((Equipe)candidat).remove(currentPersonne);
-    	equipeDispoPersonne.getItems().add(candidat);
-        equipeInscritePersonne.getItems().remove(candidat);
-        mainApp.resetList();
-    	showPersonneDetails(currentPersonne);
+    	((Equipe)currentEquipeParticipePersonne).remove(currentPersonne);
+    	equipeDispoPersonne.getItems().add(currentEquipeParticipePersonne);
+        equipeInscritePersonne.getItems().remove(currentEquipeParticipePersonne);
     }
 
     @FXML
     private void handleInscrireCompetP() {
-    	Competition compet = competDispoPersonne.getItems().get(competDispoPersonne.getSelectionModel().getSelectedIndex());
-    	compet.add(currentPersonne);
-    	competDispoPersonne.getItems().remove(compet);
-        competParticipePersonne.getItems().add(compet);
-        mainApp.resetList();
-    	showPersonneDetails(currentPersonne);
+    	currentCompetDispoPersonne.add(currentPersonne);
+    	competDispoPersonne.getItems().remove(currentCompetDispoPersonne);
+        competParticipePersonne.getItems().add(currentCompetDispoPersonne);
     }
 
     @FXML
     private void handleDesinscrireCompetP() {
-    	Competition compet = competParticipePersonne.getItems().get(competParticipePersonne.getSelectionModel().getSelectedIndex());
-    	compet.remove(currentPersonne);
-    	competDispoPersonne.getItems().add(compet);
-        competParticipePersonne.getItems().remove(compet);
-        mainApp.resetList();
-    	showPersonneDetails(currentPersonne);
+    	currentCompetParticipePersonne.remove(currentPersonne);
+    	competDispoPersonne.getItems().add(currentCompetParticipePersonne);
     }
 
     @FXML

@@ -371,8 +371,8 @@ public class Connect {
 				if (candidat instanceof Personne){
 					query = "call ModifNomPersonne(?,?)";
 					prepare = connec.prepareStatement(query);
-					prepare.setString(2,((Personne)candidat).getPrenom());
-					prepare.setString(1, nomp);
+					prepare.setString(1,((Personne)candidat).getNom());
+					prepare.setString(2, nomp);
 				}
 				prepare.executeQuery();
 			}
@@ -386,10 +386,10 @@ public class Connect {
 				public void ModifPrenomPersonne(Candidat candidat, String prenomp) {
 					try {
 						if (candidat instanceof Personne){
-							query = "call ModifNomPersonne(?,?)";
+							query = "call ModifPrenomPersonne(?,?)";
 							prepare = connec.prepareStatement(query);
-							prepare.setString(2,((Personne)candidat).getNom());
 							prepare.setString(1, prenomp);
+							prepare.setString(2,((Personne)candidat).getPrenom());
 						}
 						prepare.executeQuery();
 					}

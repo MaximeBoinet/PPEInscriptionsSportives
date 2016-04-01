@@ -40,7 +40,9 @@ public class MainApp extends Application {
     	competitions.clear();
         equipes.clear();
         personnes.clear();
-        competitions = FXCollections.observableArrayList(Inscriptions.getInscriptions().getCompetitions());
+        for (Competition competition : Inscriptions.getInscriptions().getCompetitions()) {
+        	competitions.add(competition);
+		}
         for (Candidat candidat : Inscriptions.getInscriptions().getCandidats()) {
 			if (candidat instanceof Equipe)
 				equipes.add(((Equipe)candidat));
