@@ -16,6 +16,7 @@ import inscriptions.Candidat;
 import inscriptions.Competition;
 import inscriptions.Equipe;
 import inscriptions.Personne;
+import interfUtil.view.IdentificationControler;
 import interfUtil.view.MailSenderController;
 import interfUtil.view.PersonOverviewController;
 
@@ -24,6 +25,7 @@ public class MainApp extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
+    private boolean identifie = false;
     private ObservableList<Competition> competitions = FXCollections.observableArrayList(Inscriptions.getInscriptions().getCompetitions());
     private ObservableList<Equipe> equipes = FXCollections.observableArrayList();
     private ObservableList<Personne> personnes = FXCollections.observableArrayList();
@@ -94,8 +96,34 @@ public class MainApp extends Application {
 			loader.setLocation(MainApp.class.getResource("view/PersonOverview.fxml"));
 			AnchorPane personOverView = (AnchorPane) loader.load();
 			rootLayout.setCenter(personOverView);
+			showIdentification();
+			if (!isLoged()) {
+	        	this.getPrimaryStage().close();
+			}
 			PersonOverviewController controller = loader.getController();
 			controller.setMainApp(this);
+		} catch (IOException e) {
+			// TODO: handle exception
+		}
+    }
+    
+    public void showIdentification() {
+    	try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("view/Identification.fxml"));
+			AnchorPane page = (AnchorPane) loader.load();
+
+			Stageid dialogStage = new Stageid(this);
+            dialogStage.setTitle("S'identifier");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+            
+			IdentificationControler controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+			controller.setMainApp(this);
+			dialogStage.showAndWait();
 		} catch (IOException e) {
 			// TODO: handle exception
 		}
@@ -132,5 +160,17 @@ public class MainApp extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+    
+    public boolean getId() {
+    	return this.identifie;
+    }
+    
+    public void setId(Boolean bool) {
+    	this.identifie = bool;
+    }
+    
+    public boolean isLoged() {
+    	return getId();
     }
 }

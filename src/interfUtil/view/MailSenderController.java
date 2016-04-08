@@ -80,7 +80,7 @@ public class MailSenderController {
 	@FXML
 	private void handleEnvoyer() {
 		for (String mail : mesMails) {
-			new mailmessage(mail, object.getText(), textArea.getText());
+			new mailmessage(mail, object.getText(), textArea.getText()).envoyer();
 		}
 		dialogStage.close();
 	}
