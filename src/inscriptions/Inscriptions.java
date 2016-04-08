@@ -86,9 +86,9 @@ public class Inscriptions implements Serializable
 		return competition;
 	}
 
-	public static void setMainApp(MainApp mainApp)
+	public static void setMainApp(MainApp mainApps)
 	{
-		mainApp = mainApp;
+		mainApp = mainApps;
 	}
 
 	public static MainApp getMainApp() {

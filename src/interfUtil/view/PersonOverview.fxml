@@ -130,6 +130,7 @@
                                                             <Font name="System Bold" size="13.0" />
                                                          </font>
                                                       </Label>
+                                                      <Button fx:id="mailCompet" mnemonicParsing="false" onAction="#handleMailCompet" text="Mail" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                                                    </children>
                                                 </GridPane>
                                              </children></AnchorPane>
@@ -304,6 +305,7 @@
                                                             <Insets left="5.0" />
                                                          </GridPane.margin>
                                                       </Button>
+                                                      <Button fx:id="mailEquipe" mnemonicParsing="false" onAction="#handleMailEquipe" text="Mail" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
                                                    </children>
                                                 </GridPane>
                                              </children></AnchorPane>
@@ -429,6 +431,7 @@
                                                                   <TextField fx:id="nomUpdate" onKeyReleased="#toggleNewNom" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                                   <TextField fx:id="prenomUpdate" onKeyReleased="#toggleNewPrenom" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                                   <TextField fx:id="mailUpdate" onKeyReleased="#toggleNewMail" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                                  <Button fx:id="mailPersonne" mnemonicParsing="false" onAction="#handleMailPersonne" text="Mail" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                                                                </children>
                                                             </GridPane>
                                                          </content>

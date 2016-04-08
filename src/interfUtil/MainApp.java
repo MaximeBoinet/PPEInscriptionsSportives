@@ -10,11 +10,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import inscriptions.Candidat;
 import inscriptions.Competition;
 import inscriptions.Equipe;
 import inscriptions.Personne;
+import interfUtil.view.MailSenderController;
 import interfUtil.view.PersonOverviewController;
 
 
@@ -61,6 +63,7 @@ public class MainApp extends Application {
     public ObservableList<Personne> getPersonnes() {
     	return personnes;
     }
+    
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -98,6 +101,31 @@ public class MainApp extends Application {
 		}
     }
 
+    public boolean showPersonEditDialog(Object unObj) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/MailSender.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Envoyer un Mail");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            MailSenderController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setObj(unObj);
+
+            dialogStage.showAndWait();
+
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
     public Stage getPrimaryStage() {
     	return this.primaryStage;
     }

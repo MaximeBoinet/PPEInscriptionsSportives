@@ -85,6 +85,8 @@ public class PersonOverviewController {
     private DatePicker dtePickerSet = new DatePicker();
     @FXML
     private Button supprimCompet = new Button();
+    @FXML
+    private Button mailCompet = new Button();
 
     //Champs pour les equipes
     @FXML
@@ -121,6 +123,8 @@ public class PersonOverviewController {
     private Button creerEquipe = new Button();
     @FXML
     private Button supprimerEquipe = new Button();
+    @FXML
+    private Button mailEquipe = new Button();
 
     //Champs pour personnes
     @FXML
@@ -169,6 +173,8 @@ public class PersonOverviewController {
     private TextField prenomNew = new TextField();
     @FXML
     private TextField mailNew = new TextField();
+    @FXML
+    private Button mailPersonne = new Button();
 
     private MainApp mainApp;
 
@@ -248,12 +254,14 @@ public class PersonOverviewController {
         	nomEI.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getNom()));
         	dtePickerSet.setValue(currentCompet.getDateCloture());
         	changerDate.setDisable(false);
+        	mailCompet.setDisable(false);
 
         } else {
         	currentCompet = null;
         	dtePickerSet.setValue(null);
         	supprimCompet.setDisable(true);
         	changerDate.setDisable(true);
+        	mailCompet.setDisable(true);
         }
     }
 
@@ -339,6 +347,11 @@ public class PersonOverviewController {
     		changerDate.setDisable(false);
     	}
     }
+    
+    @FXML
+    private void handleMailCompet() {
+    	mainApp.showPersonEditDialog(currentCompet);
+    }
 
     private void showEquipeDetails(Equipe equipe) {
     	if (equipe != null) {
@@ -381,10 +394,12 @@ public class PersonOverviewController {
 
         	nomEquipeNew.setText(currentEquipe.getNom());
         	appliquerNomB.setDisable(false);
+        	mailEquipe.setDisable(false);
         } else {
         	currentEquipe = null;
         	supprimerEquipe.setDisable(true);
         	appliquerNomB.setDisable(true);
+        	mailEquipe.setDisable(true);
         }
     }
 
@@ -493,6 +508,11 @@ public class PersonOverviewController {
     	tempsEquipe.delete();
     }
 
+    @FXML
+    private void handleMailEquipe() {
+    	mainApp.showPersonEditDialog(currentEquipe);
+    }
+    
     private void showPersonneDetails(Personne personne) {
     	if (personne != null) {
     		supprimerPersonne.setDisable(false);
@@ -536,6 +556,7 @@ public class PersonOverviewController {
         	appliquerNom.setDisable(false);
         	appliquerPrenom.setDisable(false);
         	appliquerMail.setDisable(false);
+        	mailPersonne.setDisable(false);
 
         } else {
         	currentEquipe = null;
@@ -546,6 +567,7 @@ public class PersonOverviewController {
         	appliquerPrenom.setDisable(true);
         	appliquerMail.setDisable(true);
         	supprimerPersonne.setDisable(true);
+        	mailPersonne.setDisable(true);
         }
     }
 
@@ -682,6 +704,11 @@ public class PersonOverviewController {
     	Personne tempsPersonne = currentPersonne;
     	mainApp.getPersonnes().remove(currentPersonne);
     	tempsPersonne.delete();
+    }
+    
+    @FXML
+    private void handleMailPersonne() {
+    	mainApp.showPersonEditDialog(currentPersonne);
     }
 
     public void setMainApp(MainApp mainApp) {

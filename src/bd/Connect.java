@@ -397,6 +397,20 @@ public class Connect {
 						//e.printStackTrace();
 					}
 				}
+				
+				public boolean isUser(String pseudo, String password) {
+					query = "call RecupUser(?,?)";
+					try {
+						prepare = connec.prepareStatement(query);
+						prepare.setString(1, pseudo);
+						prepare.setString(2, password);
+						resultat = prepare.executeQuery();
+						return resultat.next();
+					} catch (SQLException e) {
+						e.printStackTrace();
+						return false;
+					}
+				}
 }
 
 
