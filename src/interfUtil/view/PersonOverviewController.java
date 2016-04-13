@@ -713,6 +713,7 @@ public class PersonOverviewController {
 
     public void setMainApp(MainApp mainApp) {
     	this.mainApp = mainApp;
+
     	supprimCompet.setDisable(true);
     	supprimerEquipe.setDisable(true);
     	supprimerPersonne.setDisable(true);
