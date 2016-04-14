@@ -56,10 +56,11 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Inscription M2L");
-
+        System.out.println(1);
         initRootLayout();
-
+        System.out.println(2);
         showPersonOverview();
+        System.out.println(3);
     }
 
     public void initRootLayout() {
@@ -87,9 +88,10 @@ public class MainApp extends Application {
 	        	this.getPrimaryStage().close();
 			}
 			PersonOverviewController controller = loader.getController();
+			System.out.println(controller);
 			controller.setMainApp(this);
 		} catch (IOException e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
     }
     

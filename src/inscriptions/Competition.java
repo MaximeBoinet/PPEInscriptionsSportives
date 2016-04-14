@@ -21,16 +21,28 @@ public class Competition implements Comparable<Competition>, Serializable
 	private Set<Candidat> candidats;
 	private LocalDate dateCloture;
 	private boolean enEquipe = false;
+	private int identifiant;
 
-	Competition(Inscriptions inscriptions, String nom, LocalDate dateCloture, boolean enEquipe)
+	Competition(Inscriptions inscriptions, String nom, LocalDate dateCloture, boolean enEquipe, int identifiant)
 	{
 		this.enEquipe = enEquipe;
 		this.inscriptions = inscriptions;
 		this.nom = nom;
 		this.dateCloture = dateCloture;
+		this.identifiant = identifiant;
 		candidats = new TreeSet<>();
+		
 	}
 
+	/**
+	 * Retourne l'identifiant de la competition
+	 * @return 
+	 */
+	
+	public int getId() {
+		return identifiant;
+	}
+	
 	/**
 	 * Retourne le nom de la compétition.
 	 * @return
@@ -84,7 +96,7 @@ public class Competition implements Comparable<Competition>, Serializable
 	{
 		// TODO vérifier que l'on avance pas la date.
 		if (this.dateCloture == null || dateCloture.isAfter(getDateCloture())) {
-			Inscriptions.getConnection().ModifieDateCompet(dateCloture, this.dateCloture, this.getNom());
+			Inscriptions.getConnection().ModifieDateCompet(dateCloture, this);
 			this.dateCloture = dateCloture;
 		}
 
@@ -167,7 +179,7 @@ public class Competition implements Comparable<Competition>, Serializable
 	{
 		for (Candidat candidat : candidats)
 			remove(candidat);
-		Inscriptions.getConnection().EnleverCompet(this.getNom());
+		Inscriptions.getConnection().EnleverCompet(this.getId());
 		inscriptions.remove(this);
 	}
 
@@ -180,6 +192,6 @@ public class Competition implements Comparable<Competition>, Serializable
 	@Override
 	public String toString()
 	{
-		return getNom();
+		return identifiant + " " + getNom();
 	}
 }

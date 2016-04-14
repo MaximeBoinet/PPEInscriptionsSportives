@@ -318,7 +318,7 @@ public class PersonOverviewController {
     	if (dtePicker.getValue().isEqual(LocalDate.now()) || dtePicker.getValue().isBefore(LocalDate.now())) {
     		createAlerte("Date Incorrect", "Selectionnez une autre date", "La date doit être ultérieur à la date actuel");
 		} else {
-	    	Competition compet = Inscriptions.getInscriptions().createCompetition(nomcompet.getText(), dtePicker.getValue(), enEquipeCB.isSelected());
+	    	Competition compet = Inscriptions.getInscriptions().createCompetition(nomcompet.getText(), dtePicker.getValue(), enEquipeCB.isSelected(), -1);
 	    	mainApp.getCompetitions().add(compet);
 		}
     }
@@ -473,7 +473,7 @@ public class PersonOverviewController {
 
     @FXML
     private void handleCreateEquipe() {
-    	Equipe equipe = Inscriptions.getInscriptions().createEquipe(nomEquipe.getText());
+    	Equipe equipe = Inscriptions.getInscriptions().createEquipe(nomEquipe.getText(), -1);
     	mainApp.getEquipes().add(equipe);
     }
 
@@ -614,7 +614,7 @@ public class PersonOverviewController {
 
     @FXML
     private void handleCreerPersonne() {
-    	Personne pers = Inscriptions.getInscriptions().createPersonne(nomNew.getText(), prenomNew.getText(), mailNew.getText());
+    	Personne pers = Inscriptions.getInscriptions().createPersonne(nomNew.getText(), prenomNew.getText(), mailNew.getText(), -1);
     	mainApp.getPersonnes().add(pers);
     }
 
@@ -712,6 +712,7 @@ public class PersonOverviewController {
     }
 
     public void setMainApp(MainApp mainApp) {
+    	System.out.println(4);
     	this.mainApp = mainApp;
 
     	supprimCompet.setDisable(true);
@@ -725,9 +726,11 @@ public class PersonOverviewController {
     	appliquerPrenom.setDisable(true);
     	creerPersonne.setDisable(true);
     	appliquerNomB.setDisable(true);
+    	System.out.println(5);
     	competitions.setItems(mainApp.getCompetitions());
     	equipes.setItems(mainApp.getEquipes());
     	personnes.setItems(mainApp.getPersonnes());
+    	System.out.println(6);
     	showCompetDetails(null);
     	setCurrentCandidatCompetADesinscrire(null);
     	setCurrentCandidatCompetAInscrire(null);
@@ -741,6 +744,7 @@ public class PersonOverviewController {
     	setCurrentCompetParticipePersonne(null);
     	setCurrentEquipeDispoPersonne(null);
     	setCurrentEquipeParticipePersonne(null);
+    	System.out.println(7);
     	competitions.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> showCompetDetails(newValue));
     	equipeAInscrire.getSelectionModel().selectedItemProperty().addListener(

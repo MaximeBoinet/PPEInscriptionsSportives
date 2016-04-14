@@ -16,14 +16,25 @@ public abstract class Candidat implements Comparable<Candidat>, Serializable
 	private Inscriptions inscriptions;
 	private String nom;
 	private Set<Competition> competitions;
+	private int identifiant;
 
-	Candidat(Inscriptions inscriptions, String nom)
+	Candidat(Inscriptions inscriptions, String nom, int identifiant)
 	{
 		this.inscriptions = inscriptions;
 		this.nom = nom;
+		this.identifiant = identifiant;
 		competitions = new TreeSet<>();
 	}
 
+	/**
+	 * Retourne l'identifiant du candidat
+	 * @return 
+	 */
+	
+	public int getId() {
+		return identifiant;
+	}
+	
 	/**
 	 * Retourne le nom du candidat.
 	 * @return
@@ -75,9 +86,9 @@ public abstract class Candidat implements Comparable<Candidat>, Serializable
 			c.remove(this);
 		inscriptions.remove(this);
 		if (this instanceof Equipe) {
-			Inscriptions.getConnection().EnleverEquipe(this.getNom());
+			Inscriptions.getConnection().EnleverEquipe(this.getId());
 		} else if (this instanceof Personne) {
-			Inscriptions.getConnection().EnleverPersonne(((Personne)this).getMail());
+			Inscriptions.getConnection().EnleverPersonne(((Personne)this).getId());
 		}
 	}
 
@@ -90,6 +101,6 @@ public abstract class Candidat implements Comparable<Candidat>, Serializable
 	@Override
 	public String toString()
 	{
-		return "\n" + getNom() + " -> inscrit à " + getCompetitions();
+		return "\n" + identifiant + " " + getNom() + " -> inscrit à " + getCompetitions();
 	}
 }

@@ -14,9 +14,9 @@ public class Personne extends Candidat
 	private String prenom, mail;
 	private Set<Equipe> equipes;
 
-	Personne(Inscriptions inscriptions, String nom, String prenom, String mail)
+	Personne(Inscriptions inscriptions, String nom, String prenom, String mail, int identifiant)
 	{
-		super(inscriptions, nom);
+		super(inscriptions, nom, identifiant);
 		this.prenom = prenom;
 		this.mail = mail;
 		equipes = new TreeSet<>();

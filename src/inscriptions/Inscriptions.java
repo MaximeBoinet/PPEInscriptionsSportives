@@ -76,13 +76,13 @@ public class Inscriptions implements Serializable
 	 */
 
 	public Competition createCompetition(String nom,
-			LocalDate dateCloture, boolean enEquipe)
+			LocalDate dateCloture, boolean enEquipe, int identifiant)
 	{
-		Competition competition = new Competition(this, nom, dateCloture, enEquipe);
-		competitions.add(competition);
 		if (!construction)
-			getConnection().ajouterCompetition(nom, dateCloture, enEquipe);
+			identifiant = getConnection().ajouterCompetition(nom, dateCloture, enEquipe);
 
+		Competition competition = new Competition(this, nom, dateCloture, enEquipe, identifiant);
+		competitions.add(competition);
 		return competition;
 	}
 
@@ -104,21 +104,21 @@ public class Inscriptions implements Serializable
 	 * @return
 	 */
 
-	public Personne createPersonne(String nom, String prenom, String mail)
+	public Personne createPersonne(String nom, String prenom, String mail, int identifiant)
 	{
-		Personne personne = new Personne(this, nom, prenom, mail);
-
-
-		candidats.add(personne);
+		if (!construction) 
+			identifiant = getConnection().ajouterPersonne(nom, prenom, mail);
+		
+		Personne personne = new Personne(this, nom, prenom, mail, identifiant);
 		if (!construction) {
 			try {
-				new mailmessage( personne.getMail(), "Inscription", "Vous venez d'être inscrit à l'application m2l" ).envoyer();
+				new mailmessage(personne.getMail(), "Inscription", "Vous venez d'être inscrit à l'application m2l" ).envoyer();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			getConnection().ajouterPersonne(nom, prenom, mail);
 		}
+		candidats.add(personne);
 		return personne;
 	}
 
@@ -131,29 +131,29 @@ public class Inscriptions implements Serializable
 	 * @return
 	 */
 
-	public Equipe createEquipe(String nom)
+	public Equipe createEquipe(String nom, int identifiant)
 	{
-		Equipe equipe = new Equipe(this, nom);
-		candidats.add(equipe);
 		if (!construction)
-			getConnection().ajouterEquipe(nom);
+			identifiant = getConnection().ajouterEquipe(nom);
 
+		Equipe equipe = new Equipe(this, nom, identifiant);
+		candidats.add(equipe);
 		return equipe;
 	}
 
 	void remove(Competition competition)
 	{
-		competitions.remove(competition);
-		getConnection().EnleverCompet(competition.getNom());
+		getConnection().EnleverCompet(competition.getId());
+		competition.delete();
 	}
 
 	void remove(Candidat candidat)
 	{
-		candidats.remove(candidat);
 		if (candidat instanceof Personne)
-			getConnection().EnleverPersonne(((Personne) candidat).getMail());
+			getConnection().EnleverPersonne(((Personne) candidat).getId());
 		else
-			getConnection().EnleverEquipe(candidat.getNom());
+			getConnection().EnleverEquipe(candidat.getId());
+		candidat.delete();
 	}
 
 	/**

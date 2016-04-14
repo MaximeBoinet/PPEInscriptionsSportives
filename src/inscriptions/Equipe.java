@@ -15,9 +15,9 @@ public class Equipe extends Candidat
 	private static final long serialVersionUID = 4147819927233466035L;
 	private SortedSet<Personne> membres = new TreeSet<>();
 
-	Equipe(Inscriptions inscriptions, String nom)
+	Equipe(Inscriptions inscriptions, String nom, int identifiant)
 	{
-		super(inscriptions, nom);
+		super(inscriptions, nom, identifiant);
 	}
 
 	/**
@@ -39,7 +39,7 @@ public class Equipe extends Candidat
 	{
 		System.out.println(!Inscriptions.getConstruction());
 		if (!Inscriptions.getConstruction())
-			Inscriptions.getConnection().AjoutCandiDansEquipe(this.getNom(), membre.getMail());
+			Inscriptions.getConnection().AjoutCandiDansEquipe(this, membre);
 
 		membre.add(this);
 		return membres.add(membre);
