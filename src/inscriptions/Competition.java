@@ -127,7 +127,7 @@ public class Competition implements Comparable<Competition>, Serializable
 			if (enEquipe)
 				throw new RuntimeException();
 			personne.add(this);
-
+			System.out.println("okp");
 			Inscriptions.getConnection().InscritCompetCandi(personne, this);
 
 			return candidats.add(personne);
@@ -151,6 +151,7 @@ public class Competition implements Comparable<Competition>, Serializable
 			if (!enEquipe)
 				throw new RuntimeException();
 			equipe.add(this);
+			System.out.println("oke");
 			Inscriptions.getConnection().InscritCompetCandi(equipe, this);
 			return candidats.add(equipe);
 		}

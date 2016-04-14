@@ -54,6 +54,8 @@ public class Equipe extends Candidat
 	public boolean remove(Personne membre)
 	{
 		membre.remove(this);
+		if (!Inscriptions.getConstruction())
+			Inscriptions.getConnection().EnlevePersonneEquipe(membre, this);
 		return membres.remove(membre);
 	}
 

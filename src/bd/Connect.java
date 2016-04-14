@@ -210,7 +210,6 @@ public class Connect {
 		try {
 			query = "call SupprimeCompet('"+idc+"')";
 			statement.execute(query);
-
 		}
 		catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -221,7 +220,6 @@ public class Connect {
 		//Supprime une personne
 
 	public void EnleverPersonne(int idp) {
-
 		query = "call SupprimePersonne('"+idp+"')";
 		try {
 			statement.execute(query);
@@ -234,7 +232,6 @@ public class Connect {
 		// Supprime une équipe
 
 	public void EnleverEquipe(int ide) {
-
 		query = "call SupprimeEquipe('"+ide+"')";
 		try {
 			statement.execute(query);
@@ -249,15 +246,14 @@ public class Connect {
 
 	public void InscritCompetCandi(Candidat candidat, Competition competition) {
 		try {
-					query = "call AjoutCandiCompet(?,?)";
-					prepare = connec.prepareStatement(query);
-					prepare.setInt(1 ,candidat.getId());
-					prepare.setInt(2, competition.getId());
-					prepare.execute();
-
+			query = "call AjoutCandiCompet(?,?)";
+			prepare = connec.prepareStatement(query);
+			prepare.setInt(1 ,candidat.getId());
+			prepare.setInt(2, competition.getId());
+			prepare.execute();
 		}
 		catch (SQLException e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 		}
 	}
 
@@ -270,7 +266,6 @@ public class Connect {
 			prepare.setInt(1, equipe.getId());
 			prepare.setInt(2, pers.getId());
 			prepare.execute();
-			System.out.println("ok");
 		}
 		catch (SQLException e) {
 			System.out.println("Echec ajout");
@@ -280,32 +275,28 @@ public class Connect {
 	/* Retire une personne d'une équipe */
 	public void EnlevePersonneEquipe(Personne personne, Equipe equipe)
 	{
-		try
-		{
+		try {
 			query = "call SupprimePersonneEquipe(?,?)";
 			prepare = connec.prepareStatement(query);
 			prepare.setInt(1, personne.getId());
 			prepare.setInt(2, equipe.getId());
 			prepare.execute();
 		}
-		catch (SQLException e)
-		{
+		catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
 	/* Retire un candidat (équipe ou personne) d'une compétitions*/
 	public void retirerCandidatCompetition(Candidat candidat, Competition competition) {
-		try
-		{
+		try {
 			query = "call SupprimeCandidatCompet(?,?)";
 			prepare = connec.prepareStatement(query);
 			prepare.setInt(1, candidat.getId() );
 			prepare.setInt(2, competition.getId());
 			prepare.execute();
 		}
-		catch (SQLException e)
-		{
+		catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
@@ -358,52 +349,53 @@ public class Connect {
 
 	// Modification le nom d'une personne
 
-		public void ModifNomPersonne(Candidat candidat, String nomp) {
-			try {
-				if (candidat instanceof Personne){
-					query = "call ModifNomPersonne(?,?)";
-					prepare = connec.prepareStatement(query);
-					prepare.setString(1,((Personne)candidat).getNom());
-					prepare.setString(2, nomp);
-				}
-				prepare.execute();
-			}
-			catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-
-		// Modification le prenom d'une personne
-
-		public void ModifPrenomPersonne(Candidat candidat, String prenomp) {
-			try {
-				if (candidat instanceof Personne){
-					query = "call ModifPrenomPersonne(?,?)";
-					prepare = connec.prepareStatement(query);
-					prepare.setString(1, prenomp);
-					prepare.setInt(2, candidat.getId());
-				}
-				prepare.execute();
-			}
-			catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		//Verifie si c'est un utilisateur présent dans la base
-		public boolean isUser(String pseudo, String password) {
-			query = "call RecupUser(?,?)";
-			try {
+	public void ModifNomPersonne(Candidat candidat, String nomp) {
+		try {
+			if (candidat instanceof Personne){
+				query = "call ModifNomPersonne(?,?)";
 				prepare = connec.prepareStatement(query);
-				prepare.setString(1, pseudo);
-				prepare.setString(2, password);
-				resultat = prepare.executeQuery();
-				return resultat.next();
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return false;
+				prepare.setInt(1,((Personne)candidat).getId());
+				prepare.setString(2, nomp);
 			}
+			prepare.execute();
 		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// Modification le prenom d'une personne
+
+	public void ModifPrenomPersonne(Candidat candidat, String prenomp) {
+		try {
+			if (candidat instanceof Personne){
+				query = "call ModifPrenomPersonne(?,?)";
+				prepare = connec.prepareStatement(query);
+				prepare.setString(1, prenomp);
+				prepare.setInt(2, candidat.getId());
+			}
+			prepare.execute();
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+		
+	//Verifie si c'est un utilisateur présent dans la base
+	
+	public boolean isUser(String pseudo, String password) {
+		query = "call RecupUser(?,?)";
+		try {
+			prepare = connec.prepareStatement(query);
+			prepare.setString(1, pseudo);
+			prepare.setString(2, password);
+			resultat = prepare.executeQuery();
+			return resultat.next();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }
 
 

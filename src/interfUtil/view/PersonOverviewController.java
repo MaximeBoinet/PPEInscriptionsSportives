@@ -287,8 +287,10 @@ public class PersonOverviewController {
     	Candidat candi = equipeAInscrire.getItems().get(equipeAInscrire.getSelectionModel().getSelectedIndex());
     	if (currentCompet.estEnEquipe()) {
     		this.currentCompet.add((Equipe)(candi));
+    		System.out.println("Equipe add");
 		} else {
 			this.currentCompet.add((Personne)(candi));
+			System.out.println("Personne add");
 		}
         equipeAInscrire.getItems().remove(candi);
         equipeInscrite.getItems().add(candi);
