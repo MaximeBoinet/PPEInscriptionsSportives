@@ -155,8 +155,9 @@ public class Connect {
 			query = "call AjoutEquipe(?)";
 			prepare = connec.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			prepare.setString(1, nomcandidat);
-			prepare.executeQuery();
-			return prepare.getGeneratedKeys().getInt(1);
+			ResultSet rs = prepare.executeQuery();
+			rs.next();
+			return rs.getInt("ID");
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
@@ -173,7 +174,9 @@ public class Connect {
 			prepare.setString(1, nomcandidat);
 			prepare.setString(2, nompersonne);
 			prepare.setString(3, mailpersonne);
-			return prepare.executeQuery().getInt(1);
+			ResultSet rs = prepare.executeQuery();
+			rs.next();
+			return rs.getInt("ID");
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
@@ -190,7 +193,9 @@ public class Connect {
 			prepare.setString(1, nomcompet);
 			prepare.setDate(2,Date.valueOf(dateCloturec));
 			prepare.setBoolean(3,enEquipe);
-			return prepare.executeQuery().getInt(1);
+			ResultSet rs = prepare.executeQuery();
+			rs.next();
+			return rs.getInt("ID");
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
@@ -204,7 +209,7 @@ public class Connect {
 	public void EnleverCompet(int idc) {
 		try {
 			query = "call SupprimeCompet('"+idc+"')";
-			statement.executeQuery(query);
+			statement.execute(query);
 
 		}
 		catch (SQLException e) {
@@ -219,7 +224,7 @@ public class Connect {
 
 		query = "call SupprimePersonne('"+idp+"')";
 		try {
-			statement.executeQuery(query);
+			statement.execute(query);
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
@@ -232,7 +237,7 @@ public class Connect {
 
 		query = "call SupprimeEquipe('"+ide+"')";
 		try {
-			statement.executeQuery(query);
+			statement.execute(query);
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
@@ -248,7 +253,7 @@ public class Connect {
 					prepare = connec.prepareStatement(query);
 					prepare.setInt(1 ,candidat.getId());
 					prepare.setInt(2, competition.getId());
-					prepare.executeQuery();
+					prepare.execute();
 
 		}
 		catch (SQLException e) {
@@ -264,7 +269,7 @@ public class Connect {
 			prepare = connec.prepareStatement(query);
 			prepare.setInt(1, equipe.getId());
 			prepare.setInt(2, pers.getId());
-			prepare.executeQuery();
+			prepare.execute();
 			System.out.println("ok");
 		}
 		catch (SQLException e) {
@@ -281,7 +286,7 @@ public class Connect {
 			prepare = connec.prepareStatement(query);
 			prepare.setInt(1, personne.getId());
 			prepare.setInt(2, equipe.getId());
-			prepare.executeQuery();
+			prepare.execute();
 		}
 		catch (SQLException e)
 		{
@@ -297,7 +302,7 @@ public class Connect {
 			prepare = connec.prepareStatement(query);
 			prepare.setInt(1, candidat.getId() );
 			prepare.setInt(2, competition.getId());
-			prepare.executeQuery();
+			prepare.execute();
 		}
 		catch (SQLException e)
 		{
@@ -313,7 +318,7 @@ public class Connect {
 			prepare = connec.prepareStatement(query);
 			prepare.setInt(1, compet.getId());
 			prepare.setString(2, nomc);
-			prepare.executeQuery();
+			prepare.execute();
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
@@ -327,7 +332,7 @@ public class Connect {
 			prepare = connec.prepareStatement(query);
 			prepare.setDate(1,Date.valueOf(dateclot));
 			prepare.setInt(2, compet.getId());
-			prepare.executeQuery();
+			prepare.execute();
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
@@ -344,7 +349,7 @@ public class Connect {
 				prepare.setString(1, mailp);
 				prepare.setInt(2, candidat.getId());
 			}
-			prepare.executeQuery();
+			prepare.execute();
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
@@ -361,7 +366,7 @@ public class Connect {
 					prepare.setString(1,((Personne)candidat).getNom());
 					prepare.setString(2, nomp);
 				}
-				prepare.executeQuery();
+				prepare.execute();
 			}
 			catch (SQLException e) {
 				e.printStackTrace();
@@ -378,7 +383,7 @@ public class Connect {
 					prepare.setString(1, prenomp);
 					prepare.setInt(2, candidat.getId());
 				}
-				prepare.executeQuery();
+				prepare.execute();
 			}
 			catch (SQLException e) {
 				e.printStackTrace();

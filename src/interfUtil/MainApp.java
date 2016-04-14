@@ -83,10 +83,10 @@ public class MainApp extends Application {
 			loader.setLocation(MainApp.class.getResource("view/PersonOverview.fxml"));
 			AnchorPane personOverView = (AnchorPane) loader.load();
 			rootLayout.setCenter(personOverView);
-			showIdentification();
-			if (!isLoged()) {
-	        	this.getPrimaryStage().close();
-			}
+			//showIdentification();
+			//if (!isLoged()) {
+	        //	this.getPrimaryStage().close();
+			//}
 			PersonOverviewController controller = loader.getController();
 			System.out.println(controller);
 			controller.setMainApp(this);

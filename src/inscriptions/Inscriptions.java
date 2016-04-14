@@ -144,7 +144,7 @@ public class Inscriptions implements Serializable
 	void remove(Competition competition)
 	{
 		getConnection().EnleverCompet(competition.getId());
-		competition.delete();
+		competitions.remove(competition);
 	}
 
 	void remove(Candidat candidat)
@@ -153,7 +153,7 @@ public class Inscriptions implements Serializable
 			getConnection().EnleverPersonne(((Personne) candidat).getId());
 		else
 			getConnection().EnleverEquipe(candidat.getId());
-		candidat.delete();
+		candidats.remove(candidat);
 	}
 
 	/**

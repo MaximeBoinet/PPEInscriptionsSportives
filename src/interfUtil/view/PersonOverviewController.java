@@ -326,7 +326,7 @@ public class PersonOverviewController {
     @FXML
     private void handleSuppression() {
     	Competition tempsCompet = currentCompet;
-    	mainApp.getEquipes().remove(currentCompet);
+    	mainApp.getCompetitions().remove(currentCompet);
     	tempsCompet.delete();
     }
 
