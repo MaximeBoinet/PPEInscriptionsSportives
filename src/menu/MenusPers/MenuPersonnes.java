@@ -76,7 +76,7 @@ public class MenuPersonnes {
 				do {
 					mail = EntreesSorties.getString("Mail de la Personnes?: ");
 				} while (!Pattern.compile(EMAIL_PATTERN).matcher(mail).matches());
-				Inscriptions.getInscriptions().createPersonne(nom, prenom, mail);
+				Inscriptions.getInscriptions().createPersonne(nom, prenom, mail,-1);
 				System.out.println("La personnes à bien été crée");
 			}
 		};

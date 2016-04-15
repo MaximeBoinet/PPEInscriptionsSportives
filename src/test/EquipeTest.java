@@ -12,8 +12,8 @@ import inscriptions.Personne;
 
 public class EquipeTest {
 	Inscriptions inscriptionTest = Inscriptions.getInscriptions();
-	Equipe equipeTest = inscriptionTest.createEquipe("L'EQUIPE TEST");
-	Personne personneTest = inscriptionTest.createPersonne("TEST", "test","tTEST@gmail.com");
+	Equipe equipeTest = inscriptionTest.createEquipe("L'EQUIPE TEST",-1);
+	Personne personneTest = inscriptionTest.createPersonne("TEST", "test","tTEST@gmail.com",-1);
 
 	@Test
 	public void testGetMembres() {

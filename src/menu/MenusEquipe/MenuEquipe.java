@@ -63,7 +63,7 @@ public class MenuEquipe {
 		return new Action() {
 			@Override
 			public void optionSelectionnee() {
-				Inscriptions.getInscriptions().createEquipe(EntreesSorties.getString("Nom de l'équipe?: "));
+				Inscriptions.getInscriptions().createEquipe(EntreesSorties.getString("Nom de l'équipe?: "),-1);
 				System.out.println("Votre équipe à bien été crée");
 			}
 		};

@@ -87,7 +87,7 @@ public class MenuCompet {
 				
 				String enEquipe = EntreesSorties.getString("En equipe [O/N]? : ");
 				System.out.println("reponsé " + enEquipe );
-				Inscriptions.getInscriptions().createCompetition(nom, laDate, enEquipe.toLowerCase().equals("o"));
+				Inscriptions.getInscriptions().createCompetition(nom, laDate, enEquipe.toLowerCase().equals("o"),-1);
 			}
 		};
 	}

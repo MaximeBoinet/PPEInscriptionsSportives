@@ -13,12 +13,12 @@ import java.util.Set;
 public class PersonneTest {
 	
 	Inscriptions inscriptionTest = Inscriptions.getInscriptions();
-	Personne personneTest = inscriptionTest.createPersonne ("TEST", "test", "tTEST@gmail.com");
+	Personne personneTest = inscriptionTest.createPersonne ("TEST", "test", "tTEST@gmail.com",-1);
 	
 
 	@Test
 	public void testDelete() {
-		Equipe equipeTest = inscriptionTest.createEquipe("L'EQUIPE TEST");
+		Equipe equipeTest = inscriptionTest.createEquipe("L'EQUIPE TEST",-1);
 		equipeTest.add(personneTest);
 		Set<Equipe> setEquipesTest = personneTest.getEquipes();
 		personneTest.delete();
@@ -50,7 +50,7 @@ public class PersonneTest {
 
 	@Test
 	public void testGetEquipes() {
-		Equipe equipeTest = inscriptionTest.createEquipe("L'EQUIPE TEST");
+		Equipe equipeTest = inscriptionTest.createEquipe("L'EQUIPE TEST",-1);
 		equipeTest.add(personneTest);
 		Set<Equipe> setEquipesTest = personneTest.getEquipes();
 		assertTrue(setEquipesTest.contains(equipeTest));

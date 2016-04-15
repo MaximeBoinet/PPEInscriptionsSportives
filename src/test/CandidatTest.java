@@ -14,9 +14,9 @@ import java.util.Set;
 
 public class CandidatTest {
 	Inscriptions inscriptionTest = Inscriptions.getInscriptions();
-	Equipe equipeTest = inscriptionTest.createEquipe("L'EQUIPE TEST");
-	Personne personneTest = inscriptionTest.createPersonne("TEST", "test","tTEST@gmail.com");
-	Competition competitionSoloTest = inscriptionTest.createCompetition("CompetSoloTest", null, false);
+	Equipe equipeTest = inscriptionTest.createEquipe("L'EQUIPE TEST",-1);
+	Personne personneTest = inscriptionTest.createPersonne("TEST", "test","tTEST@gmail.com",-1);
+	Competition competitionSoloTest = inscriptionTest.createCompetition("CompetSoloTest", null, false,-1);
 	
 	
 	@Test
@@ -62,7 +62,7 @@ public class CandidatTest {
 
 	@Test
 	public void testCompareTo() {
-		Personne personneTest2 = inscriptionTest.createPersonne("TEST", "","TEST@gmail.com");
+		Personne personneTest2 = inscriptionTest.createPersonne("TEST", "","TEST@gmail.com",-1);
 		assertTrue(personneTest.compareTo(personneTest2) == 0);
 	}
 

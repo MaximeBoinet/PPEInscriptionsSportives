@@ -17,10 +17,10 @@ import java.util.Set;
 public class CompetitionTest {
 	
 	Inscriptions inscriptionTest = Inscriptions.getInscriptions();
-	Competition competitionEquipeTest = inscriptionTest.createCompetition("CompetEquipeTest", null, true);
-	Competition competitionSoloTest = inscriptionTest.createCompetition("CompetSoloTest", null, false);
-	Personne personneTest = inscriptionTest.createPersonne ("TEST", "test", "tTEST@gmail.com");
-	Equipe equipeTest = inscriptionTest.createEquipe("L'EQUIPE TEST");
+	Competition competitionEquipeTest = inscriptionTest.createCompetition("CompetEquipeTest", null, true,-1);
+	Competition competitionSoloTest = inscriptionTest.createCompetition("CompetSoloTest", null, false,-1);
+	Personne personneTest = inscriptionTest.createPersonne ("TEST", "test", "tTEST@gmail.com",-1);
+	Equipe equipeTest = inscriptionTest.createEquipe("L'EQUIPE TEST",-1);
 
 	@Test
 	public void testGetNom() {
@@ -78,7 +78,7 @@ public class CompetitionTest {
 
 	@Test
 	public void testRemove() {
-		Equipe equipeTest2 = inscriptionTest.createEquipe("");
+		Equipe equipeTest2 = inscriptionTest.createEquipe("",-1);
 		competitionEquipeTest.add(equipeTest);
 		competitionEquipeTest.add(equipeTest2);
 		Set<Candidat>setCandidatTest = competitionEquipeTest.getCandidats();
@@ -95,7 +95,7 @@ public class CompetitionTest {
 
 	@Test
 	public void testCompareTo() {
-		Competition competitionEquipeTest2 = inscriptionTest.createCompetition("CompetEquipeTest", null, true);
+		Competition competitionEquipeTest2 = inscriptionTest.createCompetition("CompetEquipeTest", null, true,-1);
 		assertTrue(competitionEquipeTest.compareTo(competitionEquipeTest2)== 0);
 		
 	}
