@@ -6,6 +6,7 @@ import interfUtil.MainApp;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -14,7 +15,7 @@ public class IdentificationControler {
 	@FXML
 	private TextField pseudo = new TextField();
 	@FXML
-	private TextField mdp = new TextField();
+	private PasswordField mdp = new PasswordField();
 	@FXML
 	private Button connect = new Button();
 	@FXML
